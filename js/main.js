@@ -2,7 +2,7 @@
 var innovativeview;
 
 var vis = {};
-d3.json("data/cleansed_final.json", function(data)
+d3.json("data/book-data-lite.json", function(data)
 {
 
     vis.data = data;
