@@ -1,0 +1,112 @@
+@font-face {
+    font-family: Arabian Night;
+    src: url("fonts/xxii-arabian-onenightstand/XXII ARABIAN-ONENIGHTSTAND.ttf");
+}
+
+body {
+    background-color: floralwhite;
+    margin:0 !important;
+    padding:0 !important;
+}
+
+#intro, .storyline {
+    font-family: Avenir;
+    font-size: 20px;
+    font-weight: normal;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+.storyline, #color-vis{
+    text-align: center;
+}
+
+#title {
+    font-family: "Arabian Night";
+    text-transform: uppercase;
+    margin-top: 75px;
+    margin-left: 35px;
+    color: #e8b923;
+}
+
+#bookshelf {
+    float:right;
+    margin-left: 30px;
+}
+
+#intro {
+    margin-bottom: 55px;
+}
+
+#choose-book {
+    background-color: #EBD8EF;
+}
+
+#instructions {
+    color: #e8b923;
+    -webkit-text-stroke: 0.5px black;
+}
+
+#book-selection,  #playground-vis-img  {
+    background-image: url("../img/starry-bg.jpg");
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-repeat: repeat;
+    margin-top: 35px;
+}
+
+#playground-vis-img {
+    background-image: none;
+}
+
+#table {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 75%;
+}
+
+#color-container {
+    background-color: white;
+}
+
+#color-directions, #symbol-directions {
+    margin-top: 125px;
+    margin-left: 0px;
+}
+
+#choice-explanation {
+    margin-bottom: 50px;
+}
+
+#color-vis-img, #symbol-vis-img, #playground-vis-img {
+    height: 500px;
+}
+
+#symbols-container {
+    margin-top: 50px;
+}
+
+#sources-and-credits {
+    font-size: 14px;
+    margin-top: 100px;
+    background-color: #EBD8EF;
+    margin-left: 0px;
+}
+
+#about-project, #sources {
+    margin-left: 50px;
+    text-align: left;
+}
+
+#about-project {
+    font-size: 16px;
+}
+
+#sources {
+    font-family: Avenir;
+    font-size: 14px;
+    font-style: italic;
+}
+
