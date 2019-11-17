@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="56621858-da32-4ee5-967c-5d7d3a252c3c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources" beforeDir="false" afterPath="$PROJECT_DIR$/sources" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,8 +78,16 @@
       <workItem from="1572899523388" duration="138000" />
       <workItem from="1573683035707" duration="22000" />
       <workItem from="1573683093980" duration="886000" />
-      <workItem from="1573951750653" duration="18627000" />
+      <workItem from="1573951750653" duration="19044000" />
     </task>
+    <task id="LOCAL-00001" summary="Basic web layout; not super duper pretty/ fancy but I think it gets the idea across and has id's to add visualizations to">
+      <created>1574024152757</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1574024152757</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,5 +105,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Basic web layout; not super duper pretty/ fancy but I think it gets the idea across and has id's to add visualizations to" />
+    <option name="LAST_COMMIT_MESSAGE" value="Basic web layout; not super duper pretty/ fancy but I think it gets the idea across and has id's to add visualizations to" />
   </component>
 </project>
