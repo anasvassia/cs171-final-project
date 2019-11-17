@@ -21,11 +21,11 @@ InnovativeView.prototype.initVis = function () {
 
     // Set margin and svg drawing area.
      vis.margin = {top: 10, right: 50, bottom: 10, left: 10},
-        vis.width = 1000 - vis.margin.left - vis.margin.right,
-        vis.height = 800 - vis.margin.top - vis.margin.bottom,
-        vis.outerRadius = Math.min(vis.width, vis.height) /4,
+        vis.width = 900 - vis.margin.left - vis.margin.right,
+        vis.height = 600 - vis.margin.top - vis.margin.bottom,
+        vis.outerRadius = Math.min(vis.width, vis.height) /5,
         //  vis.outerRadius = 110,
-         vis.mainRadius = 250, vis.mainCirclex = vis.width/2,
+         vis.mainRadius = 175, vis.mainCirclex = vis.width/2,
          vis.mainCircley = vis.height/2, vis.subRadius =20;
 
     // Draw SVG Element.

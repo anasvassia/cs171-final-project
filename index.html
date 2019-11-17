@@ -2,11 +2,163 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>A Cover Worth 1000 Words</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<!-- Weird gap to right of page -- bug -->
+
+    <!-- Introductory text -->
+    <div class="row container-fluid" id="introduction">
+        <div class="col-md-12" id="intro-text">
+            <div id="bookshelf">
+                <!-- feeling iffy about this image -->
+                <img src="img/empty-rack-crop.png" alt="bookshelf" id="bookshelf-image">
+            </div>
+            <div id="book-spines"></div>
+            <h1 id="title">A cover worth 1000 words</h1>
+
+            <p id="intro" class="storyline">
+                They say to never judge a book by its cover. But sometimes, we don't
+                even consciously decide on which books get our attention in the first
+                place. For example...
+            </p>
+        </div>
+    </div>
+
+    <!-- Hook/ user interaction -- book is selected -->
+    <div class="row container-fluid" id="choose-book">
+        <div class="col-md-12">
+            <div>
+                <h6 id="instructions" class="storyline">
+                    Choose the book cover that most appeals to you - that makes you
+                    want to take the book home and read it right away.
+                </h6>
+            </div>
+
+            <!-- Append books to table transition to this div 5 seconds after page open -->
+            <div id="book-selection">
+                <!-- don't like this image, but the best one that I've found so far -->
+                <img src="img/fancy-table.png" alt="table" id="table">
+            </div>
+        </div>
+    </div>
+
+    <!-- Opactiy 0 -> 100 once user selects book but am hard-coding it here now for the storyline -->
+    <div class="row container-fluid visualizations" id="vis-container">
+        <div class="col-md-12">
+
+            <!-- Explanation of user's choice -->
+            <div class="row container">
+                <div class="col-md-12">
+                    <div id="choice-explanation">
+                        <p class="storyline">
+                            Great choice! You were actually X% likely to have chosen that
+                            book, because of it's cover design. It's pretty cool how much
+                            design choices of a cover impact which books we're drawn to.
+                        </p>
+
+                        <p class="storyline">
+                            Several cover features come into play actually. One of the
+                            major ones is color!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color viualization-->
+            <div class="row container-fluid" id="color-container">
+                <div class="col-md-1"> <!-- Empty div for spacing --></div>
+                <div class="col-md-4" id="color-directions" class="storyline">
+                    <p class="storyline">
+                        This visualization shows how colors are used in the
+                        covers of books of different genres. Each circle
+                        represents a different genre, and each bar on that circle
+                        represents .... The graph in the center shows how color
+                        has changed over time for .... Hover over a bar
+                        for more detailed information, and click on a bar
+                        to updated the timeline view.
+                    </p>
+                </div>
+                <div class="col-md-7">
+                    <div id="color-vis">
+                        <!-- replace image with code results -->
+<!--                        <img src="img/innovativeVis.png" alt="innovative vis" id="color-vis-img"/>-->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book symbols visualization -->
+            <div class="row container-fluid" id="symbols-container">
+                <div class="col-md-7">
+                    <div id="symbol-vis">
+                        <!-- replace image with code results -->
+                        <div id="bar-chart"></div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+
+                <div class="col-md-4">
+                    <p class="storyline" id="symbol-directions">
+                        Just as important as color, are the symbols that appear
+                        on book covers. In this visualization, we see the most
+                        popular symbols that are used on books, grouped by
+                        genre.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Info playground -->
+            <div class="row container-fluid" id="playground-container">
+                <div class="col-md-12">
+                    <div class="row-container">
+                         <div class="col-md-12">
+                             <p class="storyline">
+                                 Color and symbols are only two aspects that
+                                 go into designing an appealing book cover.
+                                 In the final visualization, explore as much,
+                                 or as little, as you'd like, about the other
+                                 key features that go into making some covers
+                                 so irresistible. We hope that you enjoyed
+                                 this quick lesson on how aesthetics can affect
+                                 consumer decisions.
+                             </p>
+                         </div>
+                    </div>
+                </div>
+
+                <!-- User gets to do whatever they want -->
+                <div id="playground-vis">
+                    <div class="row-container">
+                        <div class="col-md-12">
+                    <!-- replace image with vis -- also not centering for some reason -->
+                            <img src="img/playground-img.jpeg" alt="playground-holder" id="playground-vis-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Sources and credits -->
+    <div id="sources-and-credits" class="storyline">
+        <p id="about-project">
+            "A Cover Worth 1000 Words" was created by Anastasia Lamothe '21,
+            Isabelle Zheng '21, and Lekshmi Santhosh '21 as the final project
+            for Harvard CS171 2019.
+        </p>
+        <p id="sources">
+            Sources go here with link tags
+        </p>
+
+    </div>
+
+
+
+
+
 <div id="innovative-view"></div>
 
 <div id="bar-chart"></div>
