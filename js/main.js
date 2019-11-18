@@ -14,7 +14,6 @@ function createVis(error, data, tagObjectData){
     if(error) { console.log(error); }
 
     vis.data = data;
-    innovativeview = new InnovativeView("innovative-view", data);
     barchart = new BarChart("bar-chart", tagObjectData);
     innovativeview = new InnovativeView("color-vis", data);
 
