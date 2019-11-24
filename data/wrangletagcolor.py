@@ -30,7 +30,6 @@ with open('tag_object.json') as jsonfile:
   for tag in data.keys():
     tag_dict[tag] = tag_dict_entry
 
-
 def colorCategorize(color):
   for c in ["red", "green", "blue"]:
     if c not in color:
@@ -90,17 +89,26 @@ with open("book_data.json") as json_file:
 
       # secondaryColor = colorCategorize(colorsLst[1]["color"])
 
+hierarchy_tag_color = {}
+
 # calculate average pixel fraction
 for tag_name, tag in tag_dict.items():
+  hierarchy_tag_color[tag_name] = {}
+  hierarchy_tag_color[tag_name]["tag_name"] = tag_name
+  hierarchy_tag_color[tag_name]["children"] = []
   for color_name, color in tag.items():
     if color["frequency"] > 0:
       color["averagePixelFraction"] = color["totalPixelFraction"]/color["frequency"]
     else:
       color["averagePixelFraction"] = 0
-
-
+    hierarchy_color = color
+    hierarchy_color["color_name"] = color_name
+    hierarchy_tag_color[tag_name]["children"].append(hierarchy_color)
 
 with open('tag_color.json', 'w') as file:
   json.dump(tag_dict, file, ensure_ascii=False, indent=4)
+
+with open('hierarchy_tag_color.json', 'w') as file:
+  json.dump(hierarchy_tag_color, file, ensure_ascii=False, indent=4)
 
 
