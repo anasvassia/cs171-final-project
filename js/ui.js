@@ -1,4 +1,8 @@
-
+/*
+    Sources used:
+    jQuery transitions:
+        https://stackoverflow.com/questions/12721029/use-jquery-to-show-a-div-in-5-seconds
+ */
 var books;
 var alreadyChose = false;
 
@@ -38,7 +42,7 @@ d3.json("data/book-data-lite.json", function(data) {
             .attr("alt", val.title);
 
        $(select).hide();
-       $(select).delay(2000).fadeIn(1000);
+       $(select).delay(2500).fadeIn(1000);
 
         $(select).on("click", function() {
             // if user has already chosen something then don't do anything

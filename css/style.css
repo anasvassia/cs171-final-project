@@ -65,8 +65,8 @@
 #color-directions, #symbol-directions {
     margin-top: 225px;
     margin-left: 0px;
-    background-color: #F19B67;
-    color: floralwhite;
+    background-color: #f797a1;
+    color: white;
 }
 
 #choice-explanation {
@@ -86,7 +86,7 @@
 #sources-and-credits {
     font-size: 14px;
     margin-top: 100px;
-    background-color: #EBD8EF;
+    background-color: #f5e9c0;
     margin-left: 0px;
 }
 
