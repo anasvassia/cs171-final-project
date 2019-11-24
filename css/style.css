@@ -63,8 +63,10 @@
 }
 
 #color-directions, #symbol-directions {
-    margin-top: 125px;
+    margin-top: 225px;
     margin-left: 0px;
+    background-color: #F19B67;
+    color: floralwhite;
 }
 
 #choice-explanation {
@@ -73,7 +75,7 @@
     text-align: center;
 }
 
-#color-vis-img, #symbol-vis-img, #vis2-img {
+#symbol-vis-img, #vis2-img {
     height: 500px;
 }
 
