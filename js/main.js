@@ -15,6 +15,7 @@ function createVis(error, data, tagObjectData){
 
     vis.data = data;
     barchart = new BarChart("bar-chart", tagObjectData);
+    treemap = new TreeMap("treemap", data)
     innovativeview = new InnovativeView("color-vis", data);
 
 };
