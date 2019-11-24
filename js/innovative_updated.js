@@ -3,10 +3,11 @@
  * @param _parentElement 	-- the HTML element in which to draw the bar charts
  * @param _data						-- the dataset 'book aesthetic analysis'
  */
-InnovativeView = function (_parentElement, _data, _genres) {
+InnovativeView = function (_parentElement, _data) {
     this.parentElement = _parentElement;
     this.data = _data;
-    this.genres = _genres;
+    this.genres = ['science-fiction', 'fantasy', 'romance', 'fiction', 'young-adult', 'thriller', 'paranormal', 'childrens'];
+    this.year_ranges = [...new Set(_data.map(x => x.year_range))].sort();
     this.initVis();
 };
 
@@ -49,6 +50,15 @@ InnovativeView.prototype.initVis = function () {
         .range([vis.subRadius, vis.outerRadius])
         .domain([0, 1]);
 
+    vis.areay = d3.scaleLinear()
+        .rangeRound([280, 0]);
+
+    vis.areax = d3.scaleBand()
+        .domain(vis.year_ranges)
+        .rangeRound([0, 500])
+        .padding(0.3)
+        .align(0.3);
+
     vis.smallcirclerad = d3.scaleLinear().domain([0,1]).range([6,25]);
 
     var circlexval= [], circleyval = [];
@@ -58,7 +68,7 @@ InnovativeView.prototype.initVis = function () {
     vis.subcenterx = circlexval;
     vis.subcentery = circleyval;
 
-    vis.reach = 3;
+    vis.reach = 4;
 
     // Draw the circular structure.
     vis.circleplotter = function(array_index, key_val, data ) {
@@ -105,15 +115,38 @@ InnovativeView.prototype.initVis = function () {
 InnovativeView.prototype.wrangleData = function () {
 
     var vis = this;
-    var summarybygenre = [];
+    var summarybygenre = [], aggregatedAreaData = [], reshapedAreaDataStage = [], reshapedAreaData = [];
+
+    vis.data = vis.data.filter(function(d){return d.dominant_color_categorized !== 'missing'});
+
+    vis.colorgroups = ["black", "orange", "white","green", "blue", "red",  "violet", "yellow"];
 
     vis.genres.forEach(function(genre){
         var filtered = vis.data.filter(function(d){return d["tags"].includes(genre);});
+        filtered.forEach(function(row){row.genre_key = genre;});
         // Aggregate values
         var countColors = d3.nest()
             .key(function(d) { return d.dominant_color_categorized; })
             .rollup(function(leaves) { return leaves.length; })
             .entries(filtered);
+
+        var countColorsArea = d3.nest()
+            .key(function(d) { return d.year_range; })
+            .key(function(d) { return d.dominant_color_categorized; })
+            .rollup(function(leaves) { return leaves.length; })
+            .entries(filtered);
+        countColorsArea.forEach(function(year_count)
+            {
+                var record = {};
+                year_count["values"].forEach(
+                    function(d){
+                        record.year_range = year_count["key"];
+                        record.genre = genre;
+                        record.color = d.key;
+                        record.count = d.value;
+                    });
+                aggregatedAreaData.push(record)});
+
         // Compute percentages
         countColors.forEach(function(d) {d.percentage = d.value / filtered.length;});
         // Sort values
@@ -122,13 +155,40 @@ InnovativeView.prototype.wrangleData = function () {
         summarybygenre.push(countColors);
     });
 vis.summarybygenre = summarybygenre;
+
+//On click event handler for filters
+    /////////////////// (Placeholder)
+aggregatedAreaData.sort(function(a,b){return (a.year_range > b.year_range) - (a.year_range < b.year_range)});
+
+reshapedAreaDataStage = d3.nest()
+        .key(function(d){return d.year_range})
+        .key(function(d){return d.color})
+        .rollup(function(v) { return d3.sum(v, function(d) { return d.count; })})
+        .entries(aggregatedAreaData);
+
+reshapedAreaDataStage.forEach(function(year){
+        var record = {};
+        record.year_range = year.key;
+        vis.colorgroups.forEach(function(color){return record[color] = 0});
+        year.values.forEach(function(d){
+            vis.colorgroups.forEach(function(color){if(d.key === color){record[color] = d.value}});
+        });
+        reshapedAreaData.push(record);
+    });
+    vis.aggregatedAreaData = reshapedAreaData;
     // // Update the visualization
     vis.updateVis();
 };
 
 InnovativeView.prototype.updateVis = function (){
 
+
     var vis = this;
+    vis.areay.domain([0, 120]);
+
+    var stack = d3.stack()
+        .keys(vis.colorgroups);
+    var series = stack(vis.aggregatedAreaData);
 
     vis.summarybygenre.forEach(function(d, i){
         vis.circleplotter([...Array(18).keys()],i,d);
@@ -146,35 +206,22 @@ InnovativeView.prototype.updateVis = function (){
         .attr("fill", "white")
         .style("stroke", "pink");
 
+    //Draw the stacked bar chart
+    vis.svg
+        .selectAll(".stacked_bar")
+        .data(series)
+        .enter()
+        .append("g")
+        .attr("class", "stacked_bar")
+        .attr("fill", function(d){return d.key})
+        .selectAll("rect")
+        .data(function(d) { return d; })
+        .enter().append("rect")
+        .attr("x", function(d) { return vis.areax(d.data.year_range); })
+        .attr("y", function(d) { return vis.areay(d[1]); })
+        .attr("height", function(d) { return (vis.areay(d[0]) - vis.areay(d[1])); })
+        .attr("width",vis.areax.bandwidth())
+        .attr("stroke", 'grey')
+        .attr("transform", "translate(175,150)");
 
-    //
-    // vis.svg.selectAll(".edgeCircle")
-    //     .data(vis.summarybygenre)
-    //     .attr("r", function(d){return d*vis.smallcirclerad(d.percentage)});
-
-    // vis.summarybygenre.forEach(function(d,i){
-    //     //update domain
-    //     vis.circlex.domain(d.map(function(summary) { return summary.key; }));
-    //     //Identify the location of the radial plot
-    //     var num1 = vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius;
-    //     var num2 = vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis. mainRadius;
-    //     //Draw radial barplot
-    //     vis.svg.append("g")
-    //         .attr("transform", "translate("+num1+","+ num2+") rotate("+ i*45+ ")")
-    //         .selectAll("path")
-    //         .data(d)
-    //         .enter()
-    //         .append("path")
-    //         .attr("class","circular_bars")
-    //         .attr("fill", function(d){if(d.key==='missing') {return 'grey'} else {return d.key}})
-    //         .attr("stroke", '#e0e0e0')
-    //         .attr("d", d3.arc()
-    //             .innerRadius(vis.subRadius)
-    //             .outerRadius(function(d) { return vis.circley(d['percentage']); })
-    //             .startAngle(function(d) { return vis.circlex(d.key); })
-    //             // .endAngle(function(d) { return vis.circlex(d.key) + vis.circlex.bandwidth(); })
-    //             .endAngle(function(d) { return vis.circlex(d.key) + 0.2 })
-    //             .padAngle(0)
-    //             .padRadius(vis.subRadius));
-    // })
 };
