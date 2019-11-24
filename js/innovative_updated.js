@@ -7,7 +7,6 @@ InnovativeView = function (_parentElement, _data, _genres) {
     this.parentElement = _parentElement;
     this.data = _data;
     this.genres = _genres;
-    console.log(this.data);
     this.initVis();
 };
 
@@ -110,23 +109,19 @@ InnovativeView.prototype.wrangleData = function () {
 
     vis.genres.forEach(function(genre){
         var filtered = vis.data.filter(function(d){return d["tags"].includes(genre);});
-
         // Aggregate values
         var countColors = d3.nest()
             .key(function(d) { return d.dominant_color_categorized; })
             .rollup(function(leaves) { return leaves.length; })
             .entries(filtered);
-
         // Compute percentages
         countColors.forEach(function(d) {d.percentage = d.value / filtered.length;});
-
         // Sort values
         countColors.sort(function(a,b){return b.value - a.value});
         //Collect all values.
         summarybygenre.push(countColors);
     });
 vis.summarybygenre = summarybygenre;
-console.log(vis.summarybygenre);
     // // Update the visualization
     vis.updateVis();
 };
