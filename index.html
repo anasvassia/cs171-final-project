@@ -11,13 +11,13 @@
 
     <!-- Introductory text -->
     <div class="row container-fluid" id="introduction">
-        <div class="col-md-12" id="intro-text">
-            <div id="bookshelf">
-                <!-- feeling iffy about this image -->
-                <img src="img/empty-rack-crop.png" alt="bookshelf" id="bookshelf-image">
-            </div>
-            <div id="book-spines"></div>
+        <div class="col-md-3" id="opening">
+            <img src="img/ribbon.png" alt="bookmark" id="bookmark">
+            <div id="test">
             <h1 id="title">A cover worth 1000 words</h1>
+            </div>
+        </div>
+        <div class="col-md-7" id="intro-text">
 
             <p id="intro" class="storyline">
                 They say to never judge a book by its cover. But sometimes, we don't
@@ -37,10 +37,50 @@
                 </h6>
             </div>
 
-            <!-- Append books to table transition to this div 5 seconds after page open -->
+            <!-- Append books to this div 5 seconds after page open -->
             <div id="book-selection">
-                <!-- don't like this image, but the best one that I've found so far -->
-                <img src="img/fancy-table.png" alt="table" id="table">
+                <div class="row container-fluid" id="books">
+                    <div class="col-md-12">
+                        <div class="row container-fluid">
+                            <div class="col-md-12">
+                                <div class="row container-fluid row1">
+                                    <div class="col-md-3">
+                                        <img src="" alt="" class="book-covers" id="img0"/>
+                                    </div>
+                                    <div class="col-3">
+                                        <img src="" alt="" class="book-covers" id="img1"/>
+                                    </div>
+                                    <div class="col-3">
+                                        <img src="" alt="" class="book-covers" id="img2"/>
+                                    </div>
+                                    <div class="col-3">
+                                        <img src="" alt="" class="book-covers" id="img3"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row container-fluid row2">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="row container-fluid">
+                                        <div class="col-md-3">
+                                            <img src="" alt="" class="book-covers" id="img4"/>
+                                        </div>
+                                        <div class="col-3">
+                                            <img src="" alt="" class="book-covers" id="img5"/>
+                                        </div>
+                                        <div class="col-3">
+                                            <img src="" alt="" class="book-covers" id="img6"/>
+                                        </div>
+                                        <div class="col-3">
+                                            <img src="" alt="" class="book-covers" id="img7"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -82,10 +122,7 @@
                     </p>
                 </div>
                 <div class="col-md-7">
-                    <div id="color-vis">
-                        <!-- replace image with code results -->
-<!--                        <img src="img/innovativeVis.png" alt="innovative vis" id="color-vis-img"/>-->
-                    </div>
+                    <div id="color-vis"></div>
                 </div>
             </div>
 
@@ -106,6 +143,8 @@
                         popular symbols that are used on books, grouped by
                         genre.
                     </p>
+                    <p>* Note that final project will include
+                        diverging bar chart</p>
                 </div>
             </div>
 
@@ -133,7 +172,7 @@
                     <div class="row-container">
                         <div class="col-md-12">
                     <!-- replace image with vis -- also not centering for some reason -->
-                            <img src="img/playground-img.jpeg" alt="playground-holder" id="playground-vis-img">
+                            <img src="img/vis3.png" alt="playground-holder" id="playground-vis-img">
                         </div>
                     </div>
                 </div>
@@ -146,7 +185,7 @@
     <div id="sources-and-credits" class="storyline">
         <p id="about-project">
             "A Cover Worth 1000 Words" was created by Anastasia Lamothe '21,
-            Isabelle Zheng '21, and Lekshmi Santhosh '21 as the final project
+            Lekshmi Santhosh '21, and Isabelle Zheng '22 as the final project
             for Harvard CS171 2019.
         </p>
         <p id="sources">
@@ -163,6 +202,7 @@
 <script src="js/d3-scale-radial.js"></script>
 <script src="js/bar-chart.js"></script>
 <script src="js/innovative.js"></script>
+<script src="js/ui.js"></script>
 <script src="js/main.js"></script>
 
 </body>

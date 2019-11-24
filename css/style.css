@@ -3,18 +3,18 @@
     src: url("fonts/xxii-arabian-onenightstand/XXII ARABIAN-ONENIGHTSTAND.ttf");
 }
 
-body {
-    background-color: floralwhite;
-    margin:0 !important;
-    padding:0 !important;
-}
-
 #intro, .storyline {
     font-family: Avenir;
     font-size: 20px;
     font-weight: normal;
     margin-top: 50px;
     margin-left: 50px;
+}
+
+.opening {
+    position: relative;
+    text-align: center;
+    color: white;
 }
 
 .storyline, #color-vis{
@@ -25,16 +25,23 @@ body {
     font-family: "Arabian Night";
     text-transform: uppercase;
     margin-top: 75px;
-    margin-left: 35px;
+    margin-bottom: 25px;
+    margin-left: 50px;
+    margin-right: 50px;
     color: #e8b923;
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    background-color: #F9E0D9;
+    text-align: center;
 }
 
-#bookshelf {
-    float:right;
-    margin-left: 30px;
+#bookmark {
+    width: 50%;
 }
 
 #intro {
+    margin-top: 150px;
     margin-bottom: 55px;
 }
 
@@ -58,17 +65,6 @@ body {
 
 #playground-vis-img {
     background-image: none;
-}
-
-#table {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 75%;
-}
-
-#color-container {
-    background-color: white;
 }
 
 #color-directions, #symbol-directions {
@@ -110,3 +106,18 @@ body {
     font-style: italic;
 }
 
+.book-covers {
+    width: 146px;
+    height: 220px;
+    text-align: center;
+}
+
+/* 0.5 times the width of .book-covers*/
+.row1{
+    margin-left: 73px;
+}
+
+/* 1.5 times the width of .book-covers*/
+.row2{
+    margin-left: 219px;
+}
