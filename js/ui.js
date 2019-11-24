@@ -37,6 +37,9 @@ d3.json("data/book-data-lite.json", function(data) {
             .attr("src", val.image_url)
             .attr("alt", val.title);
 
+       $(select).hide();
+       $(select).delay(2000).fadeIn(1000);
+
         $(select).on("click", function() {
             // if user has already chosen something then don't do anything
             if (alreadyChose) {
