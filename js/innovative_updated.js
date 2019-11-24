@@ -18,13 +18,13 @@ InnovativeView.prototype.initVis = function () {
     var vis = this;
 
     // Set margin and svg drawing area.
-     vis.margin = {top: 10, right: 50, bottom: 10, left: 10},
+    vis.margin = {top: 10, right: 50, bottom: 10, left: 10},
         vis.width = 800 - vis.margin.left - vis.margin.right,
         vis.height = 700 - vis.margin.top - vis.margin.bottom,
         vis.outerRadius = Math.min(vis.width, vis.height) /5,
         //  vis.outerRadius = 110,
-         vis.mainRadius = 225, vis.mainCirclex = vis.width/2,
-         vis.mainCircley = vis.height/2, vis.subRadius =20;
+        vis.mainRadius = 225, vis.mainCirclex = vis.width/2,
+        vis.mainCircley = vis.height/2, vis.subRadius =15;
 
     // Draw SVG Element.
     vis.svg = d3.select("#" + vis.parentElement)
@@ -55,8 +55,8 @@ InnovativeView.prototype.initVis = function () {
 
     vis.areax = d3.scaleBand()
         .domain(vis.year_ranges)
-        .rangeRound([0, 250])
-        .padding(0.3)
+        .rangeRound([0, 330])
+        .padding(0.4)
         .align(0.3);
 
     vis.smallcirclerad = d3.scaleLinear().domain([0,1]).range([6,25]);
@@ -68,7 +68,7 @@ InnovativeView.prototype.initVis = function () {
     vis.subcenterx = circlexval;
     vis.subcentery = circleyval;
 
-    vis.reach = 4;
+    vis.reach = 3;
 
     // Draw the circular structure.
     vis.circleplotter = function(array_index, key_val, data ) {
@@ -136,16 +136,16 @@ InnovativeView.prototype.wrangleData = function () {
             .rollup(function(leaves) { return leaves.length; })
             .entries(filtered);
         countColorsArea.forEach(function(year_count)
-            {
-                var record = {};
-                year_count["values"].forEach(
-                    function(d){
-                        record.year_range = year_count["key"];
-                        record.genre = genre;
-                        record.color = d.key;
-                        record.count = d.value;
-                    });
-                aggregatedAreaData.push(record)});
+        {
+            var record = {};
+            year_count["values"].forEach(
+                function(d){
+                    record.year_range = year_count["key"];
+                    record.genre = genre;
+                    record.color = d.key;
+                    record.count = d.value;
+                });
+            aggregatedAreaData.push(record)});
 
         // Compute percentages
         countColors.forEach(function(d) {d.percentage = d.value / filtered.length;});
@@ -154,19 +154,19 @@ InnovativeView.prototype.wrangleData = function () {
         //Collect all values.
         summarybygenre.push(countColors);
     });
-vis.summarybygenre = summarybygenre;
+    vis.summarybygenre = summarybygenre;
 
 //On click event handler for filters
     /////////////////// (Placeholder)
-aggregatedAreaData.sort(function(a,b){return (a.year_range > b.year_range) - (a.year_range < b.year_range)});
+    aggregatedAreaData.sort(function(a,b){return (a.year_range > b.year_range) - (a.year_range < b.year_range)});
 
-reshapedAreaDataStage = d3.nest()
+    reshapedAreaDataStage = d3.nest()
         .key(function(d){return d.year_range})
         .key(function(d){return d.color})
         .rollup(function(v) { return d3.sum(v, function(d) { return d.count; })})
         .entries(aggregatedAreaData);
 
-reshapedAreaDataStage.forEach(function(year){
+    reshapedAreaDataStage.forEach(function(year){
         var record = {};
         record.year_range = year.key;
         vis.colorgroups.forEach(function(color){return record[color] = 0});
@@ -184,7 +184,7 @@ InnovativeView.prototype.updateVis = function (){
 
 
     var vis = this;
-    vis.areay.domain([0, 120]);
+    vis.areay.domain([0, 150]);
 
     var stack = d3.stack()
         .keys(vis.colorgroups);
@@ -222,6 +222,6 @@ InnovativeView.prototype.updateVis = function (){
         .attr("height", function(d) { return (vis.areay(d[0]) - vis.areay(d[1])); })
         .attr("width",vis.areax.bandwidth())
         .attr("stroke", 'grey')
-        .attr("transform", "translate(250,150)");
+        .attr("transform", "translate(220,110)");
 
 };
