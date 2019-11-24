@@ -7,7 +7,6 @@
     font-family: Avenir;
     font-size: 20px;
     font-weight: normal;
-    margin-top: 50px;
     margin-left: 50px;
 }
 
@@ -37,7 +36,7 @@
 }
 
 #bookmark {
-    width: 50%;
+    max-width: 50%;
 }
 
 #intro {
@@ -45,17 +44,14 @@
     margin-bottom: 55px;
 }
 
-#choose-book {
-    background-color: #EBD8EF;
-}
-
 #instructions {
     color: #e8b923;
     -webkit-text-stroke: 0.5px black;
+    margin-top: -50px;
 }
 
-#book-selection,  #playground-vis-img  {
-    background-image: url("../img/starry-bg.jpg");
+#book-selection,  #vis2-img  {
+    background-image: url("../img/table.jpg");
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -63,7 +59,7 @@
     margin-top: 35px;
 }
 
-#playground-vis-img {
+#vis2-img {
     background-image: none;
 }
 
@@ -73,10 +69,12 @@
 }
 
 #choice-explanation {
+    margin-top: 50px;
     margin-bottom: 50px;
+    text-align: center;
 }
 
-#color-vis-img, #symbol-vis-img, #playground-vis-img {
+#color-vis-img, #symbol-vis-img, #vis2-img {
     height: 500px;
 }
 
@@ -114,10 +112,16 @@
 
 /* 0.5 times the width of .book-covers*/
 .row1{
-    margin-left: 73px;
+    margin-left: 20px;
+    margin-top: 25px;
+    margin-right: 0px;
 }
 
 /* 1.5 times the width of .book-covers*/
 .row2{
-    margin-left: 219px;
+    margin-top: 10px;
+    margin-left: 150px;
+    margin-bottom: 25px;
+    margin-right: 0px;
 }
+

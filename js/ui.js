@@ -21,6 +21,7 @@ d3.json("data/book-data-lite.json", function(data) {
     // generate new books on each page load
     function random(genre) {
         var result = data[Math.floor(Math.random()*data.length)];
+        // if the book doesn't have a cover photo
         if (result.tags.includes(genre) && !(result.image_url.includes("nophoto"))) {
             return result;
         }
@@ -43,7 +44,13 @@ d3.json("data/book-data-lite.json", function(data) {
             }
 
             // else let user choose a book
-            $("#choice-explanation").text(val.title);
+            $("#choice-explanation").text(
+                "Excellent choice! '" + val.title + "' by " + val.authors +
+                " is a " + genreArray[index].replace("-", " ") + " book with a dominantly " +
+                val.dominant_color_categorized + "-shade cover! How does the color " +
+                "of this cover compare with other covers of the same genre?"
+
+            );
             alreadyChose = true;
         });
     });

@@ -19,11 +19,11 @@ InnovativeView.prototype.initVis = function () {
 
     // Set margin and svg drawing area.
      vis.margin = {top: 10, right: 50, bottom: 10, left: 10},
-        vis.width = 950 - vis.margin.left - vis.margin.right,
-        vis.height = 850 - vis.margin.top - vis.margin.bottom,
+        vis.width = 800 - vis.margin.left - vis.margin.right,
+        vis.height = 700 - vis.margin.top - vis.margin.bottom,
         vis.outerRadius = Math.min(vis.width, vis.height) /5,
         //  vis.outerRadius = 110,
-         vis.mainRadius = 300, vis.mainCirclex = vis.width/2,
+         vis.mainRadius = 225, vis.mainCirclex = vis.width/2,
          vis.mainCircley = vis.height/2, vis.subRadius =20;
 
     // Draw SVG Element.
@@ -55,7 +55,7 @@ InnovativeView.prototype.initVis = function () {
 
     vis.areax = d3.scaleBand()
         .domain(vis.year_ranges)
-        .rangeRound([0, 500])
+        .rangeRound([0, 250])
         .padding(0.3)
         .align(0.3);
 
@@ -222,6 +222,6 @@ InnovativeView.prototype.updateVis = function (){
         .attr("height", function(d) { return (vis.areay(d[0]) - vis.areay(d[1])); })
         .attr("width",vis.areax.bandwidth())
         .attr("stroke", 'grey')
-        .attr("transform", "translate(175,150)");
+        .attr("transform", "translate(250,150)");
 
 };
