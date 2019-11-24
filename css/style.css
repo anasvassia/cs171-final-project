@@ -27,11 +27,11 @@
     margin-bottom: 25px;
     margin-left: 50px;
     margin-right: 50px;
-    color: #e8b923;
+    color: floralwhite;
     position: absolute;
     top: 8px;
     right: 16px;
-    background-color: #F9E0D9;
+    background-color: #F19B68;
     text-align: center;
 }
 
@@ -54,7 +54,6 @@
     background-image: url("../img/table.jpg");
     display: block;
     margin-left: auto;
-    margin-right: auto;
     background-repeat: repeat;
     margin-top: 35px;
 }
