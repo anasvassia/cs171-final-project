@@ -67,11 +67,11 @@ InnovativeView.prototype.initVis = function () {
 
     vis.areax = d3.scaleBand()
         .domain(vis.year_ranges)
-        .rangeRound([0, 330])
+        .rangeRound([0, 400])
         .padding(0.4)
         .align(0.3);
 
-    vis.smallcirclerad = d3.scaleLinear().domain([0,1]).range([6,25]);
+    vis.smallcirclerad = d3.scaleLinear().domain([0,1]).range([4,15]);
 
     // Grab the color circle radii
     var circlexval= [], circleyval = [];
@@ -83,25 +83,20 @@ InnovativeView.prototype.initVis = function () {
     // Set the spoke length
     vis.reach = 3;
 
-    //Draw the genre circles.
-    vis.svg.selectAll(".sub_circle")
-        .data(vis.genres)
-        .enter()
-        .append("circle")
-        .attr("class", function(d){return d+"_subcircle sub_circle"})
-        .attr("cx", function(d,i){return vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius})
-        .attr("cy", function(d, i){return vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius})
-        .attr("r", vis.subRadius)
-        .attr("fill", '#E8E8E8')
-        .attr("opacity", 1);
-
-
     // Draw the color structure.
     vis.circleplotter = function(array_index, key_val, data ) {
-        array_index.slice(key_val, key_val + 8).forEach(function (d, index) {
+
+        // test code for rotational symmetry. TO BE REPLACED.
+        var test = 0;
+        if (key_val > 3){test = key_val + 5 } else {test = key_val};
+
+
+        array_index.slice(test, test + 8).forEach(function (d, index) {
+
+        // array_index.slice(key_val, key_val + 8).forEach(function (d, index) {
             //
-            var edgex = vis.subcenterx[key_val] + Math.sin(d * 23 * Math.PI / 180) * (vis.subRadius + (18 - index) * vis.reach);
-            var edgey = vis.subcentery[key_val] - Math.cos(d * 23 * Math.PI / 180) * (vis.subRadius + (18 - index) * vis.reach);
+            var edgex = vis.subcenterx[key_val] + Math.sin(d * 20 * Math.PI / 180) * (vis.subRadius + (18 - index) * vis.reach);
+            var edgey = vis.subcentery[key_val] - Math.cos(d * 20 * Math.PI / 180) * (vis.subRadius + (18 - index) * vis.reach);
             //
 
             var linedata = [{"x": vis.subcenterx[key_val], "y": vis.subcentery[key_val]}, {"x": edgex, "y": edgey}];
@@ -121,6 +116,17 @@ InnovativeView.prototype.initVis = function () {
                 .attr("stroke", "#DCDCDC")
                 .attr("stroke-width", 1)
                 .attr("fill", "none");
+
+            var tip_circles = d3.tip()
+                .attr('class', 'd3-tip-circles')
+                .offset([-5, 10])
+                .html(function(d) {
+                    return "<span style='color:grey font-size: 10'>" + 'Shades of ' + data[index].key + ' occur '+
+                        Math.round((data[index].percentage)*100)+ "%" + "</span>";
+                });
+
+            vis.svg.call(tip_circles);
+
             //
             vis.svg.append("circle")
                 .attr("class", data[index].key+' edgecircle')
@@ -128,8 +134,23 @@ InnovativeView.prototype.initVis = function () {
                 .attr("cy", edgey)
                 .attr("r", vis.smallcirclerad(data[index].percentage))
                 .attr("fill",vis.colorMap[data[index].key])
+                .on('mouseover', tip_circles.show)
+                .on('mouseout', tip_circles.hide)
                 .attr("stroke", '#E8E8E8');
         })};
+
+    //Draw the genre circles.
+    vis.svg.selectAll(".sub_circle")
+        .data(vis.genres)
+        .enter()
+        .append("circle")
+        .attr("class", function(d){return d+"_subcircle sub_circle"})
+        .attr("cx", function(d,i){return vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius})
+        .attr("cy", function(d, i){return vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius})
+        .attr("r", vis.subRadius)
+        .attr("fill", '#E8E8E8')
+        .attr("opacity", 1);
+
 
     vis.wrangleData();
 };
@@ -219,6 +240,15 @@ InnovativeView.prototype.updateVis = function (){
     vis.summarybygenre.forEach(function(d, i){
         vis.circleplotter([...Array(18).keys()],i,d);});
 
+    var tip_stack = d3.tip()
+        .attr('class', 'd3-tip-stack')
+        .offset([-10, 0])
+        .html(function(d) {
+            return "<span style='color:grey'>" + d.data.year_range + "</span>";
+        });
+
+    vis.svg.call(tip_stack);
+
     //Draw the stacked bar chart
     vis.svg
         .selectAll(".stacked_bar")
@@ -234,18 +264,24 @@ InnovativeView.prototype.updateVis = function (){
         .attr("y", function(d) { return vis.areay(d[1]); })
         .attr("height", function(d) { return (vis.areay(d[0]) - vis.areay(d[1])); })
         .attr("width",vis.areax.bandwidth())
+        .on('mouseover', tip_stack.show)
+        .on('mouseout', tip_stack.hide)
         .attr("stroke", 'grey')
-        .attr("transform", "translate(220,275)");
+        .attr("stroke-width", 0.3)
+        .attr("transform", "translate(180,275)");
 
-    //On click event handler for filters
+    //On click event handler for filters - On clicking genre function, the stack bar should update.
     vis.svg.selectAll(".sub_circle")
+
         .on("click", function() {
+            //Identify the genre which the circle represents.
             var genre = d3.select(this).attr("class").split('_')[0];
             var filterReshaped = [];
+            //FIlter the data for the genre.
             vis.filteredGenreData = vis.rawAggregatedAreaData.filter(function (d) {
                 return d.genre === genre;
             });
-            // Reshape for stacked bar
+            // Reshape each color as a column for stacked bar
             // Lekshmi -> TODO Ceate a function for this and clean up the code.
             var filterStage = d3.nest()
                 .key(function (d) {
@@ -287,28 +323,59 @@ InnovativeView.prototype.updateVis = function (){
                 d['total'] = total;
             });
 
+            // Create the stack variable from reshaped data to draw the stacked bar.
             var filtered_series = stack(filterReshaped);
 
-            console.log(filtered_series);
+            // Add a titie in the middle on the circle
+
+            vis.svg.selectAll('.genre-name')
+                .remove();
+
+            vis.svg
+                .append("text")
+                .attr("class", "genre-name")
+                .attr("x", 270)
+                .attr("y", 200)
+                .attr("text-anchor", "start")
+                .text(genre + ' color trends')
+                .attr("fill", "grey");
 
             // Update domain for y axis.
             vis.areay.domain(d3.extent(filterReshaped, function(d){return d.total;}));
-            // Update bars
-            // vis.bars = vis.svg.selectAll(".stacked_bar")
-            //     .data(filtered_series)
-            //     .selectAll("rect")
-            //     .data(function(d) { return d; });
 
-            // vis.bars.exit().remove();
+            // Update bars
+            vis.bars = vis.svg.selectAll(".stacked_bar")
+                .data(filtered_series)
+                .enter()
+                .selectAll("rect")
+                .data(function(d) { return d; });
+
+            vis.bars
+                .enter()
+                .append("rect")
+                .merge(vis.bars);
+
+            // vis.bars
+            //     .transition()
+            //     .duration(500)
+            //     .attr("x", function(d) { return vis.areax(d.data.year_range); })
+            //     .attr("y", function(d) { return vis.areay(d[1]); })
+            //     .attr("height", function(d) { return (vis.areay(d[0]) - vis.areay(d[1])); });
+
             vis.svg.selectAll(".stacked_bar")
                 .data(filtered_series)
                 .selectAll("rect")
                 .data(function(d) { return d; })
                 .transition()
                 .duration(500)
-                .attr("fill", function(d){return d.key})
                 .attr("x", function(d) { return vis.areax(d.data.year_range); })
                 .attr("y", function(d) { return vis.areay(d[1]); })
                 .attr("height", function(d) { return (vis.areay(d[0]) - vis.areay(d[1])); });
+
+            vis.bars.exit().remove();
+
+
+
+
         });
 };
