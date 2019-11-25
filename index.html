@@ -98,7 +98,7 @@
             <div class="row container-fluid" id="color-container">
                 <div class="col-md-1"></div>
                 <div class="col-md-4" class="storyline">
-                    <h6>COLOR VIEW</h6>
+                    <h6 id="color-title">COLOR VIEW</h6>
                     <p class="storyline" id="color-directions">
                         This visualization shows how colors are used in the
                         covers of books of different genres. Each circle
@@ -116,54 +116,35 @@
 
             <!-- Book symbols visualization -->
             <div class="row container-fluid" id="symbols-container">
-
                 <div class="col-md-12">
                     <h6>SYMBOL VIEW</h6>
                     <p class="storyline" id="symbol-directions">
                         Just as important as color, are the symbols that appear
-                        on book covers. In this visualization, we see the most
-                        popular symbols that are used on books, grouped by
-                        genre.
+                        on book covers. In this visualization, the bar chart to
+                        the left shows the most popular symbols that are used
+                        on book covers, grouped by genre. The tree map to the
+                        right shows the main color of the books within that
+                        genre. Feel free to use the drop-down box to filter by
+                        a specific genre.
                     </p>
                 </div>
-            </div>
-
-            <div class="row container-fluid">
-                <div class="col-md-12">
-                    <p class="storyline">
-                        Color and symbols are only two aspects that
-                        go into designing an appealing book cover.
-                        In the final visualization, explore as much,
-                        or as little, as you'd like, about the other
-                        key features that go into making some covers
-                        so irresistible. We hope that you enjoyed
-                        this quick lesson on how aesthetics can affect
-                        consumer decisions.
-                    </p>
-                </div>
-            </div>
             </div>
         </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <form class="form-inline">
                 <div class="form-group">
-                    <label for="genre-select">Chart Data:</label>
-                    <select class="form-control" id="genre-select">
-
-                    </select>
-
+                    <label for="genre-select"><pre>Chart Data:  </pre></label>
+                    <select class="form-control" id="genre-select"></select>
                 </div>
             </form>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6" id="barchart">
-
-        </div>
-        <div class="col-md-6" id="treemap">
-                <!-- replace image with vis -- also not centering for some reason -->
-        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5" id="barchart"></div>
+        <div class="col-md-6" id="treemap"></div>
     </div>
 
 
@@ -177,7 +158,6 @@
         <p id="sources">
             Sources go here with link tags
         </p>
-
     </div>
 
 

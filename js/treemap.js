@@ -20,7 +20,7 @@ TreeMap = function(_parentElement, _data, _metaData){
 TreeMap.prototype.initVis = function(){
     var vis = this;
 
-    vis.margin = { top: 20, right: 60, bottom: 20, left: 60 };
+    vis.margin = { top: 20, right: 100, bottom: 20, left: 60 };
 
     console.log($("#" + vis.parentElement).width());
 
@@ -100,7 +100,7 @@ TreeMap.prototype.updateVis = function(){
         .style("stroke", "black")
         .style("fill", function(d) {
             return vis.colorMap[d.data["color_name"]];
-        })
+        });
 
     // and to add the text labels
     var textLabels = vis.svg
@@ -120,5 +120,6 @@ TreeMap.prototype.updateVis = function(){
             return d.data["color_name"]; })
         .attr("font-size", "15px")
         .attr("fill", "white")
+        .attr("class", "tree-labels")
 }
 

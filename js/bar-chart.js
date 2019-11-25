@@ -113,7 +113,7 @@ BarChart.prototype.updateVis = function(){
         .attr("width", function(d) {
             return vis.x(d.score); })
         .attr("height", vis.y.bandwidth())
-        .attr("fill", "black");
+        .attr("fill", "#f09b68");
 
     bars.exit().remove();
 

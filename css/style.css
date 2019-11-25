@@ -31,6 +31,9 @@ h6 {
     font-family: Playfair;
     font-size: 30px;
     color: #eb5f6c;
+}
+
+#color-title {
     margin-top: 150px;
 }
 
@@ -121,10 +124,33 @@ h6 {
     font-size: 16px;
 }
 
-#sources, .genre-name, .tooltip {
+#sources, .genre-name {
     font-family: Google-Roboto;
     font-size: 14px;
     font-style: italic;
+}
+
+.tooltip, .data-label, .y-axis, .tree-labels, #genre-select, label pre {
+    font-family: Google-Roboto;
+    font-size: 14px;
+    font-style: normal;
+}
+
+.form-group {
+    margin-left: 30px;
+}
+
+.tree-labels {
+    font-size: 16px;
+    font-weight: bold;
+    -webkit-text-stroke: 0.5px black;
+}
+
+label pre {
+    font-size: 18px;
+}
+.y-axis {
+    font-size: 12px;
 }
 
 .book-covers {
