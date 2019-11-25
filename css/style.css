@@ -29,6 +29,9 @@
 
 h6 {
     font-family: Playfair;
+    font-size: 30px;
+    color: #eb5f6c;
+    margin-top: 150px;
 }
 
 .opening {
@@ -84,7 +87,6 @@ h6 {
 }
 
 #color-directions, #symbol-directions {
-    margin-top: 225px;
     background-color: #f797a1;
     color: white;
 }
@@ -119,7 +121,7 @@ h6 {
     font-size: 16px;
 }
 
-#sources {
+#sources, .genre-name, .tooltip {
     font-family: Google-Roboto;
     font-size: 14px;
     font-style: italic;

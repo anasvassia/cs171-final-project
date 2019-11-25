@@ -118,10 +118,10 @@ InnovativeView.prototype.initVis = function () {
                 .attr("fill", "none");
 
             var tip_circles = d3.tip()
-                .attr('class', 'd3-tip-circles')
+                .attr('class', 'd3-tip-circles tooltip')
                 .offset([-5, 10])
                 .html(function(d) {
-                    return "<span style='color:grey font-size: 10'>" + 'Shades of ' + data[index].key + ' occur '+
+                    return "<span style='color:grey'>" + 'Shades of ' + data[index].key + ' occur '+
                         Math.round((data[index].percentage)*100)+ "%" + "</span>";
                 });
 
