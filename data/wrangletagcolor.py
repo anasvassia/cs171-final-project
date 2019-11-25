@@ -22,13 +22,13 @@ primarycolors = ["red", "orange", "yellow", "green", "blue",
 
 for color in primarycolors:
   books_by_color[color] = []
-  tag_dict_entry[color] = {"score": 0, "frequency": 0,
-  "totalPixelFraction": 0}
 
 with open('tag_object.json') as jsonfile:
   data = json.load(jsonfile)
   for tag in data.keys():
-    tag_dict[tag] = tag_dict_entry
+    tag_dict[tag] = {}
+    for color in primarycolors:
+      tag_dict[tag][color] = {"score": 0, "frequency": 0, "totalPixelFraction": 0}
 
 def colorCategorize(color):
   for c in ["red", "green", "blue"]:
@@ -79,6 +79,9 @@ with open("book_data.json") as json_file:
         print("BOOK: " + book["book_id"])
         print(colorsLst[0]["color"])
         print(primaryColor, h, l, s)
+      tag_dict["total"][primaryColor]["score"] += float(colorsLst[0]["score"])
+      tag_dict["total"][primaryColor]["frequency"] += 1
+      tag_dict["total"][primaryColor]["totalPixelFraction"] += float(colorsLst[0]["pixelFraction"])
       if "tags" in book and primaryColor:
         for tag in book["tags"]:
           if tag["tag_name"] in tag_dict.keys():

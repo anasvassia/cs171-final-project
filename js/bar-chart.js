@@ -21,7 +21,7 @@ BarChart.prototype.initVis = function(){
     var vis = this;
 
     vis.margin = { top: 20, right: 60, bottom: 20, left: 100 };
-
+    console.log($("#" + vis.parentElement).width());
     vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
         vis.height = 800 - vis.margin.top - vis.margin.bottom;
 
@@ -55,7 +55,7 @@ BarChart.prototype.initVis = function(){
         .attr("class", "y-axis axis");
 
     // (Filter, aggregate, modify data)
-    vis.wrangleData();
+    vis.wrangleData("total");
 }
 
 
@@ -63,16 +63,19 @@ BarChart.prototype.initVis = function(){
  * Data wrangling
  */
 
-BarChart.prototype.wrangleData = function(){
+BarChart.prototype.wrangleData = function(genre){
     var vis = this;
 
-    vis.displayData = vis.data["total"];
+    vis.displayData = vis.data[genre];
+
 
     vis.displayData.sort(function(a, b) {
         return b.score - a.score;
     });
 
     vis.displayData = vis.displayData.slice(0, 20);
+
+    console.log(vis.displayData);
 
     // Update the visualization
     vis.updateVis();
@@ -89,7 +92,7 @@ BarChart.prototype.updateVis = function(){
     // Update domains
     vis.x.domain([0, d3.max(vis.displayData, function(d) {
         return d.score;
-    })])
+    })]);
 
     vis.y.domain(vis.displayData.map(function(d) {
         return d.name;
@@ -103,23 +106,25 @@ BarChart.prototype.updateVis = function(){
 
         .merge(bars)
         .transition()
-        .attr("width", function(d) { return vis.x(d.score); })
-        .attr("height", vis.y.bandwidth())
-        .attr("x", function(d){
-            return vis.x(0);
-        })
+        .attr("x", vis.x(0))
         .attr("y", function(d){
             return vis.y(d.name);
         })
-        .attr("fill", "black")
+        .attr("width", function(d) {
+            return vis.x(d.score); })
+        .attr("height", vis.y.bandwidth())
+        .attr("fill", "black");
 
-    // vis.svg.select(".x-axis").call(vis.xAxis);
-    vis.svg.select(".y-axis").call(vis.yAxis);
+    bars.exit().remove();
 
-    bars.enter().append("text")
+    var textLabels = vis.svg
+        .selectAll("text.data-label")
+        .data(vis.displayData);
+
+    textLabels.enter().append("text")
         .attr("class", "data-label")
 
-        .merge(bars)
+        .merge(textLabels)
         .transition()
         .attr("x", function(d){
             return vis.x(d.score) + 10;
@@ -131,5 +136,10 @@ BarChart.prototype.updateVis = function(){
             return Math.round(d.score);
         })
         .attr("fill", "black");
+
+    textLabels.exit().remove();
+
+    // vis.svg.select(".x-axis").call(vis.xAxis);
+    vis.svg.select(".y-axis").call(vis.yAxis);
 }
 

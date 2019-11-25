@@ -116,14 +116,8 @@
 
             <!-- Book symbols visualization -->
             <div class="row container-fluid" id="symbols-container">
-                <div class="col-md-7">
-                    <div id="symbol-vis">
-                        <div id="bar-chart"></div>
-                    </div>
-                </div>
-                <div class="col-md-1"></div>
 
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <h6>SYMBOL VIEW</h6>
                     <p class="storyline" id="symbol-directions">
                         Just as important as color, are the symbols that appear
@@ -148,14 +142,27 @@
                     </p>
                 </div>
             </div>
-
-            <div class="row-container-fluid">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <div id="treemap"></div>
-                </div>
-                <div class="col-md-3"></div>
             </div>
+        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="genre-select">Chart Data:</label>
+                    <select class="form-control" id="genre-select">
+
+                    </select>
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6" id="barchart">
+
+        </div>
+        <div class="col-md-6" id="treemap">
+                <!-- replace image with vis -- also not centering for some reason -->
         </div>
     </div>
 
