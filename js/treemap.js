@@ -97,7 +97,6 @@ TreeMap.prototype.updateVis = function(){
         .attr('y', function (d) { return d.y0; })
         .attr('width', function (d) { return d.x1 - d.x0; })
         .attr('height', function (d) { return d.y1 - d.y0; })
-        .style("stroke", "black")
         .style("fill", function(d) {
             return vis.colorMap[d.data["color_name"]];
         });
