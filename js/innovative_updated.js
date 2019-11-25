@@ -241,7 +241,7 @@ InnovativeView.prototype.updateVis = function (){
         vis.circleplotter([...Array(18).keys()],i,d);});
 
     var tip_stack = d3.tip()
-        .attr('class', 'd3-tip-stack')
+        .attr('class', 'd3-tip-stack tooltip')
         .offset([-10, 0])
         .html(function(d) {
             return "<span style='color:grey'>" + d.data.year_range + "</span>";
