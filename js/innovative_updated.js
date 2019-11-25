@@ -90,6 +90,7 @@ InnovativeView.prototype.initVis = function () {
         var test = 0;
         if (key_val > 3){test = key_val + 5 } else {test = key_val};
 
+
         array_index.slice(test, test + 8).forEach(function (d, index) {
 
         // array_index.slice(key_val, key_val + 8).forEach(function (d, index) {
@@ -115,6 +116,17 @@ InnovativeView.prototype.initVis = function () {
                 .attr("stroke", "#DCDCDC")
                 .attr("stroke-width", 1)
                 .attr("fill", "none");
+
+            var tip_circles = d3.tip()
+                .attr('class', 'd3-tip-circles')
+                .offset([-5, 10])
+                .html(function(d) {
+                    return "<span style='color:grey font-size: 10'>" + 'Shades of ' + data[index].key + ' occur '+
+                        Math.round((data[index].percentage)*100)+ "%" + "</span>";
+                });
+
+            vis.svg.call(tip_circles);
+
             //
             vis.svg.append("circle")
                 .attr("class", data[index].key+' edgecircle')
@@ -122,6 +134,8 @@ InnovativeView.prototype.initVis = function () {
                 .attr("cy", edgey)
                 .attr("r", vis.smallcirclerad(data[index].percentage))
                 .attr("fill",vis.colorMap[data[index].key])
+                .on('mouseover', tip_circles.show)
+                .on('mouseout', tip_circles.hide)
                 .attr("stroke", '#E8E8E8');
         })};
 
@@ -226,6 +240,15 @@ InnovativeView.prototype.updateVis = function (){
     vis.summarybygenre.forEach(function(d, i){
         vis.circleplotter([...Array(18).keys()],i,d);});
 
+    var tip_stack = d3.tip()
+        .attr('class', 'd3-tip-stack')
+        .offset([-10, 0])
+        .html(function(d) {
+            return "<span style='color:grey'>" + d.data.year_range + "</span>";
+        });
+
+    vis.svg.call(tip_stack);
+
     //Draw the stacked bar chart
     vis.svg
         .selectAll(".stacked_bar")
@@ -241,12 +264,15 @@ InnovativeView.prototype.updateVis = function (){
         .attr("y", function(d) { return vis.areay(d[1]); })
         .attr("height", function(d) { return (vis.areay(d[0]) - vis.areay(d[1])); })
         .attr("width",vis.areax.bandwidth())
+        .on('mouseover', tip_stack.show)
+        .on('mouseout', tip_stack.hide)
         .attr("stroke", 'grey')
         .attr("stroke-width", 0.3)
         .attr("transform", "translate(180,275)");
 
     //On click event handler for filters - On clicking genre function, the stack bar should update.
     vis.svg.selectAll(".sub_circle")
+
         .on("click", function() {
             //Identify the genre which the circle represents.
             var genre = d3.select(this).attr("class").split('_')[0];
@@ -347,6 +373,8 @@ InnovativeView.prototype.updateVis = function (){
                 .attr("height", function(d) { return (vis.areay(d[0]) - vis.areay(d[1])); });
 
             vis.bars.exit().remove();
+
+
 
 
         });
