@@ -1,4 +1,4 @@
-/*
+\/*
  * Innovative View - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the bar charts
  * @param _data						-- the dataset 'book aesthetic analysis'
@@ -299,6 +299,20 @@ InnovativeView.prototype.updateVis = function (){
 
             // Create the stack variable from reshaped data to draw the stacked bar.
             var filtered_series = stack(filterReshaped);
+
+            // Add a titie in the middle on the circle
+
+            vis.svg.selectAll('.genre-name')
+                .remove();
+
+            vis.svg
+                .append("text")
+                .attr("class", "genre-name")
+                .attr("x", 270)
+                .attr("y", 200)
+                .attr("text-anchor", "start")
+                .text(genre + ' color trends')
+                .attr("fill", "grey");
 
             // Update domain for y axis.
             vis.areay.domain(d3.extent(filterReshaped, function(d){return d.total;}));
