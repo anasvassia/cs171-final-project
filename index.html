@@ -17,9 +17,9 @@
         </div>
         <div class="col-md-7" id="intro-text">
             <p id="intro" class="storyline">
-                They say to never judge a book by its cover. But sometimes, we don't
-                even consciously decide on which books get our attention in the first
-                place. For example...
+                They say to never judge a book by its cover. But sometimes, we
+                don't even consciously decide on which books get our attention
+                in the first place. For example...
             </p>
             <hr/>
         </div>
@@ -27,53 +27,55 @@
 
     <!-- Hook/ user interaction -- book is selected -->
     <div class="row container-fluid" id="choose-book">
+
         <div class="col-md-12">
-            <div>
-                <h6 id="instructions" class="storyline">
-                    Choose the book cover that most appeals to you - that makes you
-                    want to take the book home and read it right away.
-                </h6>
+            <div class="row container-fluid">
+                <div class="col-md-3"></div>
+                <div class="col-md-7">
+                    <h6 id="instructions" class="storyline">
+                        Choose the book cover that most appeals to you -
+                        that makes you want to take the book home and read
+                        it right away - by clicking on it. Choose wisely,
+                        since you won't be able to choose a different book without refreshing the page.
+                    </h6>
+                </div>
+                <div class="col-md-2"></div>
             </div>
 
-            <!-- Append books to this div 5 seconds after page open -->
             <div id="book-selection">
-                <div class="row container-fluid" id="books">
+                <div class="row container-fluid">
                     <div class="col-md-12">
-                        <div class="row container-fluid">
-                            <div class="col-md-12">
-                                <div class="row container-fluid row1">
-                                    <div class="col-md-3">
-                                        <img src="" alt="" class="book-covers" id="img0"/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <img src="" alt="" class="book-covers" id="img1"/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <img src="" alt="" class="book-covers" id="img2"/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <img src="" alt="" class="book-covers" id="img3"/>
-                                    </div>
-                                </div>
+                        <div class="row container-fluid row1">
+                            <div class="col-md-3">
+                                <img src="" alt="" class="book-covers" id="img0"/>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="" alt="" class="book-covers" id="img1"/>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="" alt="" class="book-covers" id="img2"/>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="" alt="" class="book-covers" id="img3"/>
                             </div>
                         </div>
-                        <div class="row container-fluid row2">
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <div class="row container-fluid">
-                                        <div class="col-md-3">
-                                            <img src="" alt="" class="book-covers" id="img4"/>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <img src="" alt="" class="book-covers" id="img5"/>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <img src="" alt="" class="book-covers" id="img6"/>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <img src="" alt="" class="book-covers" id="img7"/>
-                                        </div>
-                                    </div>
+                    </div>
+                </div>
+                <div class="row container-fluid row2">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="row container-fluid">
+                                <div class="col-md-3">
+                                    <img src="" alt="" class="book-covers" id="img4"/>
+                                </div>
+                                <div class="col-md-3">
+                                    <img src="" alt="" class="book-covers" id="img5"/>
+                                </div>
+                                <div class="col-md-3">
+                                    <img src="" alt="" class="book-covers" id="img6"/>
+                                </div>
+                                <div class="col-md-3">
+                                    <img src="" alt="" class="book-covers" id="img7"/>
                                 </div>
                             </div>
                         </div>
@@ -83,25 +85,21 @@
         </div>
     </div>
 
-    <!-- Opactiy 0 -> 100 once user selects book but am hard-coding it here now for the storyline -->
     <div class="row container-fluid visualizations" id="vis-container">
         <div class="col-md-12">
-
-            <!-- Explanation of user's choice -->
-            <div class="row container">
-                <div class="col-md-12">
-                    <div>
-                        <p class="storyline" id="choice-explanation"></p>
-
-                        <hr/>
-                    </div>
-                </div>
+            <div class="row container-fluid">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 storyline" id="choice-explanation"></div>
+                <div class="col-md-2"></div>
             </div>
+            <hr/>
+
 
             <!-- Color viualization-->
             <div class="row container-fluid" id="color-container">
-                <div class="col-md-1"> <!-- Empty div for spacing --></div>
+                <div class="col-md-1"></div>
                 <div class="col-md-4" class="storyline">
+                    <h6>COLOR</h6>
                     <p class="storyline" id="color-directions">
                         This visualization shows how colors are used in the
                         covers of books of different genres. Each circle
@@ -136,34 +134,27 @@
                 </div>
             </div>
 
-            <!-- Info playground -->
-            <div class="row container-fluid" id="playground-container">
+            <div class="row container-fluid">
                 <div class="col-md-12">
-                    <div class="row-container">
-                         <div class="col-md-12">
-                             <p class="storyline">
-                                 Color and symbols are only two aspects that
-                                 go into designing an appealing book cover.
-                                 In the final visualization, explore as much,
-                                 or as little, as you'd like, about the other
-                                 key features that go into making some covers
-                                 so irresistible. We hope that you enjoyed
-                                 this quick lesson on how aesthetics can affect
-                                 consumer decisions.
-                             </p>
-                         </div>
-                    </div>
+                    <p class="storyline">
+                        Color and symbols are only two aspects that
+                        go into designing an appealing book cover.
+                        In the final visualization, explore as much,
+                        or as little, as you'd like, about the other
+                        key features that go into making some covers
+                        so irresistible. We hope that you enjoyed
+                        this quick lesson on how aesthetics can affect
+                        consumer decisions.
+                    </p>
                 </div>
+            </div>
 
-                <!-- User gets to do whatever they want -->
-                <div id="playground-vis">
-                    <div class="row-container">
-                        <div class="col-md-12">
-                    <!-- replace image with vis -- also not centering for some reason -->
-                            <div id="treemap"></div>
-                        </div>
-                    </div>
+            <div class="row-container-fluid">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div id="treemap"></div>
                 </div>
+                <div class="col-md-3"></div>
             </div>
         </div>
     </div>
@@ -188,6 +179,7 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/d3.min.js"></script>
 <script src="js/d3-scale-radial.js"></script>
+<script src="js/d3-tip.js"></script>
 <script src="js/bar-chart.js"></script>
 <script src="js/treemap.js"></script>
 <script src="js/innovative_updated.js"></script>

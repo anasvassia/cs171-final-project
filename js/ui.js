@@ -51,12 +51,12 @@ d3.json("data/book-data-lite.json", function(data) {
             }
 
             // else let user choose a book
-            $("#choice-explanation").text(
+            $("#choice-explanation").html(
                 "Excellent choice! '" + val.title + "' by " + val.authors +
                 " is a " + genreArray[index].replace("-", " ") + " book with a dominantly " +
                 val.dominant_color_categorized + "-shade cover! How does the color " +
                 "of this cover compare with other covers of the same genre? Well, we" +
-                " can explore that by using the visualization below."
+                " can explore that by using the visualization below. </hr>"
 
             );
             alreadyChose = true;

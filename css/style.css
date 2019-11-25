@@ -3,11 +3,32 @@
     src: url("fonts/xxii-arabian-onenightstand/XXII ARABIAN-ONENIGHTSTAND.ttf");
 }
 
-#intro, .storyline {
-    font-family: Avenir;
+@font-face {
+    font-family: Google-Roboto;
+    src: url("fonts/Roboto/Roboto-Light.ttf");
+}
+
+@font-face {
+    font-family: Playfair;
+    src: url("fonts/Playfair_Display/PlayfairDisplay-Black.ttf");
+}
+
+
+#choose-book, body {
+    margin:0;
+    padding: 0;
+}
+
+#intro, .storyline, #sources {
+    font-family: Google-Roboto;
     font-size: 20px;
     font-weight: normal;
-    margin-left: 50px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+h6 {
+    font-family: Playfair;
 }
 
 .opening {
@@ -18,6 +39,7 @@
 
 .storyline, #color-vis{
     text-align: center;
+    font-kerning: auto;
 }
 
 #title {
@@ -46,14 +68,13 @@
 
 #instructions {
     color: #e8b923;
-    -webkit-text-stroke: 0.5px black;
+    -webkit-text-stroke: 0.05px black;
     margin-top: -50px;
 }
 
 #book-selection,  #vis2-img  {
     background-image: url("../img/table.jpg");
     display: block;
-    margin-left: auto;
     background-repeat: repeat;
     margin-top: 35px;
 }
@@ -64,7 +85,6 @@
 
 #color-directions, #symbol-directions {
     margin-top: 225px;
-    margin-left: 0px;
     background-color: #f797a1;
     color: white;
 }
@@ -100,7 +120,7 @@
 }
 
 #sources {
-    font-family: Avenir;
+    font-family: Google-Roboto;
     font-size: 14px;
     font-style: italic;
 }
@@ -109,20 +129,17 @@
     width: 146px;
     height: 220px;
     text-align: center;
-}
-
-/* 0.5 times the width of .book-covers*/
-.row1{
-    margin-left: 20px;
     margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.row1, .row2{
+    margin-left: 20px;
     margin-right: 0px;
 }
 
-/* 1.5 times the width of .book-covers*/
-.row2{
-    margin-top: 10px;
-    margin-left: 150px;
-    margin-bottom: 25px;
-    margin-right: 0px;
+hr {
+    margin-top: -25px;
+    margin-bottom: 0;
 }
 
