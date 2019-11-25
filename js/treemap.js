@@ -22,8 +22,10 @@ TreeMap.prototype.initVis = function(){
 
     vis.margin = { top: 20, right: 60, bottom: 20, left: 60 };
 
-    vis.width = 800  - vis.margin.left - vis.margin.right,
-        vis.height = 600 - vis.margin.top - vis.margin.bottom;
+    console.log($("#" + vis.parentElement).width());
+
+    vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
+        vis.height = 800 - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -46,7 +48,7 @@ TreeMap.prototype.initVis = function(){
     }
 
     // (Filter, aggregate, modify data)
-    vis.wrangleData();
+    vis.wrangleData("total");
 }
 
 
@@ -54,10 +56,10 @@ TreeMap.prototype.initVis = function(){
  * Data wrangling
  */
 
-TreeMap.prototype.wrangleData = function(){
+TreeMap.prototype.wrangleData = function(genre){
     var vis = this;
 
-    vis.root = d3.hierarchy(vis.data["total"])
+    vis.root = d3.hierarchy(vis.data[genre])
         .sum(function(d) { return d.frequency; })
 
     console.log(vis.root);
@@ -79,11 +81,18 @@ TreeMap.prototype.updateVis = function(){
         (vis.root);
 
     // use this information to add rectangles:
-    vis.svg
+    var rectangles = vis.svg
         .selectAll("rect")
-        .data(vis.root.leaves())
+        .data(vis.root.leaves());
+
+    rectangles.exit().remove();
+
+    rectangles
         .enter()
         .append("rect")
+
+        .merge(rectangles)
+        .transition()
         .attr('x', function (d) { return d.x0; })
         .attr('y', function (d) { return d.y0; })
         .attr('width', function (d) { return d.x1 - d.x0; })
@@ -94,11 +103,16 @@ TreeMap.prototype.updateVis = function(){
         })
 
     // and to add the text labels
-    vis.svg
+    var textLabels = vis.svg
         .selectAll("text")
-        .data(vis.root.leaves())
-        .enter()
+        .data(vis.root.leaves());
+
+    textLabels.exit().remove();
+
+    textLabels.enter()
         .append("text")
+        .merge(textLabels)
+        .transition()
         .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
         .text(function(d){
