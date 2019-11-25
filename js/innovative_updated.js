@@ -1,4 +1,4 @@
-\/*
+/*
  * Innovative View - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the bar charts
  * @param _data						-- the dataset 'book aesthetic analysis'
