@@ -159,6 +159,9 @@ label pre {
     text-align: center;
     margin-top: 25px;
     margin-bottom: 25px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .row1, .row2{
