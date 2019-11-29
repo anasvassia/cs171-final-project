@@ -5,7 +5,7 @@
  * @param _data						-- the actual data: perDayData
  */
 
-TreeMap = function(_parentElement, _data, _metaData){
+TreeMap = function(_parentElement, _data){
     this.parentElement = _parentElement;
     this.data = _data;
 

@@ -2,6 +2,7 @@
 var innovativeview;
 var barchart;
 var treemap;
+var ridgeline;
 
 var vis = {};
 
@@ -10,16 +11,18 @@ queue()
     .defer(d3.json,"data/tag_object.json")
     .defer(d3.json,"data/hierarchy_tag_color.json")
     .defer(d3.json, "data/tag_frequency.json")
+    .defer(d3.json, "data/book_data.json")
     .await(createVis);
 
 
-function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequencyData){
+function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequencyData, bookData){
     if(error) { console.log(error); }
 
     vis.data = data;
     barchart = new BarChart("barchart", tagObjectData);
     treemap = new TreeMap("treemap", hierarchyTagColorData)
     innovativeview = new InnovativeView("color-vis", data);
+    ridgeline = new RidgeLine("ridgeline", bookData);
 
     createSelect(tagFrequencyData);
 };
