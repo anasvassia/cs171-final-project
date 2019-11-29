@@ -1,6 +1,9 @@
 import json
 import colorsys
 
+
+book_data = []
+
 tag_dict = {}
 
 tag_dict_entry = {}
@@ -72,9 +75,12 @@ with open("book_data.json") as json_file:
   data = json.load(json_file)
   for book in data:
 
-    if "imagePropertiesAnnotation" in book:
+    if "imagePropertiesAnnotation" in book and book["image_url"] != "https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png":
       colorsLst = book["imagePropertiesAnnotation"]["dominantColors"]["colors"]
       primaryColor, h, l, s = colorCategorize(colorsLst[0]["color"])
+
+      book["dominantColorCategory"] = primaryColor
+      book_data.append(book)
       if int(book["book_id"] ) % 500 == 0:
         print("BOOK: " + book["book_id"])
         print(colorsLst[0]["color"])
@@ -114,4 +120,5 @@ with open('tag_color.json', 'w') as file:
 with open('hierarchy_tag_color.json', 'w') as file:
   json.dump(hierarchy_tag_color, file, ensure_ascii=False, indent=4)
 
-
+with open('new_book_data.json', 'w') as file:
+  json.dump(book_data, file, ensure_ascii=False, indent=4)

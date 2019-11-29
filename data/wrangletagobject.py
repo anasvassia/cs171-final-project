@@ -11,7 +11,7 @@ with open("book_data.json") as json_file:
   for book in data:
     if int(book["book_id"]) % 1000 == 0:
       print("BOOK: " + book["book_id"])
-    if "localizedObjectAnnotations" in book.keys():
+    if "localizedObjectAnnotations" in book and book["image_url"] != "https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png":
       for tag in book["tags"]:
         tag_name = tag["tag_name"]
         if tag_name in tag_dict.keys():
