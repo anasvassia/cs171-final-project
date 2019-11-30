@@ -20,7 +20,7 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
 
     vis.data = data;
     barchart = new BarChart("barchart", tagObjectData);
-    treemap = new TreeMap("treemap", hierarchyTagColorData)
+    treemap = new TreeMap("treemap", hierarchyTagColorData, data);
     innovativeview = new InnovativeView("color-vis", data);
     ridgeline = new RidgeLine("ridgeline", bookData);
 

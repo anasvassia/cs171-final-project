@@ -120,11 +120,11 @@ RidgeLine.prototype.updateVis = function(){
     var vis = this;
 
 
-    var areas = vis.svg.selectAll(".areas")
-        .data(vis.allDensity)
-        .enter()
-        .append("g")
-        .attr("transform", function(d){return("translate(0," + (vis.yName(d.key)-vis.height - vis.yName.bandwidth()) +")" )});
+    // var areas = vis.svg.selectAll(".areas")
+    //     .data(vis.allDensity)
+    //     .enter()
+    //     .append("g")
+    //     .attr("transform", function(d){return("translate(0," + (vis.yName(d.key)-vis.height - vis.yName.bandwidth()) +")" )});
 
     // areas.selectAll("rect")
     //     .data(bins)
