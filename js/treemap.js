@@ -75,7 +75,7 @@ TreeMap.prototype.wrangleData = function(genre){
                 var data = vis.data[genre].children.find(element => element["color_name"] === color)
                 if (data["images"].length < 12) {
                     console.log(data);
-                    data["images"].push(book["image_url"]);
+                    data["images"].push(book);
                 }
             }
         }
@@ -127,6 +127,8 @@ TreeMap.prototype.updateVis = function(){
     groups.merge(groups)
         .transition();
 
+
+   // TODO: FIX CLIPPING
     groups.append("clipPath")
         .attr("id", function (d) {
             return "clipPath-" + d.data.color_name;
@@ -136,13 +138,19 @@ TreeMap.prototype.updateVis = function(){
         .attr('height', function (d) { return d.y1 - d.y0; });
 
 
+    var tip = d3.tip().attr("class", "tooltip")
+        .html(function(d) {
+            return d.original_title;
+        })
+
+    groups.call(tip);
+
     var images = groups.selectAll("image")
 
         .data(function(d){
             return d.data.images.map(function(i) {
                 return {
-                    "image": i,
-                    "color": d.data.color_name,
+                    ...i,
                     "total_width": d.x1 - d.x0,
                     "total_height": d.y1 - d.y0
                 };
@@ -153,12 +161,14 @@ TreeMap.prototype.updateVis = function(){
         .attr("height", 74)
             .attr("clip-path", function(d){
                 console.log(d);
-                return "url(#clipPath-" + d.color + ")";
+                return "url(#clipPath-" + d.dominant_color_categorized + ")";
             })
         .attr("xlink:href", function (d) {
             console.log(d);
-            return d.image;
+            return d.image_url;
         })
+        .attr("pointer-events", "all")
+
         .attr("transform", function (d, i) {
             var row_num = Math.ceil(d.total_width/50);
             console.log("total_width " +  d.total_width + " row_num " + row_num);
@@ -171,11 +181,14 @@ TreeMap.prototype.updateVis = function(){
             } else {
                 return 0;
             }
-        });
+        })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
 
     groups.append("rect")
         .attr('width', function (d) { return d.x1 - d.x0; })
         .attr('height', function (d) { return d.y1 - d.y0; })
+        .attr("pointer-events", "none")
         .style("fill", function(d) {
             return vis.colorMap[d.data["color_name"]];
         })

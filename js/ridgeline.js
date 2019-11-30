@@ -57,8 +57,8 @@ RidgeLine.prototype.initVis = function(){
 
     // Create a Y scale for densities
     vis.y = d3.scaleLinear()
-        .domain([0, 0.2])
-        .range([ vis.height, 0]);
+        .domain([0, 200])
+        .range([ vis.height/10, 0]);
 
     // Create the Y axis for names
     vis.yName = d3.scaleBand()
@@ -89,9 +89,11 @@ RidgeLine.prototype.wrangleData = function(genre){
     for (i = 0; i < n; i++) {
         var key = vis.categories[i]
         var category_data = vis.data.filter(function(d) { return d["dominantColorCategory"] === key; })
-        console.log(key + " " + category_data.length);
 
-        // set the parameters for the histogram
+       // console.log(key + " " + category_data.length);
+       // var ratings = category_data.map(function(d){  return +d["average_rating"]});
+
+        // // set the parameters for the histogram
         var histogram = d3.histogram()
             .value(function(d){  return +d["average_rating"]})   // I need to give the vector of value
             .domain(vis.x.domain())  // then the domain of the graphic
@@ -99,7 +101,7 @@ RidgeLine.prototype.wrangleData = function(genre){
 
         var bins = histogram(category_data);
 
-        vis.allDensity.push(bins);
+        vis.allDensity.push({key: key, bins: bins});
 
     //     console.log(ratings);
     //     var density = kde(ratings);
@@ -119,28 +121,55 @@ RidgeLine.prototype.wrangleData = function(genre){
 RidgeLine.prototype.updateVis = function(){
     var vis = this;
 
+    var areas = vis.svg.selectAll(".areas")
+        .data(vis.allDensity)
+        .enter()
+        .append("g")
+        .attr("class", "areas")
+        .attr("transform", function(d){
+            return("translate(0," + (vis.yName(d.key) - vis.yName.bandwidth()) +")" )
+        });
 
-    // var areas = vis.svg.selectAll(".areas")
-    //     .data(vis.allDensity)
-    //     .enter()
-    //     .append("g")
-    //     .attr("transform", function(d){return("translate(0," + (vis.yName(d.key)-vis.height - vis.yName.bandwidth()) +")" )});
+    areas.selectAll("rect")
 
-    // areas.selectAll("rect")
-    //     .data(bins)
-    //     .enter()
-    //     .append("rect")
-    //     .attr("x", 1)
-    //     .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-    //     .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
-    //     .attr("height", function(d) { return height - y(d.length); })
-    //     .style("fill", "#69b3a2")
+        .data(function (d) {
+            bins = d.bins.map(function (bin) {
+                return {
+                    'x0': bin.x0,
+                    'x1': bin.x1,
+                    'bin': bin,
+                    'color': d.key
+                }
+            })
+
+            return bins;
+        })
+        .enter()
+        .append("rect")
+        .attr("x", 1)
+        .attr("transform", function(d) { return "translate(" + vis.x(d.x0) + "," + vis.y(d.bin.length) + ")"; })
+        .attr("width", function(d) {
+            var numbins = 51;
+            if (numbins > 0) {
+                var barWidth = vis.width / numbins - 1;
+
+            return barWidth
+            } else {
+            return 0;
+            };
+        })
+        .attr("height", function(d) { return vis.height/10 - vis.y(d.bin.length); })
+        .attr("fill", function (d) {
+            return vis.colorMap[d.color];
+        })
 
 
-    // vis.svg.selectAll("areas")
+
+    // vis.svg.selectAll(".areas")
     //     .data(vis.allDensity)
     //     .enter()
     //     .append("path")
+    //     .attr("class", "areas")
     //     .attr("transform", function(d){return("translate(0," + (vis.yName(d.key)-vis.height - vis.yName.bandwidth()) +")" )})
     //     .attr("fill", function (d) {
     //         return vis.colorMap[d.key];
@@ -158,9 +187,11 @@ RidgeLine.prototype.updateVis = function(){
 }
 
 function kernelDensityEstimator(kernel, X) {
-    return function(V) {
-        return X.map(function(x) {
-            return [x, d3.mean(V, function(v) { return kernel(x - v); })];
+    return function (V) {
+        return X.map(function (x) {
+            return [x, d3.mean(V, function (v) {
+                return kernel(x - v);
+            })];
         });
     };
 }
