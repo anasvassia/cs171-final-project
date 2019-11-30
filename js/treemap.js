@@ -70,7 +70,7 @@ TreeMap.prototype.wrangleData = function(genre){
         var book = vis.bookData[i];
 
         if (book["tags"].includes(genre) || genre === "total") {
-            var color = book["dominant_color_categorized"];
+            var color = book["dominantColorCategory"];
             if (color &&  color != "missing") {
                 var data = vis.data[genre].children.find(element => element["color_name"] === color)
                 if (data["images"].length < 12) {
@@ -109,7 +109,7 @@ TreeMap.prototype.updateVis = function(){
 
     d3.treemap()
         .size([vis.width, vis.height])
-        .padding(2)
+        .padding(3)
         (vis.root);
 
     console.log(vis.root);
@@ -129,13 +129,15 @@ TreeMap.prototype.updateVis = function(){
 
 
    // TODO: FIX CLIPPING
-    groups.append("clipPath")
+    leaf.append("clipPath")
         .attr("id", function (d) {
             return "clipPath-" + d.data.color_name;
         })
-        .append("rect")
-        .attr('width', function (d) { return d.x1 - d.x0; })
-        .attr('height', function (d) { return d.y1 - d.y0; });
+        .attr("clipPathUnits", "userSpaceOnUse")
+        .append("use")
+        .attr("xlink:href", d => "url(#rect-" + d.data.color_name + ")" );
+
+
 
 
     var tip = d3.tip().attr("class", "tooltip")
@@ -159,10 +161,7 @@ TreeMap.prototype.updateVis = function(){
         .append("image")
         .attr('width', 50)
         .attr("height", 74)
-            .attr("clip-path", function(d){
-                console.log(d);
-                return "url(#clipPath-" + d.dominant_color_categorized + ")";
-            })
+
         .attr("xlink:href", function (d) {
             console.log(d);
             return d.image_url;
@@ -182,10 +181,14 @@ TreeMap.prototype.updateVis = function(){
                 return 0;
             }
         })
+        .attr("clip-path", function(d){
+            return "url(#clipPath-" + d.dominantColorCategory + ")";
+        })
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide);
 
     groups.append("rect")
+        .attr("id", d => "rect-" + d.data.color_name )
         .attr('width', function (d) { return d.x1 - d.x0; })
         .attr('height', function (d) { return d.y1 - d.y0; })
         .attr("pointer-events", "none")
