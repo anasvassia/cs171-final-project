@@ -179,3 +179,66 @@ hr {
     margin-bottom: 0;
 }
 
+/*Color View Styles*/
+
+.genre-label {
+    font-family: Helvetica; /*TO BE REPLACED BY THE DEFAULT FONTS   */
+    font-size: 15px;
+    fill: grey;
+}
+
+#legend-title {
+    font-family: Helvetica; /*TO BE REPLACED BY THE DEFAULT FONTS   */
+    font-size: 18px;
+    fill: #A0A0A0;
+    text-decoration-line: underline;
+}
+
+.legend-details {
+    font-family: Helvetica; /*TO BE REPLACED BY THE DEFAULT FONTS   */
+    font-size: 15px;
+    color: #D0D0D0;
+    font-style: italic;
+}
+
+.d3-tip-circles {
+    font-family: Helvetica; /*TO BE REPLACED BY THE DEFAULT FONTS   */
+    font-size: 15px;
+    color: grey;
+    font-style: italic;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius : 10px;
+}
+
+.tooltip-percent{
+    font-size: 18px;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.legend-arrow-text {
+    font-family: Helvetica; /*TO BE REPLACED BY THE DEFAULT FONTS   */
+    font-size: 12px;
+    fill: #D0D0D0;
+    font-style: italic;
+}
+
+.faded {
+    opacity: 0.2;
+}
+
+.legend{
+    opacity: 1;
+}
+
+.sub_circle:hover{
+    fill: #A8A8A8;
+}
+
+.colorcircle:hover{
+    opacity: 0.6;
+}
+
+.sub_circle,.colorcircle{
+    cursor: pointer;
+}

@@ -12,16 +12,18 @@ queue()
     .defer(d3.json,"data/hierarchy_tag_color.json")
     .defer(d3.json, "data/tag_frequency.json")
     .defer(d3.json, "data/book_data.json")
+    .defer(d3.json,"data/summarybygenre.json")
     .await(createVis);
 
 
-function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequencyData, bookData){
+function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequencyData, bookData, summaryByGenre){
     if(error) { console.log(error); }
 
     vis.data = data;
     barchart = new BarChart("barchart", tagObjectData);
+
     treemap = new TreeMap("treemap", hierarchyTagColorData, data);
-    innovativeview = new InnovativeView("color-vis", data);
+    innovativeview = new InnovativeView("color-vis", data, summaryByGenre);
     ridgeline = new RidgeLine("ridgeline", bookData);
 
     createSelect(tagFrequencyData);
