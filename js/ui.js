@@ -1,7 +1,9 @@
 /*
     Sources used:
     jQuery transitions:
-        https://stackoverflow.com/questions/12721029/use-jquery-to-show-a-div-in-5-seconds
+        https://stackoverflow.com/a/12721353
+    toggling click:
+        https://stackoverflow.com/a/41012579
  */
 var books = [];
 
@@ -36,24 +38,52 @@ d3.json("data/book-data-lite.json", function(data) {
         var select = "#img"+index;
         $(select)
             .attr("src", val.image_url)
-            .attr("alt", val.title);
+            .attr("alt", val.title)
+            .css("opacity", "0.7");
 
-       $(select).hide();
-       $(select).delay(2500).fadeIn(1000);
+       // $(select).hide();
+       // $(select).delay(2500).fadeIn(1000);
 
-        $(select).on("click", function() {
-            // let user choose a book
-            $("#choice-explanation").html(
-                "Excellent choice! '" + val.title + "' by " + val.authors +
-                " is a " + genreArray[index].replace("-", " ") + " book with a dominantly " +
-                val.dominant_color_categorized + "-shade cover! How does the color " +
-                "of this cover compare with other covers of the same genre? Well, we" +
-                " can explore that by using the visualization below. </hr>"
+       // save state of click
+        var clicked = false;
 
-            );
-            innovativeview.selectedBook = val;
-            innovativeview.updateVis();
-        });
+        $(select)
+            .on("mouseover", function() {
+                if(!clicked) {
+                    $(select)
+                        .css("opacity", "1.0")
+                        .css("border", "3px dotted wheat");
+                }
+            })
+            .on("mouseout", function() {
+                if(!clicked) {
+                    $(select)
+                        .css("opacity", "0.7")
+                        .css("border", "none");
+                }
+            })
+            .on("click", function() {
+                clicked = !clicked;
+                // user can select whichever book they like
+                if(clicked) {
+                    $(".book-covers")
+                        .css("opacity", "0.7")
+                        .css("border", "none");
+                    $(select)
+                        .css("opacity", "1.0")
+                        .css("border", "3px double wheat");
+                    // let user choose a book
+                    $("#choice-explanation").html(
+                        "Excellent choice! '" + val.title + "' by " + val.authors +
+                        " is a " + genreArray[index].replace("-", " ") + " book with a dominantly " +
+                        val.dominantColorCategory + "-shade cover! How does the color " +
+                        "of this cover compare with other covers of the same genre? Well, we" +
+                        " can explore that by using the visualization below. </hr>"
+                    );
+                    innovativeview.selectedBook = val;
+                    innovativeview.updateVis();
+                }
+            });
     });
 });
 
