@@ -13,10 +13,11 @@ queue()
     .defer(d3.json, "data/tag_frequency.json")
     .defer(d3.json, "data/book_data.json")
     .defer(d3.json,"data/summarybygenre.json")
+    .defer(d3.json,"data/genrebyyear.json")
     .await(createVis);
 
 
-function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequencyData, bookData, summaryByGenre){
+function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequencyData, bookData, summaryByGenre, genreByYear){
     if(error) { console.log(error); }
 
     vis.data = data;
