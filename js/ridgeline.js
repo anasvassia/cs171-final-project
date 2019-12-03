@@ -108,7 +108,7 @@ RidgeLine.prototype.wrangleData = function(genre){
     //     vis.allDensity.push({key: key, density: density})
     }
 
-    console.log(vis.allDensity)
+    // console.log(vis.allDensity);
     // Update the visualization
     vis.updateVis();
 }

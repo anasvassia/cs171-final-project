@@ -3,11 +3,8 @@
     jQuery transitions:
         https://stackoverflow.com/questions/12721029/use-jquery-to-show-a-div-in-5-seconds
  */
-var books;
-var alreadyChose = false;
+var books = [];
 
-// selection is the isbn of the book that the user chose
-var selection;
 
 // load data
 d3.json("data/book-data-lite.json", function(data) {
@@ -45,12 +42,7 @@ d3.json("data/book-data-lite.json", function(data) {
        $(select).delay(2500).fadeIn(1000);
 
         $(select).on("click", function() {
-            // if user has already chosen something then don't do anything
-            if (alreadyChose) {
-                return;
-            }
-
-            // else let user choose a book
+            // let user choose a book
             $("#choice-explanation").html(
                 "Excellent choice! '" + val.title + "' by " + val.authors +
                 " is a " + genreArray[index].replace("-", " ") + " book with a dominantly " +
@@ -59,9 +51,11 @@ d3.json("data/book-data-lite.json", function(data) {
                 " can explore that by using the visualization below. </hr>"
 
             );
-            alreadyChose = true;
+            innovativeview.selectedBook = val;
+            innovativeview.updateVis();
         });
     });
 });
+
 
 

@@ -63,7 +63,7 @@ TreeMap.prototype.wrangleData = function(genre){
         vis.data[genre].children[i]["images"] = [];
     }
 
-    console.log(vis.data[genre]);
+    // console.log(vis.data[genre]);
 
 
     for (var i = 0; i < vis.bookData.length; i++) {
@@ -74,7 +74,7 @@ TreeMap.prototype.wrangleData = function(genre){
             if (color &&  color != "missing") {
                 var data = vis.data[genre].children.find(element => element["color_name"] === color)
                 if (data["images"].length < 12) {
-                    console.log(data);
+                    // console.log(data);
                     data["images"].push(book);
                 }
             }
@@ -90,7 +90,7 @@ TreeMap.prototype.wrangleData = function(genre){
         }
     }
 
-    console.log(vis.data[genre]);
+    // console.log(vis.data[genre]);
 
     vis.root = d3.hierarchy(vis.data[genre])
         .sum(function(d) { return d.frequency; })
@@ -112,7 +112,7 @@ TreeMap.prototype.updateVis = function(){
         .padding(3)
         (vis.root);
 
-    console.log(vis.root);
+    // console.log(vis.root);
 
     // use this information to add rectangles:
     var leaf = vis.svg
@@ -163,14 +163,14 @@ TreeMap.prototype.updateVis = function(){
         .attr("height", 74)
 
         .attr("xlink:href", function (d) {
-            console.log(d);
+            // console.log(d);
             return d.image_url;
         })
         .attr("pointer-events", "all")
 
         .attr("transform", function (d, i) {
             var row_num = Math.ceil(d.total_width/50);
-            console.log("total_width " +  d.total_width + " row_num " + row_num);
+            // console.log("total_width " +  d.total_width + " row_num " + row_num);
             return "translate(" + ((i%row_num)*50) + ", " + (Math.floor(i/row_num)*74) + ")"
         })
         .attr("opacity", function (d, i) {

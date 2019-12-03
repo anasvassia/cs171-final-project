@@ -24,7 +24,7 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
     barchart = new BarChart("barchart", tagObjectData);
 
     treemap = new TreeMap("treemap", hierarchyTagColorData, data);
-    innovativeview = new InnovativeView("color-vis", data, summaryByGenre);
+    innovativeview = new InnovativeView("color-vis", data, summaryByGenre, {});
     ridgeline = new RidgeLine("ridgeline", bookData);
 
     createSelect(tagFrequencyData);
@@ -33,7 +33,7 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
 function createSelect(tagFrequencyData) {
     tagFrequencyData.sort(function(a, b) {
         return b.frequency - a.frequency;
-    })
+    });
     var topTags = tagFrequencyData.slice(0, 100);
 
     var select = $('#genre-select');

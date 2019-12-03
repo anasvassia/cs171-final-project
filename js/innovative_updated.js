@@ -3,11 +3,14 @@
  * @param _parentElement 	-- the HTML element in which to draw the bar charts
  * @param _data						-- the dataset 'book aesthetic analysis'
  */
-InnovativeView = function (_parentElement, _data, _summarybygenre) {
+
+
+InnovativeView = function (_parentElement, _data, _summarybygenre, _selectedBook) {
     this.parentElement = _parentElement;
     this.data = _data;
     this.summarybygenre = _summarybygenre;
     this.year_ranges = [...new Set(_data.map(x => x.year_range))].sort();
+    this.selectedBook = _selectedBook;
     this.initVis();
 };
 
@@ -527,6 +530,11 @@ InnovativeView.prototype.updateVis = function (){
     //         $('#huh').toggleClass('opacity');
     //     });
     // });
+
+
+    // user's book selection
+    console.log(vis.selectedBook);
+
 
     // Attach an on-click event on the circle.
     vis.svg.selectAll('.sub_circle, .colorcircle, .spokes')
