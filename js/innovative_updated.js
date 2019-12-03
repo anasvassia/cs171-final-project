@@ -3,11 +3,14 @@
  * @param _parentElement 	-- the HTML element in which to draw the bar charts
  * @param _data						-- the dataset 'book aesthetic analysis'
  */
-InnovativeView = function (_parentElement, _data, _summarybygenre) {
+
+
+InnovativeView = function (_parentElement, _data, _summarybygenre, _selectedBook) {
     this.parentElement = _parentElement;
     this.data = _data;
     this.summarybygenre = _summarybygenre;
     this.year_ranges = [...new Set(_data.map(x => x.year_range))].sort();
+    this.selectedBook = _selectedBook;
     this.initVis();
 };
 
@@ -188,7 +191,7 @@ vis.svg.selectAll('.genre-label')
         .append("text")
         .attr("id", "legend-title")
         .attr("x", vis.mainCirclex)
-        .attr('y', vis.mainCircley - 125)
+        .attr('y', vis.mainCircley - 140)
         .attr("text-anchor", 'middle')
         .text('Color Usage across 8 Genre Book Covers');
 
@@ -197,14 +200,14 @@ vis.svg.selectAll('.genre-label')
         .append("foreignObject")
         .attr('class', 'legend-details')
         .attr("x", 325)
-        .attr('y', vis.mainCircley - 110)
-        .attr('height', 140)
+        .attr('y', vis.mainCircley - 125)
+        .attr('height', 160)
         .attr('width', 425)
-        .text("We picked books from 8 most common genres published between 1900 and 2017 and extracted the most dominant " +
-            "color from book covers. We've custom designed a 'hub & spoke' visual to represent each genre. " +
-            "The hub (center circle) represents a genre and the spoke length & area of the colored circles represent the " +
+        .text("We analyzed books from 8 most common genres published between 1900 and 2017 and extracted the most dominant " +
+            "color. We've custom designed a 'hub & spoke' visual to represent each genre. " +
+            "The center represents a genre and spoke length & area of the colored circles represent the " +
             "color prevalence in a genre. Click on the circles to learn more about color prevalence trends. Click on the white space to clear " +
-            "any filters.");
+            "filters.");
 
     // Add a sample drawing for legend
    var legend_loc_x = vis.mainCirclex - 50;
@@ -527,6 +530,11 @@ InnovativeView.prototype.updateVis = function (){
     //         $('#huh').toggleClass('opacity');
     //     });
     // });
+
+
+    // user's book selection
+    console.log(vis.selectedBook);
+
 
     // Attach an on-click event on the circle.
     vis.svg.selectAll('.sub_circle, .colorcircle, .spokes')

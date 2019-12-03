@@ -21,7 +21,7 @@ BarChart.prototype.initVis = function(){
     var vis = this;
 
     vis.margin = { top: 20, right: 60, bottom: 20, left: 100 };
-    console.log($("#" + vis.parentElement).width());
+    // console.log($("#" + vis.parentElement).width());
     vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
         vis.height = 800 - vis.margin.top - vis.margin.bottom;
 
@@ -75,7 +75,7 @@ BarChart.prototype.wrangleData = function(genre){
 
     vis.displayData = vis.displayData.slice(0, 20);
 
-    console.log(vis.displayData);
+    // console.log(vis.displayData);
 
     // Update the visualization
     vis.updateVis();
