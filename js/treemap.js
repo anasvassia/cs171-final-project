@@ -73,7 +73,7 @@ TreeMap.prototype.wrangleData = function(genre){
             var color = book["dominantColorCategory"];
             if (color &&  color != "missing") {
                 var data = vis.data[genre].children.find(element => element["color_name"] === color)
-                if (data["images"].length < 12) {
+                if (data["images"].length < 20 && book["ratings_count"] > 100000) {
                     console.log(data);
                     data["images"].push(book);
                 }
@@ -81,7 +81,7 @@ TreeMap.prototype.wrangleData = function(genre){
         }
         var cond = true;
         vis.data[genre].children.forEach(function (color) {
-            if (color["images"].length < 12) {
+            if (color["images"].length < 20) {
                 cond = false;
             }
         });
@@ -142,7 +142,7 @@ TreeMap.prototype.updateVis = function(){
 
     var tip = d3.tip().attr("class", "tooltip")
         .html(function(d) {
-            return d.original_title;
+            return d.title;
         })
 
     groups.call(tip);
