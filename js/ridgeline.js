@@ -20,7 +20,7 @@ RidgeLine = function(_parentElement, _data){
 RidgeLine.prototype.initVis = function(){
     var vis = this;
 
-    vis.margin = { top: 20, right: 100, bottom: 20, left: 60 };
+    vis.margin = { top: 100, right: 100, bottom: 20, left: 60 };
 
     vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
         vis.height = 800 - vis.margin.top - vis.margin.bottom;
@@ -49,7 +49,7 @@ RidgeLine.prototype.initVis = function(){
 
     // Add X axis
     vis.x = d3.scaleLinear()
-        .domain([2, 5])
+        .domain([2.5, 5])
         .range([ 0, vis.width ]);
     vis.svg.append("g")
         .attr("transform", "translate(0," + vis.height + ")")
@@ -57,14 +57,13 @@ RidgeLine.prototype.initVis = function(){
 
     // Create a Y scale for densities
     vis.y = d3.scaleLinear()
-        .domain([0, 200])
         .range([ vis.height/10, 0]);
 
     // Create the Y axis for names
     vis.yName = d3.scaleBand()
         .domain(vis.categories)
         .range([0, vis.height])
-        .paddingInner(1)
+        .paddingInner(1);
     vis.svg.append("g")
         .call(d3.axisLeft(vis.yName));
 
@@ -103,7 +102,7 @@ RidgeLine.prototype.wrangleData = function(genre){
         var histogram = d3.histogram()
             .value(function(d){  return +d["average_rating"]})   // I need to give the vector of value
             .domain(vis.x.domain())  // then the domain of the graphic
-            .thresholds(vis.x.ticks(40)); // then the numbers of bins
+            .thresholds(vis.x.ticks(30)); // then the numbers of bins
 
         var bins = histogram(category_data);
 
@@ -128,20 +127,37 @@ RidgeLine.prototype.wrangleData = function(genre){
 
 RidgeLine.prototype.updateVis = function(){
     var vis = this;
+    
+    
+    
+    vis.y.domain([0, d3.max(vis.allDensity, function (d) {
+        return d3.max(d.bins, function (b) {
+            return b.length;
+        })
+    })])
+    
 
-    var update = vis.svg.selectAll(".areas")
+    vis.update = vis.svg.selectAll(".areas")
         .data(vis.allDensity);
 
-    vis.areas = update.enter()
+    vis.areasenter = vis.update.enter()
         .append("g")
         .attr("class", "areas")
 
-    vis.areas.merge(update)
-        .transition();
+    vis.areas = vis.areasenter.merge(vis.update);
 
-    vis.areas.attr("transform", function(d){
-        return("translate(0," + (vis.yName(d.key) + vis.yName.bandwidth()) +")" )
+    vis.areas
+        .transition()
+        .attr("transform", function(d){
+        return("translate(0," + (vis.yName(d.key) - vis.yName.step()) +")" )
     });
+
+    vis.tip = d3.tip().attr("class", "tooltip")
+        .html(function(d) {
+            return d.bin.length;
+        })
+
+    vis.areas.call(vis.tip);
 
 
     vis.rect_selection = vis.areas.selectAll("rect")
@@ -159,14 +175,18 @@ RidgeLine.prototype.updateVis = function(){
     vis.rects = vis.rect_selection.enter()
         .append("rect")
         .attr("class", "ridgeline-bars")
+        .merge(vis.rect_selection);
 
-    vis.rects.merge(vis.rect_selection)
-        .transition()
+    vis.rects.transition();
 
     vis.rects.attr("x", 1)
         .attr("transform", function(d) { return "translate(" + vis.x(d.x0) + "," + vis.y(d.bin.length) + ")"; })
+
+        .on('mouseover', vis.tip.show)
+        .on('mouseout', vis.tip.hide)
+
         .attr("width", function(d) {
-            var numbins = 31;
+            var numbins = 26;
             if (numbins > 0) {
                 var barWidth = vis.width / numbins - 1;
 
@@ -178,43 +198,11 @@ RidgeLine.prototype.updateVis = function(){
         .attr("height", function(d) { return vis.height/10 - vis.y(d.bin.length); })
         .attr("fill", function (d) {
             return vis.colorMap[d.color];
-        })
+        });
+
 
     vis.rects.exit().remove();
-
-    // vis.svg.selectAll(".areas")
-    //     .data(vis.allDensity)
-    //     .enter()
-    //     .append("path")
-    //     .attr("class", "areas")
-    //     .attr("transform", function(d){return("translate(0," + (vis.yName(d.key)-vis.height - vis.yName.bandwidth()) +")" )})
-    //     .attr("fill", function (d) {
-    //         return vis.colorMap[d.key];
-    //     })
-    //     .datum(function(d){return(d.density)})
-    //     .attr("stroke", "#000")
-    //     .attr("stroke-width", 1)
-    //     .attr("d",  d3.line()
-    //         .curve(d3.curveBasis)
-    //         .x(function(d) {
-    //             return vis.x(d[0]); })
-    //         .y(function(d) { return vis.y(d[1]); })
-    //     )
-
+    
 }
 
-function kernelDensityEstimator(kernel, X) {
-    return function (V) {
-        return X.map(function (x) {
-            return [x, d3.mean(V, function (v) {
-                return kernel(x - v);
-            })];
-        });
-    };
-}
-function kernelEpanechnikov(k) {
-    return function(v) {
-        return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
-    };
-}
 

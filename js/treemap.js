@@ -159,18 +159,11 @@ TreeMap.prototype.updateVis = function(){
     vis.groups
         .transition()
         .attr("transform", function(d) {
-            console.log(d);
             return "translate(" + d.x0 + "," + d.y0 + ")";
         } )
         .attr("clip-path", function(d){
-            console.log(d);
             return "url(#clipPath-" + d.data.color_name + ")";
         });
-
-
-
-
-
 
     vis.tip = d3.tip().attr("class", "tooltip")
         .html(function(d) {
@@ -182,7 +175,6 @@ TreeMap.prototype.updateVis = function(){
     vis.images = vis.groups.selectAll("image")
 
         .data(function(d){
-            console.log(d);
             return d.data.images.map(function(i) {
                 return {
                     ...i,
@@ -197,7 +189,6 @@ TreeMap.prototype.updateVis = function(){
         .attr('width', 50)
         .attr("height", 74)
         .attr("xlink:href", function (d) {
-            console.log(d);
             return d.image_url;
         })
         .attr("pointer-events", "all")
@@ -206,7 +197,7 @@ TreeMap.prototype.updateVis = function(){
 
         .attr("transform", function (d, i) {
             var row_num = Math.ceil(d.total_width/50);
-            console.log("total_width " +  d.total_width + " row_num " + row_num);
+//            console.log("total_width " +  d.total_width + " row_num " + row_num);
             return "translate(" + ((i%row_num)*50) + ", " + (Math.floor(i/row_num)*74) + ")"
         })
         .attr("opacity", function (d, i) {
@@ -232,7 +223,6 @@ TreeMap.prototype.updateVis = function(){
         .merge(vis.rects)
         .transition()
        .attr("id",  function(d) {
-            console.log(d);
             return "rect-" + d.data.color_name;
         } )
         .attr('width', function (d) { return d.x1 - d.x0; })
@@ -243,7 +233,6 @@ TreeMap.prototype.updateVis = function(){
         })
         .style("fill-opacity", 0.5)
          .attr("transform", function(d) {
-             console.log(d);
              return "translate(" + d.x0 + "," + d.y0 + ")";
          } );
 
