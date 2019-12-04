@@ -155,25 +155,29 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="genre-select"><pre>Chart Data:  </pre></label>
-                    <select class="form-control" id="genre-select"></select>
-                </div>
-            </form>
-        </div>
-    </div>
+
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-5" id="barchart"></div>
         <div class="col-md-6" id="treemap"></div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12" id="ridgeline"></div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="genre-select"><pre>Chart Data:  </pre></label>
+                <select class="form-control" id="genre-select"></select>
+            </div>
+        </form>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10" id="ridgeline"></div>
+    <div class="col-md-1"></div>
+</div>
 
     <!-- Sources and credits -->
     <div id="sources-and-credits" class="storyline">
@@ -187,7 +191,6 @@
         </p>
     </div>
 
-
 <script src="js/queue.v1.min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.js"></script>
@@ -198,8 +201,9 @@
 <script src="js/treemap.js"></script>
 <script src="js/ridgeline.js"></script>
 <script src="js/ui.js"></script>
-<script src="js/innovative_updated.js"></script>
+<script src="js/lodash.js"></script>
 <script src="js/main.js"></script>
-
+<script src="js/innovative_updated.js"></script>
+<script src="js/stacked_bar.js"></script>
 </body>
 </html>

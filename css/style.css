@@ -239,3 +239,10 @@ hr {
 .sub_circle,.colorcircle{
     cursor: pointer;
 }
+
+.y_axis path{
+    stroke: #DCDCDC;
+}
+.x_axis path{
+    stroke: #DCDCDC;
+}
