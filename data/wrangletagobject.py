@@ -1,7 +1,16 @@
 import json
 
+clothing_items = ["Shoe", "Footwear", "Necklace", "Hat", "Glasses", "Watch", "Bracelet", "Top", "Shorts", "Outerwear", "Helmet", "Dress", "Coat", "Earrings", "Glove", "High heels" ]
+animals = ["Bird", "Tiger", "Dog", "Fish", "Caterpillar"]
+food_items = ["Apple", "Fruit", "Squash"]
+goods = ["Tableware", "Bracelet", "Luggage & bags", "Home appliance", "Light fixture", "Ball", "Clock", "Coin", "Bicycle", "Bicycle wheel", "Bottled and jarred packaged goods"]
+
+
 tag_dict = {}
 tag_dict["total"] = {}
+
+colors_dict = {}
+colors_dict["total"] = {}
 
 tag_list = {}
 tag_list["total"] = []
@@ -20,22 +29,48 @@ with open("book_data.json") as json_file:
              tag_dict[tag_name][obj["name"]] += obj["score"]
             else:
               tag_dict[tag_name][obj["name"]] = obj["score"]
+
+            if obj["name"] not in colors_dict[tag_name].keys():
+              colors_dict[tag_name][obj["name"]] = {"black": 0,
+                "blue": 0, "gray":0, "green": 0, "orange": 0,
+                "pink": 0, "red": 0, "violet": 0, "white": 0, "yellow": 0}
+
+            colors_dict[tag_name][obj["name"]][book["dominantColorCategory"]] += obj["score"]
         else:
           tag_dict[tag_name] = {}
+          colors_dict[tag_name] = {}
           for obj in book["localizedObjectAnnotations"]:
             tag_dict[tag_name][obj["name"]] = obj["score"]
+            if obj["name"] not in colors_dict[tag_name].keys():
+              colors_dict[tag_name][obj["name"]] = {"black": 0,
+                "blue": 0, "gray":0, "green": 0, "orange": 0,
+                "pink": 0, "red": 0, "violet": 0, "white": 0, "yellow": 0}
+
+            colors_dict[tag_name][obj["name"]][book["dominantColorCategory"]] += obj["score"]
+
       for obj in book["localizedObjectAnnotations"]:
         if obj["name"] in tag_dict["total"].keys():
          tag_dict["total"][obj["name"]] += obj["score"]
         else:
           tag_dict["total"][obj["name"]] = obj["score"]
 
+        if obj["name"] not in colors_dict["total"].keys():
+          colors_dict["total"][obj["name"]] = {"black": 0,
+            "blue": 0, "gray":0, "green": 0, "orange": 0,
+            "pink": 0, "red": 0, "violet": 0, "white": 0, "yellow": 0}
+
+        colors_dict["total"][obj["name"]][book["dominantColorCategory"]] += obj["score"]
+
+
 
 
 for tag_name, tag_entry in tag_dict.items():
     tag_list[tag_name] = []
     for obj_name, score in tag_entry.items():
-        tag_list[tag_name].append({"name": obj_name, "score": score})
+        tag_list_item = {"name": obj_name, "score": score }
+        tag_list_item.update(colors_dict[tag_name][obj_name])
+        tag_list[tag_name].append(tag_list_item)
+
 
 
 with open('tag_object.json', 'w') as file:
