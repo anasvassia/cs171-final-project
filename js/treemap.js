@@ -24,7 +24,7 @@ TreeMap.prototype.initVis = function(){
     vis.margin = { top: 20, right: 100, bottom: 20, left: 60 };
 
     vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
-        vis.height = 800 - vis.margin.top - vis.margin.bottom;
+        vis.height = 720 - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -186,8 +186,16 @@ TreeMap.prototype.updateVis = function(){
     vis.imageElements = vis.images.enter()
         .append("image")
         .merge(vis.images)
-        .attr('width', 50)
-        .attr("height", 74)
+        .attr('width', function(d) {
+            return 50;
+            // var num_cols = Math.floor(d.total_width/50);
+            // return Math.max(1, d.total_width / num_cols);
+        })
+        .attr("height", function(d) {
+            return 74;
+            // var num_rows = Math.floor(d.total_height/74);
+            // return Math.max(1, d.total_height / num_rows);
+        })
         .attr("xlink:href", function (d) {
             return d.image_url;
         })
@@ -199,9 +207,19 @@ TreeMap.prototype.updateVis = function(){
             var row_num = Math.ceil(d.total_width/50);
 //            console.log("total_width " +  d.total_width + " row_num " + row_num);
             return "translate(" + ((i%row_num)*50) + ", " + (Math.floor(i/row_num)*74) + ")"
+//             var num_cols = Math.max(1,  Math.floor(d.total_width/50));
+//             var num_rows = Math.max(1, Math.floor(d.total_height/74));
+//             console.log("cols: " + num_cols + " rows: " + num_rows);
+//
+//             var x = d.total_width / num_cols * (i % num_cols);
+//             var y = d.total_height/num_rows  * Math.floor(i /num_rows );
+//             return "translate(" + (x) + ", " + (y) + ")"
+
+
         })
         .attr("opacity", function (d, i) {
             var row_num = Math.ceil(d.total_width/74);
+            // cond: Math.floor(i/row_num)*74 <= d.total_height + 74
             if (Math.floor(i/row_num)*74 <= d.total_height + 74) {
                 return 1;
             } else {
@@ -231,7 +249,7 @@ TreeMap.prototype.updateVis = function(){
         .style("fill", function(d) {
             return vis.colorMap[d.data["color_name"]];
         })
-        .style("fill-opacity", 0.5)
+        .style("fill-opacity", 0.6)
          .attr("transform", function(d) {
              return "translate(" + d.x0 + "," + d.y0 + ")";
          } );
@@ -241,13 +259,12 @@ TreeMap.prototype.updateVis = function(){
 
     // and to add the text labels
     vis.textLabels = vis.svg
-        .selectAll("text")
+        .selectAll("text.tree-labels")
         .data(vis.root.leaves());
-
-    vis.textLabels.exit().remove();
 
     vis.textLabels.enter()
         .append("text")
+        .attr("class", "tree-labels")
         .merge(vis.textLabels)
         .transition()
         .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
@@ -256,7 +273,8 @@ TreeMap.prototype.updateVis = function(){
             return d.data["color_name"]; })
         .attr("font-size", "15px")
         .attr("fill", "white")
-        .attr("class", "tree-labels")
+
+    vis.textLabels.exit().remove();
 
 
 }

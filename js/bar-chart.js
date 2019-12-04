@@ -23,7 +23,7 @@ BarChart.prototype.initVis = function(){
     vis.margin = { top: 20, right: 60, bottom: 20, left: 100 };
     // console.log($("#" + vis.parentElement).width());
     vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
-        vis.height = 800 - vis.margin.top - vis.margin.bottom;
+        vis.height = 720 - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -73,7 +73,7 @@ BarChart.prototype.wrangleData = function(genre){
         return b.score - a.score;
     });
 
-    vis.displayData = vis.displayData.slice(0, 20);
+    vis.displayData = vis.displayData.slice(0, 16);
 
     // console.log(vis.displayData);
 
@@ -113,7 +113,7 @@ BarChart.prototype.updateVis = function(){
         .attr("width", function(d) {
             return vis.x(d.score); })
         .attr("height", vis.y.bandwidth())
-        .attr("fill", "#f09b68");
+        .attr("fill", "#736f6c");
 
     bars.exit().remove();
 
