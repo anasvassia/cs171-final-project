@@ -11,13 +11,12 @@ queue()
     .defer(d3.json,"data/tag_object.json")
     .defer(d3.json,"data/hierarchy_tag_color.json")
     .defer(d3.json, "data/tag_frequency.json")
-    .defer(d3.json, "data/book_data.json")
     .defer(d3.json,"data/summarybygenre.json")
     .defer(d3.json,"data/genrebyyear.json")
     .await(createVis);
 
 
-function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequencyData, bookData, summaryByGenre, genreByYear){
+function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequencyData, summaryByGenre, genreByYear){
     if(error) { console.log(error); }
 
     vis.data = data;
@@ -25,7 +24,7 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
 
     treemap = new TreeMap("treemap", hierarchyTagColorData, data);
     innovativeview = new InnovativeView("color-vis", data, summaryByGenre, {});
-    ridgeline = new RidgeLine("ridgeline", bookData);
+    ridgeline = new RidgeLine("ridgeline", data);
 
     createSelect(tagFrequencyData);
 };
@@ -52,5 +51,6 @@ function createSelect(tagFrequencyData) {
     select.on('change', function() {
         treemap.wrangleData(this.value);
         barchart.wrangleData(this.value);
+        ridgeline.wrangleData(this.value);
     });
 }

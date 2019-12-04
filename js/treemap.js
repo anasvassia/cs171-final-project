@@ -90,7 +90,7 @@ TreeMap.prototype.wrangleData = function(genre){
         }
     }
 
-    // console.log(vis.data[genre]);
+    console.log(vis.data[genre]);
 
     vis.root = d3.hierarchy(vis.data[genre])
         .sum(function(d) { return d.frequency; })
@@ -114,42 +114,75 @@ TreeMap.prototype.updateVis = function(){
 
     // console.log(vis.root);
 
+
+
     // use this information to add rectangles:
-    var leaf = vis.svg
+    vis.leaf = vis.svg
         .selectAll("g.area")
         .data(vis.root.leaves());
 
-    var groups = leaf.enter()
+
+    // TODO: FIX CLIPPING
+    // vis.clipPaths = vis.svg
+    //     .selectAll(".clip-path")
+    //     .data(vis.root.leaves());
+    //
+    // vis.clipPaths.exit().remove();
+    //
+    // vis.clipPaths.enter()
+    //     .append("clipPath")
+    //     .attr("id", function (d) {
+    //         console.log(d);
+    //         return "clipPath-" + d.data["color_name"];
+    //     })
+    //     .attr("class", "clip-path")
+    //     .merge(vis.leaf)
+    //     .attr("clipPathUnits", "userSpaceOnUse")
+    //     .append("rect")
+    //     .attr('width', function (d) { return d.x1 - d.x0; })
+    //     .attr('height', function (d) { return d.y1 - d.y0; })
+    //     .attr("x", function(d) {
+    //
+    //         return d.x0;
+    //     } )
+    //     .attr("y", function(d) {
+    //
+    //         return d.y0;
+    //     } );
+
+    vis.groupsenter = vis.leaf.enter()
         .append("g")
-        .attr("class", "area")
-        .attr("transform", d => `translate(${d.x0},${d.y0})`);
+        .attr("class", "area");
 
-    groups.merge(groups)
-        .transition();
+    vis.groups = vis.groupsenter.merge(vis.leaf);
 
-
-   // TODO: FIX CLIPPING
-    leaf.append("clipPath")
-        .attr("id", function (d) {
-            return "clipPath-" + d.data.color_name;
-        })
-        .attr("clipPathUnits", "userSpaceOnUse")
-        .append("use")
-        .attr("xlink:href", d => "url(#rect-" + d.data.color_name + ")" );
-
+    vis.groups
+        .transition()
+        .attr("transform", function(d) {
+            console.log(d);
+            return "translate(" + d.x0 + "," + d.y0 + ")";
+        } )
+        .attr("clip-path", function(d){
+            console.log(d);
+            return "url(#clipPath-" + d.data.color_name + ")";
+        });
 
 
 
-    var tip = d3.tip().attr("class", "tooltip")
+
+
+
+    vis.tip = d3.tip().attr("class", "tooltip")
         .html(function(d) {
             return d.title;
         })
 
-    groups.call(tip);
+    vis.groups.call(vis.tip);
 
-    var images = groups.selectAll("image")
+    vis.images = vis.groups.selectAll("image")
 
         .data(function(d){
+            console.log(d);
             return d.data.images.map(function(i) {
                 return {
                     ...i,
@@ -157,20 +190,23 @@ TreeMap.prototype.updateVis = function(){
                     "total_height": d.y1 - d.y0
                 };
             }); })
-        .enter()
+
+    vis.imageElements = vis.images.enter()
         .append("image")
+        .merge(vis.images)
         .attr('width', 50)
         .attr("height", 74)
-
         .attr("xlink:href", function (d) {
-            // console.log(d);
+            console.log(d);
             return d.image_url;
         })
         .attr("pointer-events", "all")
+        .on('mouseover', vis.tip.show)
+        .on('mouseout', vis.tip.hide)
 
         .attr("transform", function (d, i) {
             var row_num = Math.ceil(d.total_width/50);
-            // console.log("total_width " +  d.total_width + " row_num " + row_num);
+            console.log("total_width " +  d.total_width + " row_num " + row_num);
             return "translate(" + ((i%row_num)*50) + ", " + (Math.floor(i/row_num)*74) + ")"
         })
         .attr("opacity", function (d, i) {
@@ -180,37 +216,50 @@ TreeMap.prototype.updateVis = function(){
             } else {
                 return 0;
             }
-        })
-        .attr("clip-path", function(d){
-            return "url(#clipPath-" + d.dominantColorCategory + ")";
-        })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
+        });
 
-    groups.append("rect")
-        .attr("id", d => "rect-" + d.data.color_name )
+    vis.imageElements.transition();
+    vis.imageElements.exit().remove();
+
+    // TODO: need to remove rects
+
+    vis.rects = vis.svg
+        .selectAll("text")
+        .data(vis.root.leaves());
+
+     vis.rects.enter()
+        .append("rect")
+        .merge(vis.rects)
+        .transition()
+       .attr("id",  function(d) {
+            console.log(d);
+            return "rect-" + d.data.color_name;
+        } )
         .attr('width', function (d) { return d.x1 - d.x0; })
         .attr('height', function (d) { return d.y1 - d.y0; })
         .attr("pointer-events", "none")
         .style("fill", function(d) {
             return vis.colorMap[d.data["color_name"]];
         })
-        .style("fill-opacity", 0.5);
+        .style("fill-opacity", 0.5)
+         .attr("transform", function(d) {
+             console.log(d);
+             return "translate(" + d.x0 + "," + d.y0 + ")";
+         } );
 
-
-    groups.exit().remove();
+    vis.rects.exit().remove();
 
 
     // and to add the text labels
-    var textLabels = vis.svg
+    vis.textLabels = vis.svg
         .selectAll("text")
         .data(vis.root.leaves());
 
-    textLabels.exit().remove();
+    vis.textLabels.exit().remove();
 
-    textLabels.enter()
+    vis.textLabels.enter()
         .append("text")
-        .merge(textLabels)
+        .merge(vis.textLabels)
         .transition()
         .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
@@ -219,5 +268,7 @@ TreeMap.prototype.updateVis = function(){
         .attr("font-size", "15px")
         .attr("fill", "white")
         .attr("class", "tree-labels")
+
+
 }
 
