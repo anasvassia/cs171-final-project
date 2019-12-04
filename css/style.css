@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: Playfair;
-    src: url("fonts/Playfair_Display/PlayfairDisplay-Black.ttf");
+    src: url("fonts/Playfair_Display/PlayfairDisplay-Regular.ttf");
 }
 
 #intro, .storyline, #sources {
@@ -23,7 +23,6 @@
 
 #header-img {
     width: 100%;
-    opacity: 0.9;
     border: #2F354C solid 7px;
     border-style: none none solid none;
 }
@@ -39,6 +38,10 @@ h1 {
     border: #2F354C solid 2px;
     padding: 25px;
 }
+ h5 {
+     font-family: Playfair;
+     font-size: 24px;
+ }
 
 h6 {
     font-family: Playfair;
