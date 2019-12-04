@@ -24,7 +24,7 @@ TreeMap.prototype.initVis = function(){
     vis.margin = { top: 20, right: 100, bottom: 20, left: 60 };
 
     vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
-        vis.height = 720 - vis.margin.top - vis.margin.bottom;
+        vis.height = 600 - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")

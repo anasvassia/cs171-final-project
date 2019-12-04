@@ -1,4 +1,7 @@
-
+const capitalize = (s) => {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
 /*
  * PrioVis - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the visualization
@@ -31,6 +34,21 @@ BarChart.prototype.initVis = function(){
         .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
         .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+
+    vis.colorMap = {
+        "blue": "#93d7f0",
+        "red": "#eb5f6c",
+        "yellow": "#f1d063",
+        "green": "#99d58f",
+        "violet": "#bb96d8",
+        "orange": "#f09b68",
+        "pink": "#f797a1",
+        "white": "#f5e9c0",
+        "black": "#433d39",
+        "gray": "#736f6c"
+    }
+
+    vis.colors = Object.keys(vis.colorMap);
 
     // Scales and axes
     vis.x = d3.scaleLinear()
@@ -66,6 +84,8 @@ BarChart.prototype.initVis = function(){
 BarChart.prototype.wrangleData = function(genre){
     var vis = this;
 
+
+
     vis.displayData = vis.data[genre];
 
 
@@ -75,7 +95,13 @@ BarChart.prototype.wrangleData = function(genre){
 
     vis.displayData = vis.displayData.slice(0, 16);
 
-    // console.log(vis.displayData);
+    vis.layers = d3.stack()
+        .keys(vis.colors)
+        (vis.displayData);
+
+    console.log(vis.layers);
+
+        // console.log(vis.displayData);
 
     // Update the visualization
     vis.updateVis();
@@ -98,24 +124,84 @@ BarChart.prototype.updateVis = function(){
         return d.name;
     }));
 
-    var bars = vis.svg.selectAll(".bar")
-        .data(vis.displayData);
 
-    bars.enter().append("rect")
-        .attr("class", "bar")
 
-        .merge(bars)
-        .transition()
-        .attr("x", vis.x(0))
-        .attr("y", function(d){
-            return vis.y(d.name);
-        })
-        .attr("width", function(d) {
-            return vis.x(d.score); })
-        .attr("height", vis.y.bandwidth())
-        .attr("fill", "#736f6c");
 
-    bars.exit().remove();
+    vis.groupsselect = vis.svg
+        .selectAll("g.layer")
+        .data(vis.layers)
+
+    vis.groupsenter = vis.groupsselect.enter().append("g")
+        .attr("class", "layer")
+        .attr("id", function (d) {
+            return "layer-" + d.key;
+
+        });
+
+    vis.groups = vis.groupsenter.merge(vis.groupsselect);
+
+    vis.groups.attr("fill", function (d) {
+        return vis.colorMap[d.key];
+    })
+        .transition();
+
+
+
+
+    vis.rectsselect = vis.groups.selectAll("rect")
+        .data(function(d) { return d; })
+
+    vis.rectsenter = vis.rectsselect.enter().append("rect")
+
+    vis.rects = vis.rectsenter.merge(vis.rectsselect)
+
+    vis.tip = d3.tip().attr("class", "tooltip")
+            .html(function(d) {
+                var subgroupName = d3.select(this.parentNode).datum().key;
+                var subgroupValue = d.data[subgroupName];
+                return "Object Type: " + d.data.name + "<br>" + "Color: " + capitalize(subgroupName) + "<br>" + "Score: " + Math.round(subgroupValue);
+            })
+
+    vis.rects.call(vis.tip);
+
+
+    vis.rects.on('mouseover', vis.tip.show)
+            .on('mouseout', vis.tip.hide)
+            .attr("x", function (d) {
+                return vis.x(d[0]);
+            })
+            .attr("y", function(d){
+                return vis.y(d.data.name);
+            })
+            .attr("width", function(d) {
+                return vis.x(d[1]) - vis.x(d[0]); })
+            .attr("height", vis.y.bandwidth())
+
+    vis.rects.transition();
+
+
+
+    vis.groupsselect.exit().remove();
+    vis.rectsselect.exit().remove();
+
+    // var bars = vis.svg.selectAll(".bar")
+    //     .data(vis.displayData);
+    //
+    // bars.enter().append("rect")
+    //     .attr("class", "bar")
+    //
+    //     .merge(bars)
+    //     .transition()
+    //     .attr("x", vis.x(0))
+    //     .attr("y", function(d){
+    //         return vis.y(d.name);
+    //     })
+    //     .attr("width", function(d) {
+    //         return vis.x(d.score); })
+    //     .attr("height", vis.y.bandwidth())
+    //     .attr("fill", "#736f6c");
+    //
+    // bars.exit().remove();
 
     var textLabels = vis.svg
         .selectAll("text.data-label")
