@@ -310,6 +310,6 @@ InnovativeView.prototype.updateVis = function (){
 
     var vis = this;
     // user's book selection
-    console.log(vis.selectedBook);
+    // console.log(vis.selectedBook);
 
 };

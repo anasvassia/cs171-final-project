@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="row container-fluid" id="header">
-        <img src="img/books.jpg" alt="Stack of Books" id="header-img"/>
+    <!-- Header image and title -->
+    <div class="row container-fluid step parallax" id="header">
+        <img src="img/header-image.jpeg" alt="Stack of Books" id="header-img"/>
         <div class="col-md-3"><hr/></div>
         <div class="col-md-6" id="title">
             <h1>A Cover Worth 1000 Words</h1>
@@ -16,48 +17,57 @@
             <h5>how aesthetic features can influence your purchases</h5>
         </div>
         <div class="col-md-3"><hr/></div>
-
     </div>
     <!-- Introductory text -->
-    <div class="row container-fluid" id="intro">
+    <div class="row container-fluid step" id="intro">
         <div class="col-md-12" id="opening">
             <p class="storyline">
-
-                Aesthetics tend to be taken for granted. Who cares if
-                something looks good? Function before style, right? While
-                there is some truth to that, visual appeal definitely plays an
-                important role in our everyday lives. Aesthetics can affect
-                everything from how we feel, to the decisions that we make -
-                sometimes without us even realizing it!
+                Aesthetics tend to be taken for granted. Who cares if something looks good?
+                Function before style, right? While there is some truth to that, visual appeal
+                definitely plays an important role in our everyday lives. Aesthetics can affect
+                everything from how we feel, to the decisions that we make - sometimes without
+                us even realizing it!
                 <br/>
-                Often when we think ‘aesthetics’, the first things that come
-                to mind are probably envy-enticing photos that flood Instagram
-                and Tumblr. However, aesthetic  is used in the creation of
-                books, movies, and even music, and is  an overarching term that
-                includes everything from typography to delivery. Arguably, it’s
-                these more basic building blocks that can have the biggest
-                influence on the human psyche. Whether you’re a customer or a
-                product designer, learning more about aesthetics can really
-                help you to make savvier decisions. Not convinced?
-                Understandable - it can be a tough concept to wrap your head
-                around, and your first instinct might be to click out of this
-                page entirely. Let’s see if we can change your mind, though, by
-                starting with a quick example.
+                Often when we think ‘aesthetics’, the first things that come to mind are
+                probably envy-enticing photos that flood Instagram and Tumblr. However,
+                aesthetic  is used in the creation of books, movies, and even music, and is  an
+                overarching term that includes everything from typography to delivery.
+                Arguably, it’s these more basic building blocks that can have the biggest
+                influence on the human psyche. Whether you’re a customer or a product designer,
+                learning more about aesthetics can really help you to make savvier decisions.
+                Not convinced? Understandable - it can be a tough concept to wrap your head
+                around, and your first instinct might be to click out of this page entirely.
+                Let’s see if we can change your mind though.
+                <br>
+                We’ve used data from <a
+                    href="https://github.com/zygmuntz/goodbooks-10k">
+                 zygmuntz’s goodbooks dataset </a>(a compilation of data - genre,
+                ratings, etc.- of various books) from the book-rating site, goodreads) as
+                well
+                as information gathered by running book cover images through
+                <a href="https://cloud.google.com/vision/"> Google’s Vision
+                    API </a>
+                (using their “scores” result) to figure
+                out the dominant colors and symbols used on different book covers) in order
+                to
+                create the informative visualizations on this website. Hopefully they can
+                help
+                to provide some insite into this cool topic. Before we dive in, though,
+                let’s
+                first begin with a quick example.
             </p>
         </div>
     </div>
 
     <!-- Hook/ user interaction -- book is selected -->
-    <div class="row container-fluid" id="choose-book">
+    <div class="row container-fluid step" id="choose-book">
         <div class="col-md-12">
             <div class="row container-fluid">
-                <div class="col-md-3"></div>
-                <div class="col-md-7">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
                     <h6 id="instructions" class="storyline">
-                        Choose the book cover that most appeals to you -
-                        that makes you want to take the book home and read
-                        it right away - by clicking on it. Choose wisely,
-                        since you won't be able to choose a different book without refreshing the page.
+                        Imagine this scene: you walk into a bookstore and immediately there’s a book
+                        that catches your eye and draws your attention. Which one is it?
                     </h6>
                 </div>
                 <div class="col-md-2"></div>
@@ -110,28 +120,13 @@
         <div class="col-md-12">
             <div class="row container-fluid">
                 <div class="col-md-2"></div>
-                <div class="col-md-8 storyline" id="choice-explanation"></div>
+                <div class="col-md-8 storyline step" id="choice-explanation"></div>
                 <div class="col-md-2"></div>
             </div>
             <hr/>
 
             <!-- Color viualization-->
-            <div class="row container-fluid" id="color-container">
-<!--                <div class="col-md-1"></div>-->
-<!--
-                <div class="col-md-4" class="storyline">
-                    <h6 id="color-title">COLOR VIEW</h6>
-                    <p class="storyline" id="color-directions">
-                        This visualization shows how colors are used in the
-                        covers of books of different genres. Each circle
-                        represents a different genre, and each bar on that circle
-                        represents .... The graph in the center shows how color
-                        has changed over time for .... Hover over a bar
-                        for more detailed information, and click on a bar
-                        to updated the timeline view.
-                    </p>
-                </div>
--->
+            <div class="row container-fluid step" id="color-container">
                 <div class="col-md-6">
                     <div id="color-vis"></div>
                 </div>
@@ -141,7 +136,7 @@
             </div>
 
             <!-- Book symbols visualization -->
-            <div class="row container-fluid" id="symbols-container">
+            <div class="row container-fluid step" id="symbols-container">
                 <div class="col-md-12">
                     <h6>SYMBOL VIEW</h6>
                     <p class="storyline" id="symbol-directions">
@@ -158,28 +153,28 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row step">
         <div class="col-md-1"></div>
         <div class="col-md-5" id="barchart"></div>
         <div class="col-md-6" id="treemap"></div>
     </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <form class="form-inline">
-            <div class="form-group">
-                <label for="genre-select"><pre>Chart Data:  </pre></label>
-                <select class="form-control" id="genre-select"></select>
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="genre-select"><pre>Chart Data:  </pre></label>
+                    <select class="form-control" id="genre-select"></select>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10" id="ridgeline"></div>
-    <div class="col-md-1"></div>
-</div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" id="ridgeline"></div>
+        <div class="col-md-1"></div>
+    </div>
 
     <!-- Sources and credits -->
     <div id="sources-and-credits" class="storyline">
@@ -193,12 +188,14 @@
         </p>
     </div>
 
+
 <script src="js/queue.v1.min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/d3.min.js"></script>
 <script src="js/d3-scale-radial.js"></script>
 <script src="js/d3-tip.js"></script>
+<script src="js/Scrollify-master/jquery.scrollify.js"></script>
 <script src="js/bar-chart.js"></script>
 <script src="js/treemap.js"></script>
 <script src="js/ridgeline.js"></script>

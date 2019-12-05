@@ -125,3 +125,11 @@ function createSelect(tagFrequencyData) {
         ridgeline.wrangleData(this.value);
     });
 }
+
+
+
+$(function() {
+    $.scrollify({
+        section : ".step"
+    });
+});

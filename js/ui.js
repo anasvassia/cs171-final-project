@@ -67,21 +67,63 @@ d3.json("data/book-data-lite.json", function(data) {
                 // user can select whichever book they like
                 if(clicked) {
                     $(".book-covers")
-                        .css("opacity", "0.7")
+                        .css("opacity", "0.8")
                         .css("border", "none");
                     $(select)
                         .css("opacity", "1.0")
                         .css("border", "3px double wheat");
+                    console.log(val);
+                    var genre = genreArray[index].replace("-", " ");
                     // let user choose a book
                     $("#choice-explanation").html(
-                        "Excellent choice! '" + val.title + "' by " + val.authors +
-                        " is a " + genreArray[index].replace("-", " ") + " book with a dominantly " +
-                        val.dominantColorCategory + "-shade cover! How does the color " +
-                        "of this cover compare with other covers of the same genre? Well, we" +
-                        " can explore that by using the visualization below. </hr>"
+                        val.title + " by " + val.authors + "? " +
+                        "Not a bad choice. This is " +
+                        "actually a " + genre +
+                        " book, published in " + val.original_publication_year +
+                        ", with a predominantly " + val.dominantColorCategory +
+                        " colored cover. But think for a moment - why did you " +
+                        "choose this book though? Is [color] your favorite " +
+                        "color? Maybe you particularly liked the art style of " +
+                        "this cover? Maybe you’re not entirely sure why. " +
+                        "Regardless, there was probably something (or things) " +
+                        "about this cover that appealed to you and made you " +
+                        "want to choose it. This is the power of aesthetics. " +
+                        "It’s not always a fancy sign that screams 'PICK ME!!'," +
+                        " but is actually typically a bunch of small, subtle " +
+                        "features that come together to make you feel an " +
+                        "attraction to the object. Aesthetics help to influence" +
+                        " your emotions, and this influence is what makes " +
+                        "design so powerful and important. There’s actually an" +
+                        " entire psychological field, known as " +
+                        "<a href='https://en.wikipedia.org/wiki/Neuroesthetics'>" +
+                        "neuroaesthetics</a>, that researches how and why these" +
+                        " visual stimuli affect our everyday decisions. <br/><br/>" +
+                        "While neuroaesthetics is a topic that we could talk " +
+                        "about for days, we’ll " +
+                        "provide a short introduction to this awesome field by " +
+                        "looking at book covers. " +
+                        "Bringing it back to the book you selected, recall " +
+                        "that " + val.title + " by " + val.authors + " is " +
+                        "a" + genre +
+                        " book with a predominantly " +
+                        val.dominantColorCategory + " colored " +
+                        "cover. This is actually " +
+                        "[pretty (>15%)/ not very (<15%)] common for " + genre +
+                        "books. Has this always been " +
+                        "the case for this genre? What about colors used in " +
+                        "other genres? Let’s find " +
+                        "out."
                     );
+                    // pass selection to innovative view
                     innovativeview.selectedBook = val;
                     innovativeview.updateVis();
+                    // on click, move to choice explanation div
+                    var offset = $(this).offset();
+                    offset.top += 400;
+                    $('html, body').animate({
+                        scrollTop: offset.top,
+                        scrollLeft: offset.left
+                    });
                 }
             });
     });
