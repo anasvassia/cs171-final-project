@@ -138,12 +138,15 @@ function createSelect(tagFrequencyData) {
 
     var topTags = tagFrequencyData.slice(0, 60);
 
-    var select = $('#combobox');
-
-    //$( "#combobox" ).combobox();
-    // $( "#toggle" ).on( "click", function() {
-    //     $( "#combobox" ).toggle();
-    // });
+    var select = $('#genre-select');
+    var ratingSelect = $('#rating-genre-select');
+    var ratingOptions;
+    if(ratingSelect.prop) {
+        ratingOptions = ratingSelect.prop('options');
+    }
+    else {
+        ratingOptions = ratingSelect.attr('options');
+    }
 
     if(select.prop) {
         var options = select.prop('options');
@@ -152,19 +155,29 @@ function createSelect(tagFrequencyData) {
         var options = select.attr('options');
     }
     options[0] = new Option("All", "total");
+    ratingOptions[0] = new Option("All", "total");
+
     topTags.forEach(function(tag) {
         var displayTag = capitalize(tag["tag_name"].replace("-", " "));
         options[options.length] = new Option(displayTag, tag["tag_name"]);
+        ratingOptions[ratingOptions.length] = new Option(displayTag, tag["tag_name"]);
     });
 
     select.val("total");
     select.on('change', function() {
-        console.log(this.value);
         treemap.wrangleData(this.value);
         bookdisplay.wrangleData(this.value, "total");
         barchart.wrangleData(this.value);
+    });
+
+    console.log(ratingOptions)
+    ratingSelect.val("total");
+    ratingSelect.on('change', function() {
         ridgeline.wrangleData(this.value);
     });
+
+
+
 }
 
 
