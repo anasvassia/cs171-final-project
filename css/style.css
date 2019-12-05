@@ -13,6 +13,19 @@
     src: url("fonts/Playfair_Display/PlayfairDisplay-Regular.ttf");
 }
 
+@font-face {
+    font-family: Zilla-Slab;
+    src: url("fonts/ZIlla_Slab/ZillaSlab-Regular.ttf");
+}
+
+.step {
+    position:relative;
+    overflow:hidden;
+    width:100%;
+    min-height:100vh;
+
+}
+
 #intro, .storyline, #sources {
     font-family: Google-Roboto;
     font-size: 20px;
@@ -39,8 +52,9 @@ h1 {
     padding: 25px;
 }
  h5 {
-     font-family: Playfair;
+     font-family: Zilla-Slab;
      font-size: 24px;
+     text-align: center;
  }
 
 h6 {
@@ -49,44 +63,25 @@ h6 {
     color: #eb5f6c;
 }
 
-#color-title {
-    margin-top: 150px;
+#book-selection {
+    background-color: rgba(70, 25, 12, 0.9);
+    display: block;
+    margin-bottom: 20px;
 }
 
-.opening {
-    text-align: center;
-    color: white;
+#instructions {
+    color: darkgray;
+    -webkit-text-stroke: 0.5px black;
+}
+
+#color-title {
+    margin-top: 150px;
 }
 
 .storyline, #color-vis{
     text-align: center;
     font-kerning: auto;
-}
-
-
-#bookmark {
-    max-width: 50%;
-}
-
-#intro {
-    margin-top: 75px;
-    margin-bottom: 55px;
-}
-
-#instructions {
-    color: #e8b923;
-    -webkit-text-stroke: 0.05px black;
-}
-
-#book-selection,  #vis2-img  {
-    background-image: url("../img/table.jpg");
-    display: block;
-    background-repeat: repeat;
-    margin-top: 35px;
-}
-
-#vis2-img {
-    background-image: none;
+    margin: auto;
 }
 
 #color-directions, #symbol-directions {
@@ -100,9 +95,6 @@ h6 {
     text-align: center;
 }
 
-#symbol-vis-img, #vis2-img {
-    height: 500px;
-}
 
 #symbols-container {
     margin-top: 50px;

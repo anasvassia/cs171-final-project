@@ -23,7 +23,7 @@ queue()
     .defer(d3.json,"data/hierarchy_tag_color.json")
     .defer(d3.json, "data/tag_frequency.json")
     .defer(d3.json,"data/summarybygenre.json")
-    .defer(d3.json,"data/genrebyyear.json")
+    .defer(d3.json,"data/genrebyyearpct.json")
     .await(createVis);
 
 
@@ -139,3 +139,9 @@ function createSelect(tagFrequencyData) {
     });
 }
 
+
+$(function() {
+    $.scrollify({
+        section : ".step"
+    });
+});
