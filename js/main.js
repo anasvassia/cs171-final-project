@@ -4,6 +4,8 @@ var stackedbar;
 var barchart;
 var treemap;
 var ridgeline;
+var bookdisplay;
+var ratingbookdisplay;
 
 var vis = {};
 
@@ -18,6 +20,10 @@ var leaveEventHandler = function(genre, color) {
     bookdisplay.wrangleData(genre, color);
     treemap.deselectColor();
     barchart.deselectColor();
+}
+
+var enterRatingEventHandler = function (genre, color, rating) {
+    ratingbookdisplay.wrangleData(genre, color, rating);
 }
 
 const capitalize = (s) => {
@@ -43,6 +49,7 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
     barchart = new BarChart("barchart", tagObjectData, enterEventHandler, leaveEventHandler);
 
     bookdisplay = new BookDisplay("book-display", data);
+    ratingbookdisplay = new RatingBookDisplay("rating-book-display", data);
 
     treemap = new TreeMap("treemap", hierarchyTagColorData, data,  enterEventHandler, leaveEventHandler);
 
@@ -50,7 +57,7 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
 
     stackedbar = new StackedBar("stacked-bar", genreByYear);
 
-    ridgeline = new RidgeLine("ridgeline", data);
+    ridgeline = new RidgeLine("ridgeline", data, enterRatingEventHandler);
 
     createSelect(tagFrequencyData);
 
