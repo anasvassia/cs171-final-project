@@ -45,10 +45,10 @@ InnovativeView.prototype.initVis = function () {
 
 // Set margin and svg drawing area.
     vis.margin = {top: 10, right: 20, bottom: 10, left: 10},
-        vis.width = 1100 - vis.margin.left - vis.margin.right,
+        vis.width  = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
         vis.height = 900 - vis.margin.top - vis.margin.bottom,
         vis.outerRadius = Math.min(vis.width, vis.height) /5,
-        vis.mainRadius = 250, vis.mainCirclex = vis.width/2.2,
+        vis.mainRadius = 250, vis.mainCirclex = vis.width/2,
         vis.mainCircley = vis.height/2, vis.subRadius =15;
 
     // Draw SVG Element.
@@ -198,12 +198,12 @@ vis.svg.selectAll('.genre-label')
     vis.svg
         .append("foreignObject")
         .attr('class', 'legend-details')
-        .attr("x", 280)
+        .attr("x", vis.width/3.7 )
         .attr('y', vis.mainCircley - 125)
         .attr('height', 160)
         .attr('width', 425)
         .text("We analyzed books from 8 most common genres published between 1900 and 2017 and extracted the most dominant " +
-            "color. We've custom designed a 'hub & spoke' visual to represent each genre. " +
+            "color. We've custom designed a hub & spoke' visual to represent each genre. " +
             "The center represents a genre and spoke length & area of the colored circles represent the " +
             "color prevalence in a genre. Click on the circles to learn more about color prevalence trends. Click on the white space to clear " +
             "filters.");
@@ -310,6 +310,6 @@ InnovativeView.prototype.updateVis = function (){
 
     var vis = this;
     // user's book selection
-    console.log(vis.selectedBook);
+    // console.log(vis.selectedBook);
 
 };
