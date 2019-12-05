@@ -120,13 +120,13 @@
         <div class="col-md-12">
             <div class="row container-fluid">
                 <div class="col-md-2"></div>
-                <div class="col-md-8 storyline step" id="choice-explanation"></div>
-                <div class="col-md-2"></div>
+                <div class="col-md-7 storyline step" id="choice-explanation"></div>
+                <div class="col-md-3" id="selected-book"></div>
             </div>
             <hr/>
 
             <!-- Color viualization-->
-            <div class="row container-fluid" id="color-container">
+            <div class="row container-fluid step" id="color-container">
                 <div class="col-md-7">
                     <div id="color-vis"></div>
                 </div>
@@ -138,15 +138,20 @@
             <!-- Book symbols visualization -->
             <div class="row container-fluid step" id="symbols-container">
                 <div class="col-md-12">
-                    <h6>SYMBOL VIEW</h6>
-                    <p class="storyline" id="symbol-directions">
-                        Just as important as color, are the symbols that appear
-                        on book covers. In this visualization, the bar chart to
-                        the left shows the most popular symbols that are used
-                        on book covers, grouped by genre. The tree map to the
-                        right shows the main color of the books within that
-                        genre. Feel free to use the drop-down box to filter by
-                        a specific genre.
+                    <p class="storyline">
+                        Who knew that there was such a pattern to the usage of
+                        color! Pretty cool, right? Another important feature
+                        of book covers are the symbols used. How many times
+                        have you picked up a book and then immediately put it
+                        back down because you knew that it was going to be
+                        ‘another chick-lit’? Certain genres tend to show
+                        certain objects on their book covers, because of what
+                        these objects symbolize to us as the customers.
+                        Flowers are typically associated with love, and other
+                        positive emotions, while fire tends to be associated
+                        with darker themes like anger and rebellion. Let’s
+                        check out what other correlations there are.
+
                     </p>
                 </div>
             </div>
@@ -159,7 +164,7 @@
         <div class="col-md-6" id="treemap"></div>
     </div>
 
-    <div class="row">
+    <div class="row step">
         <div class="col-md-12">
             <form class="form-inline">
                 <div class="form-group">
@@ -170,7 +175,8 @@
         </div>
     </div>
 
-    <div class="row">
+
+    <div class="row step">
         <div class="col-md-1"></div>
         <div class="col-md-10" id="ridgeline"></div>
         <div class="col-md-1"></div>

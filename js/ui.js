@@ -74,6 +74,8 @@ d3.json("data/book-data-lite.json", function(data) {
                         .css("border", "3px double wheat");
                     console.log(val);
                     var genre = genreArray[index].replace("-", " ");
+                    console.log(innovativeview.summarybygenre);
+
                     // let user choose a book
                     $("#choice-explanation").html(
                         val.title + " by " + val.authors + "? " +
@@ -82,7 +84,7 @@ d3.json("data/book-data-lite.json", function(data) {
                         " book, published in " + val.original_publication_year +
                         ", with a predominantly " + val.dominantColorCategory +
                         " colored cover. But think for a moment - why did you " +
-                        "choose this book though? Is [color] your favorite " +
+                        "choose this book? Is [color] your favorite " +
                         "color? Maybe you particularly liked the art style of " +
                         "this cover? Maybe you’re not entirely sure why. " +
                         "Regardless, there was probably something (or things) " +
@@ -114,16 +116,15 @@ d3.json("data/book-data-lite.json", function(data) {
                         "other genres? Let’s find " +
                         "out."
                     );
+                    $("#selected-book").html(
+                        "<img src=" + val.image_url +
+                        " alt='Book Cover' id='selected-book-image'/>"
+                    );
                     // pass selection to innovative view
                     innovativeview.selectedBook = val;
                     innovativeview.updateVis();
                     // on click, move to choice explanation div
-                    var offset = $(this).offset();
-                    offset.top += 400;
-                    $('html, body').animate({
-                        scrollTop: offset.top,
-                        scrollLeft: offset.left
-                    });
+                   $.scrollify.next();
                 }
             });
     });

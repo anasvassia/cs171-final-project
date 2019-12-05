@@ -64,7 +64,7 @@ h6 {
 }
 
 #book-selection {
-    background-color: rgba(70, 25, 12, 0.9);
+    background-color: rgba(70, 25, 12, 0.85);
     display: block;
     margin-bottom: 20px;
 }
@@ -72,6 +72,17 @@ h6 {
 #instructions {
     color: darkgray;
     -webkit-text-stroke: 0.5px black;
+}
+
+#choice-explanation {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+#selected-book-image {
+    width: 50%;
+    margin: auto;
 }
 
 #color-title {
@@ -83,18 +94,6 @@ h6 {
     font-kerning: auto;
     margin: auto;
 }
-
-#color-directions, #symbol-directions {
-    background-color: #f797a1;
-    color: white;
-}
-
-#choice-explanation {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    text-align: center;
-}
-
 
 #symbols-container {
     margin-top: 50px;
