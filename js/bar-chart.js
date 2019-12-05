@@ -125,13 +125,7 @@ BarChart.prototype.updateVis = function(){
         return d.name;
     }));
 
-    vis.tip = d3.tip().attr("class", "tooltip")
-        .html(function(d) {
-            console.log(this);
-            var subgroupName = d3.select(this.parentNode).datum().key;
-            var subgroupValue = d.data[subgroupName];
-            return "Object Type: " + d.data.name + "<br>" + "Color: " + capitalize(subgroupName) + "<br>" + "Score: " + Math.round(subgroupValue);
-        })
+
 
     vis.groupsselect = vis.svg
         .selectAll("g.layer")
@@ -151,12 +145,30 @@ BarChart.prototype.updateVis = function(){
     })
         .transition();
 
+
+    vis.rectsselect = vis.groups.selectAll("rect")
+        .data(function(d) { return d; })
+
+    vis.rectsenter = vis.rectsselect.enter().append("rect");
+
+    vis.rects = vis.rectsenter.merge(vis.rectsselect)
+
+    vis.tip = d3.tip().attr("class", "tooltip");
+    vis.rects.call(vis.tip);
+
+
     var mouseover = function(d) {
-        console.log(d);
 
         var subgroupName = d3.select(this.parentNode).datum().key; // This was the tricky part
-        console.log(this.parentNode);
-        vis.tip.show(d, this);
+        var subgroupValue = d.data[subgroupName];
+
+        vis.tip.html(
+            "Object Type: " + d.data.name + "<br>" + "Color: " + capitalize(subgroupName) + "<br>" + "Score: " + Math.round(subgroupValue)
+        );
+
+        vis.tip.show(d);
+
+
         vis.eventHandler(vis.current_genre, subgroupName);
         vis.svg.selectAll(".layer")
             .style("fill-opacity", 0.6);
@@ -174,13 +186,6 @@ BarChart.prototype.updateVis = function(){
 
     }
 
-    vis.rectsselect = vis.groups.selectAll("rect")
-        .data(function(d) { return d; })
-
-    vis.rectsenter = vis.rectsselect.enter().append("rect");
-
-    vis.rects = vis.rectsenter.merge(vis.rectsselect)
-    vis.rects.call(vis.tip);
 
     vis.rects.on('mouseover', mouseover)
         .on('mouseout', mouseleave)
