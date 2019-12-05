@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>A Cover Worth 1000 Words</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 
@@ -164,7 +165,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row container-fluid step">
         <div class="col-md-12">
             <div class="row">
@@ -198,11 +199,34 @@
 
 
 
-    <div class="row step">
+<div class="step">
+            <form>
+                <div class="form-row">
+                    <div class="col-6">
+                    <label>Choose a genre: </label>
+                    <select class="form-control" id="rating-genre-select"></select>
+                    </div>
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <span>Average Rating</span>
+
+                        <label class="switch">
+                        <input type="checkbox" id="rating-checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                        <span>Number of Reviews</span>
+
+                    </div>
+                </div>
+            </form>
+
+    <div class="row ">
         <div class="col-md-1"></div>
-        <div class="col-md-10" id="ridgeline"></div>
+        <div class="col-md-8" id="ridgeline"></div>
+        <div class="col-md-2" id="rating-book-display"></div>
         <div class="col-md-1"></div>
     </div>
+</div>
 
     <!-- Sources and credits -->
     <div id="sources-and-credits" class="storyline step">
@@ -220,19 +244,23 @@
 
 <script src="js/queue.v1.min.js"></script>
 <script src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+    <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/d3.min.js"></script>
 <script src="js/d3-scale-radial.js"></script>
 <script src="js/d3-tip.js"></script>
 <script src="js/Scrollify-master/jquery.scrollify.js"></script>
 <script src="js/bar-chart.js"></script>
-<script src="js/book-display.js"></script>
+    <script src="js/rating-book-display.js"></script>
+    <script src="js/book-display.js"></script>
 
 <script src="js/treemap.js"></script>
 <script src="js/ridgeline.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/lodash.js"></script>
 <script src="js/main.js"></script>
+<script src="js/combobox.js"></script>
 <script src="js/innovative_updated.js"></script>
 <script src="js/stacked_bar.js"></script>
 </body>

@@ -4,6 +4,8 @@ var stackedbar;
 var barchart;
 var treemap;
 var ridgeline;
+var bookdisplay;
+var ratingbookdisplay;
 
 var vis = {};
 
@@ -18,6 +20,11 @@ var leaveEventHandler = function(genre, color) {
     bookdisplay.wrangleData(genre, color);
     treemap.deselectColor();
     barchart.deselectColor();
+}
+
+var enterRatingEventHandler = function (genre, color, rating, param) {
+    console.log(param);
+    ratingbookdisplay.wrangleData(genre, color, rating, param);
 }
 
 const capitalize = (s) => {
@@ -50,7 +57,9 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
 
     stackedbar = new StackedBar("stacked-bar", genreByYear);
 
-    ridgeline = new RidgeLine("ridgeline", data);
+    ratingbookdisplay = new RatingBookDisplay("rating-book-display", data);
+
+    ridgeline = new RidgeLine("ridgeline", data, enterRatingEventHandler);
 
     createSelect(tagFrequencyData);
 
@@ -124,9 +133,24 @@ function createSelect(tagFrequencyData) {
     tagFrequencyData.sort(function(a, b) {
         return b.frequency - a.frequency;
     });
-    var topTags = tagFrequencyData.slice(0, 100);
+
+    tagFrequencyData = tagFrequencyData.filter(function (d) {
+        return !(["nonfiction", "ya", "book-club"]).includes(d.tag_name);
+    });
+
+    var topTags = tagFrequencyData.slice(0, 60);
 
     var select = $('#genre-select');
+    var ratingSelect = $('#rating-genre-select');
+    var ratingCheckbox = $('#rating-checkbox');
+    var ratingOptions;
+    if(ratingSelect.prop) {
+        ratingOptions = ratingSelect.prop('options');
+    }
+    else {
+        ratingOptions = ratingSelect.attr('options');
+    }
+
     if(select.prop) {
         var options = select.prop('options');
     }
@@ -134,17 +158,32 @@ function createSelect(tagFrequencyData) {
         var options = select.attr('options');
     }
     options[0] = new Option("All", "total");
-    topTags.forEach(function(tag) {
-        options[options.length] = new Option(tag["tag_name"], tag["tag_name"]);
-    });
-    select.val("total");
+    ratingOptions[0] = new Option("All", "total");
 
+    topTags.forEach(function(tag) {
+        var displayTag = capitalize(tag["tag_name"].replace("-", " "));
+        options[options.length] = new Option(displayTag, tag["tag_name"]);
+        ratingOptions[ratingOptions.length] = new Option(displayTag, tag["tag_name"]);
+    });
+
+    select.val("total");
     select.on('change', function() {
         treemap.wrangleData(this.value);
         bookdisplay.wrangleData(this.value, "total");
         barchart.wrangleData(this.value);
-        ridgeline.wrangleData(this.value);
     });
+
+    ratingSelect.val("total");
+    ratingSelect.on('change', function() {
+        ridgeline.wrangleData(this.value, !$('#rating-checkbox').is(':checked'));
+    });
+
+    ratingCheckbox.change(function () {
+        console.log($('#rating-genre-select').val());
+            ridgeline.wrangleData($('#rating-genre-select').val(), !this.checked);
+        }
+    )
+
 }
 
 

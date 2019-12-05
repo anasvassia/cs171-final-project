@@ -5,7 +5,7 @@
  * @param _data						-- the actual data: perDayData
  */
 
-BookDisplay = function(_parentElement, _bookData){
+RatingBookDisplay = function(_parentElement, _bookData){
     this.parentElement = _parentElement;
     this.bookData = _bookData;
 
@@ -17,7 +17,7 @@ BookDisplay = function(_parentElement, _bookData){
  * Initialize visualization (static content, e.g. SVG area or axes)
  */
 
-BookDisplay.prototype.initVis = function(){
+RatingBookDisplay.prototype.initVis = function(){
     var vis = this;
 
     vis.margin = { top: 20, right: 10, bottom: 20, left: 30 };
@@ -45,8 +45,9 @@ BookDisplay.prototype.initVis = function(){
         "gray": "#736f6c"
     }
 
+
     // (Filter, aggregate, modify data)
-    vis.wrangleData("total", "total");
+    vis.wrangleData("total", "total", [0, 5], "average_rating");
 }
 
 
@@ -54,11 +55,14 @@ BookDisplay.prototype.initVis = function(){
  * Data wrangling
  */
 
-BookDisplay.prototype.wrangleData = function(genre, color){
+RatingBookDisplay.prototype.wrangleData = function(genre, color, rating, param){
     var vis = this;
 
     vis.current_genre = genre;
     vis.current_color = color;
+    vis.current_rating = rating;
+
+    console.log(param);
 
 
     // for (var i = 0; i < vis.data[genre].children.length; i++) {
@@ -66,15 +70,20 @@ BookDisplay.prototype.wrangleData = function(genre, color){
     // }
 
     // console.log(vis.data[genre]);
-    vis.images = []
+    vis.images = [];
+
+    vis.bookData.sort(function (a, b) {
+        return b["ratings_count"] - a["ratings_count"];
+    });
+
 
     for (var i = 0; i < vis.bookData.length; i++) {
         var book = vis.bookData[i];
         if (book["tags"].includes(genre) || genre === "total") {
             var book_color = book["dominantColorCategory"];
             if (book_color &&  book_color != "missing") {
-                if (book_color === color || color === "total") {
-                    if (vis.images.length < 6 && book["ratings_count"] > 100000) {
+                if ((book_color === color || color === "total") && (book[param] >= rating[0] && book[param] <= rating[1])) {
+                    if (vis.images.length < 6) {
                         vis.images.push(book);
                     }
                 }
@@ -84,7 +93,7 @@ BookDisplay.prototype.wrangleData = function(genre, color){
             break;
         }
     }
-
+    console.log(vis.images);
     // Update the visualization
     vis.updateVis();
 }
@@ -94,13 +103,12 @@ BookDisplay.prototype.wrangleData = function(genre, color){
  * The drawing function
  */
 
-BookDisplay.prototype.updateVis = function(){
+RatingBookDisplay.prototype.updateVis = function(){
     var vis = this;
 
 
     vis.svg.select("text").remove();
     vis.svg.append("text")
-        .attr("class", "book-display-labels")
         .each(function (d) {
             var arr;
             if (vis.current_color != "total" && vis.current_genre != "total") {
@@ -117,7 +125,7 @@ BookDisplay.prototype.updateVis = function(){
                 d3.select(this).append("tspan")
                     .text(arr[i])
                     .attr("dy", i ? "1.2em" : 0)
-                    .attr("x", 30)
+                    .attr("x", 25)
                     .attr("text-anchor", "middle")
                     .attr("class", "tspan" + i)
                     .attr("fill", "black");
@@ -156,8 +164,8 @@ BookDisplay.prototype.updateVis = function(){
         })
         .attr("pointer-events", "all")
         .attr("transform", function (d, i) {
-            // var row_num = Math.ceil(vis.width/50);
-            // console.log("total_width " +  vis.width + " row_num " + row_num);
+            var row_num = Math.ceil(vis.width/50);
+//            console.log("total_width " +  d.total_width + " row_num " + row_num);
             return "translate(" + (0) + ", " + (i*74 + 10*i + 50) + ")"
 //             var num_cols = Math.max(1,  Math.floor(d.total_width/50));
 //             var num_rows = Math.max(1, Math.floor(d.total_height/74));
