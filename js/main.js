@@ -24,6 +24,8 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
 
     barchart = new BarChart("barchart", tagObjectData);
 
+    bookdisplay = new BookDisplay("book-display", data);
+
     treemap = new TreeMap("treemap", hierarchyTagColorData, data);
 
     innovativeview = new InnovativeView("color-vis", data, genreByYear, summaryByGenre, {});
@@ -121,6 +123,7 @@ function createSelect(tagFrequencyData) {
 
     select.on('change', function() {
         treemap.wrangleData(this.value);
+        bookdisplay.wrangleData(this.value, "total");
         barchart.wrangleData(this.value);
         ridgeline.wrangleData(this.value);
     });
