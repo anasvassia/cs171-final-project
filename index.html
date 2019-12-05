@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
     <!-- Header image and title -->
     <div class="row container-fluid step parallax" id="header">
         <img src="img/header-image.jpeg" alt="Stack of Books" id="header-img"/>
@@ -19,6 +20,7 @@
         <div class="col-md-3"><hr/></div>
     </div>
     <!-- Introductory text -->
+
     <div class="row container-fluid step" id="intro">
         <div class="col-md-12" id="opening">
             <p class="storyline">
@@ -60,6 +62,7 @@
     </div>
 
     <!-- Hook/ user interaction -- book is selected -->
+
     <div class="row container-fluid step" id="choose-book">
         <div class="col-md-12">
             <div class="row container-fluid">
@@ -74,9 +77,9 @@
             </div>
 
             <div id="book-selection">
-                <div class="row container-fluid">
+                <div class="row">
                     <div class="col-md-12">
-                        <div class="row container-fluid row1">
+                        <div class="row row1">
                             <div class="col-md-3">
                                 <img src="" alt="" class="book-covers" id="img0"/>
                             </div>
@@ -92,10 +95,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="row container-fluid row2">
+                <div class="row row2">
                     <div class="col-md-12">
                         <div class="col-md-12">
-                            <div class="row container-fluid">
+                            <div class="row">
                                 <div class="col-md-3">
                                     <img src="" alt="" class="book-covers" id="img4"/>
                                 </div>
@@ -116,7 +119,7 @@
         </div>
     </div>
 
-    <div class="row container-fluid visualizations" id="vis-container">
+    <div class="row visualizations" id="vis-container">
         <div class="col-md-12">
             <div class="row container-fluid">
                 <div class="col-md-2"></div>
@@ -126,7 +129,7 @@
             <hr/>
 
             <!-- Color viualization-->
-            <div class="row container-fluid step" id="color-container">
+            <div class="row container-fluid" id="color-container">
                 <div class="col-md-7">
                     <div id="color-vis"></div>
                 </div>
@@ -136,6 +139,7 @@
             </div>
 
             <!-- Book symbols visualization -->
+
             <div class="row container-fluid step" id="symbols-container">
                 <div class="col-md-12">
                     <p class="storyline">
@@ -157,11 +161,12 @@
             </div>
         </div>
     </div>
-
+    
     <div class="row step">
-        <div class="col-md-1"></div>
+
         <div class="col-md-5" id="barchart"></div>
-        <div class="col-md-6" id="treemap"></div>
+        <div class="col-md-2" id="book-display"></div>
+        <div class="col-md-5" id="treemap"></div>
     </div>
 
     <div class="row step">
@@ -193,6 +198,7 @@
             Sources go here with link tags
         </p>
     </div>
+</div>
 
 
 <script src="js/queue.v1.min.js"></script>
@@ -201,8 +207,10 @@
 <script src="js/d3.min.js"></script>
 <script src="js/d3-scale-radial.js"></script>
 <script src="js/d3-tip.js"></script>
-<script src="js/Scrollify-master/jquery.scrollify.js"></script>
+<!--<script src="js/Scrollify-master/jquery.scrollify.js"></script>-->
 <script src="js/bar-chart.js"></script>
+<script src="js/book-display.js"></script>
+
 <script src="js/treemap.js"></script>
 <script src="js/ridgeline.js"></script>
 <script src="js/ui.js"></script>

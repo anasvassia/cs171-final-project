@@ -1,13 +1,18 @@
 
+
+
+
 /*
  * PrioVis - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the visualization
  * @param _data						-- the actual data: perDayData
  */
 
-BarChart = function(_parentElement, _data, _metaData){
+BarChart = function(_parentElement, _data, _enterEventHandler, _leaveEventHandler){
     this.parentElement = _parentElement;
     this.data = _data;
+    this.enterEventHandler = _enterEventHandler;
+    this.leaveEventHandler = _leaveEventHandler;
 
     this.initVis();
 }
@@ -23,7 +28,7 @@ BarChart.prototype.initVis = function(){
     vis.margin = { top: 20, right: 60, bottom: 20, left: 100 };
     // console.log($("#" + vis.parentElement).width());
     vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
-        vis.height = 800 - vis.margin.top - vis.margin.bottom;
+        vis.height = 600 - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -31,6 +36,21 @@ BarChart.prototype.initVis = function(){
         .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
         .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+
+    vis.colorMap = {
+        "blue": "#93d7f0",
+        "red": "#eb5f6c",
+        "yellow": "#f1d063",
+        "green": "#99d58f",
+        "violet": "#bb96d8",
+        "orange": "#f09b68",
+        "pink": "#f797a1",
+        "white": "#f5e9c0",
+        "black": "#433d39",
+        "gray": "#736f6c"
+    }
+
+    vis.colors = Object.keys(vis.colorMap);
 
     // Scales and axes
     vis.x = d3.scaleLinear()
@@ -66,6 +86,8 @@ BarChart.prototype.initVis = function(){
 BarChart.prototype.wrangleData = function(genre){
     var vis = this;
 
+    vis.current_genre = genre;
+
     vis.displayData = vis.data[genre];
 
 
@@ -73,9 +95,15 @@ BarChart.prototype.wrangleData = function(genre){
         return b.score - a.score;
     });
 
-    vis.displayData = vis.displayData.slice(0, 20);
+    vis.displayData = vis.displayData.slice(0, 16);
 
-    // console.log(vis.displayData);
+    vis.layers = d3.stack()
+        .keys(vis.colors)
+        (vis.displayData);
+
+    console.log(vis.layers);
+
+        // console.log(vis.displayData);
 
     // Update the visualization
     vis.updateVis();
@@ -98,24 +126,106 @@ BarChart.prototype.updateVis = function(){
         return d.name;
     }));
 
-    var bars = vis.svg.selectAll(".bar")
-        .data(vis.displayData);
 
-    bars.enter().append("rect")
-        .attr("class", "bar")
 
-        .merge(bars)
-        .transition()
-        .attr("x", vis.x(0))
+    vis.groupsselect = vis.svg
+        .selectAll("g.layer")
+        .data(vis.layers)
+
+    vis.groupsenter = vis.groupsselect.enter().append("g")
+        .attr("class", "layer")
+        .attr("id", function (d) {
+            return "layer-" + d.key;
+
+        });
+
+    vis.groups = vis.groupsenter.merge(vis.groupsselect);
+
+    vis.groups.attr("fill", function (d) {
+        return vis.colorMap[d.key];
+    })
+        .transition();
+
+
+    vis.rectsselect = vis.groups.selectAll("rect")
+        .data(function(d) { return d; })
+
+    vis.rectsenter = vis.rectsselect.enter().append("rect");
+
+    vis.rects = vis.rectsenter.merge(vis.rectsselect)
+
+    vis.tip = d3.tip().attr("class", "tooltip");
+    vis.rects.call(vis.tip);
+
+
+    var mouseover = function(d) {
+
+        var subgroupName = d3.select(this.parentNode).datum().key; // This was the tricky part
+        var subgroupValue = d.data[subgroupName];
+
+        vis.tip.html(
+            "Object Type: " + d.data.name + "<br>" + "Color: " + capitalize(subgroupName) + "<br>" + "Score: " + Math.round(subgroupValue)
+        );
+
+        vis.tip.show(d);
+
+
+        vis.enterEventHandler(vis.current_genre, subgroupName);
+        vis.svg.selectAll(".layer")
+            .style("fill-opacity", 0.5);
+
+        vis.svg.select("#layer-" + subgroupName)
+            .style("fill-opacity", 1);
+    }
+
+    var mouseleave = function(d) {
+
+        vis.tip.hide(d);
+        vis.svg.selectAll(".layer")
+            .style("fill-opacity", 1);
+        vis.leaveEventHandler(vis.current_genre, "total");
+
+    }
+
+
+    vis.rects.on('mouseover', mouseover)
+        .on('mouseout', mouseleave)
+        .attr("x", function (d) {
+            return vis.x(d[0]);
+        })
         .attr("y", function(d){
-            return vis.y(d.name);
+            return vis.y(d.data.name);
         })
         .attr("width", function(d) {
-            return vis.x(d.score); })
-        .attr("height", vis.y.bandwidth())
-        .attr("fill", "#f09b68");
+            return vis.x(d[1]) - vis.x(d[0]); })
+        .attr("height", vis.y.bandwidth());
 
-    bars.exit().remove();
+
+    vis.rects.transition();
+
+
+
+    vis.groupsselect.exit().remove();
+    vis.rectsselect.exit().remove();
+
+    // var bars = vis.svg.selectAll(".bar")
+    //     .data(vis.displayData);
+    //
+    // bars.enter().append("rect")
+    //     .attr("class", "bar")
+    //
+    //     .merge(bars)
+    //     .transition()
+    //     .attr("x", vis.x(0))
+    //     .attr("y", function(d){
+    //         return vis.y(d.name);
+    //     })
+    //     .attr("width", function(d) {
+    //         return vis.x(d.score); })
+    //     .attr("height", vis.y.bandwidth())
+    //     .attr("fill", "#736f6c");
+    //
+    // bars.exit().remove();
 
     var textLabels = vis.svg
         .selectAll("text.data-label")
@@ -141,5 +251,23 @@ BarChart.prototype.updateVis = function(){
 
     // vis.svg.select(".x-axis").call(vis.xAxis);
     vis.svg.select(".y-axis").call(vis.yAxis);
+}
+
+BarChart.prototype.selectColor = function(color) {
+    var vis = this;
+
+    vis.svg.selectAll(".layer")
+        .style("fill-opacity", 0.5);
+
+    vis.svg.select("#layer-" + color)
+        .style("fill-opacity", 1);
+}
+
+BarChart.prototype.deselectColor = function() {
+    var vis = this;
+
+
+    vis.svg.selectAll(".layer")
+        .style("fill-opacity", 1);
 }
 

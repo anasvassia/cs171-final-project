@@ -5,10 +5,12 @@
  * @param _data						-- the actual data: perDayData
  */
 
-TreeMap = function(_parentElement, _data, _bookData){
+TreeMap = function(_parentElement, _data, _bookData,  _enterEventHandler, _leaveEventHandler){
     this.parentElement = _parentElement;
     this.data = _data;
     this.bookData = _bookData;
+    this.enterEventHandler = _enterEventHandler;
+    this.leaveEventHandler = _leaveEventHandler;
 
     this.initVis();
 }
@@ -24,7 +26,7 @@ TreeMap.prototype.initVis = function(){
     vis.margin = { top: 20, right: 100, bottom: 20, left: 60 };
 
     vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
-        vis.height = 800 - vis.margin.top - vis.margin.bottom;
+        vis.height = 600 - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -58,6 +60,7 @@ TreeMap.prototype.initVis = function(){
 TreeMap.prototype.wrangleData = function(genre){
     var vis = this;
 
+    vis.current_genre = genre;
 
     for (var i = 0; i < vis.data[genre].children.length; i++) {
         vis.data[genre].children[i]["images"] = [];
@@ -117,9 +120,9 @@ TreeMap.prototype.updateVis = function(){
 
 
     // use this information to add rectangles:
-    vis.leaf = vis.svg
-        .selectAll("g.area")
-        .data(vis.root.leaves());
+    // vis.leaf = vis.svg
+    //     .selectAll("g.area")
+    //     .data(vis.root.leaves());
 
 
     // TODO: FIX CLIPPING
@@ -150,114 +153,175 @@ TreeMap.prototype.updateVis = function(){
     //         return d.y0;
     //     } );
 
-    vis.groupsenter = vis.leaf.enter()
-        .append("g")
-        .attr("class", "area");
+    // vis.groupsenter = vis.leaf.enter()
+    //     .append("g")
+    //     .attr("class", "area");
+    //
+    // vis.groups = vis.groupsenter.merge(vis.leaf);
+    //
+    // vis.groups
+    //     .transition()
+    //     .attr("transform", function(d) {
+    //         return "translate(" + d.x0 + "," + d.y0 + ")";
+    //     } )
+    //     .attr("clip-path", function(d){
+    //         return "url(#clipPath-" + d.data.color_name + ")";
+    //     });
 
-    vis.groups = vis.groupsenter.merge(vis.leaf);
-
-    vis.groups
-        .transition()
-        .attr("transform", function(d) {
-            return "translate(" + d.x0 + "," + d.y0 + ")";
-        } )
-        .attr("clip-path", function(d){
-            return "url(#clipPath-" + d.data.color_name + ")";
-        });
-
-    vis.tip = d3.tip().attr("class", "tooltip")
-        .html(function(d) {
-            return d.title;
-        })
-
-    vis.groups.call(vis.tip);
-
-    vis.images = vis.groups.selectAll("image")
-
-        .data(function(d){
-            return d.data.images.map(function(i) {
-                return {
-                    ...i,
-                    "total_width": d.x1 - d.x0,
-                    "total_height": d.y1 - d.y0
-                };
-            }); })
-
-    vis.imageElements = vis.images.enter()
-        .append("image")
-        .merge(vis.images)
-        .attr('width', 50)
-        .attr("height", 74)
-        .attr("xlink:href", function (d) {
-            return d.image_url;
-        })
-        .attr("pointer-events", "all")
-        .on('mouseover', vis.tip.show)
-        .on('mouseout', vis.tip.hide)
-
-        .attr("transform", function (d, i) {
-            var row_num = Math.ceil(d.total_width/50);
-//            console.log("total_width " +  d.total_width + " row_num " + row_num);
-            return "translate(" + ((i%row_num)*50) + ", " + (Math.floor(i/row_num)*74) + ")"
-        })
-        .attr("opacity", function (d, i) {
-            var row_num = Math.ceil(d.total_width/74);
-            if (Math.floor(i/row_num)*74 <= d.total_height + 74) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
-
-    vis.imageElements.transition();
-    vis.imageElements.exit().remove();
+//
+//     vis.images = vis.groups.selectAll("image")
+//
+//         .data(function(d){
+//             return d.data.images.map(function(i) {
+//                 return {
+//                     ...i,
+//                     "total_width": d.x1 - d.x0,
+//                     "total_height": d.y1 - d.y0
+//                 };
+//             }); })
+//
+//     vis.imageElements = vis.images.enter()
+//         .append("image")
+//         .merge(vis.images)
+//         .attr('width', function(d) {
+//             return 50;
+//             // var num_cols = Math.floor(d.total_width/50);
+//             // return Math.max(1, d.total_width / num_cols);
+//         })
+//         .attr("height", function(d) {
+//             return 74;
+//             // var num_rows = Math.floor(d.total_height/74);
+//             // return Math.max(1, d.total_height / num_rows);
+//         })
+//         .attr("xlink:href", function (d) {
+//             return d.image_url;
+//         })
+//         .attr("pointer-events", "all")
+//         .on('mouseover', vis.tip.show)
+//         .on('mouseout', vis.tip.hide)
+//
+//         .attr("transform", function (d, i) {
+//             var row_num = Math.ceil(d.total_width/50);
+// //            console.log("total_width " +  d.total_width + " row_num " + row_num);
+//             return "translate(" + ((i%row_num)*50) + ", " + (Math.floor(i/row_num)*74) + ")"
+// //             var num_cols = Math.max(1,  Math.floor(d.total_width/50));
+// //             var num_rows = Math.max(1, Math.floor(d.total_height/74));
+// //             console.log("cols: " + num_cols + " rows: " + num_rows);
+// //
+// //             var x = d.total_width / num_cols * (i % num_cols);
+// //             var y = d.total_height/num_rows  * Math.floor(i /num_rows );
+// //             return "translate(" + (x) + ", " + (y) + ")"
+//
+//
+//         })
+//         .attr("opacity", function (d, i) {
+//             var row_num = Math.ceil(d.total_width/74);
+//             // cond: Math.floor(i/row_num)*74 <= d.total_height + 74
+//             if (Math.floor(i/row_num)*74 <= d.total_height + 74) {
+//                 return 1;
+//             } else {
+//                 return 0;
+//             }
+//         });
+//
+//     vis.imageElements.transition();
+//     vis.imageElements.exit().remove();
 
     // TODO: need to remove rects
 
-    vis.rects = vis.svg
-        .selectAll("text")
+    vis.rectsSelect = vis.svg
+        .selectAll("rect")
         .data(vis.root.leaves());
 
-     vis.rects.enter()
+    vis.rectsSelect.exit().remove();
+
+    vis.tip = d3.tip().attr("class", "tooltip")
+        .html(function(d) {
+            return d3.format(".1%")(d.data.frequency/d.parent.value);
+        })
+
+
+     vis.rects = vis.rectsSelect.enter()
         .append("rect")
-        .merge(vis.rects)
-        .transition()
+         .merge(vis.rectsSelect)
        .attr("id",  function(d) {
             return "rect-" + d.data.color_name;
         } )
         .attr('width', function (d) { return d.x1 - d.x0; })
         .attr('height', function (d) { return d.y1 - d.y0; })
-        .attr("pointer-events", "none")
+        .attr("pointer-events", "all")
         .style("fill", function(d) {
             return vis.colorMap[d.data["color_name"]];
         })
-        .style("fill-opacity", 0.5)
+        .style("fill-opacity", 1)
          .attr("transform", function(d) {
              return "translate(" + d.x0 + "," + d.y0 + ")";
          } );
 
-    vis.rects.exit().remove();
+    vis.rects.call(vis.tip);
+
+    var mouseover = function(d) {
+        vis.tip.show(d);
+        vis.enterEventHandler(vis.current_genre, d.data.color_name);
+        vis.svg.selectAll("rect")
+            .style("fill-opacity", 0.5);
+
+        vis.svg.select("#rect-" + d.data.color_name)
+            .style("fill-opacity", 1);
+    }
+
+    var mouseleave = function(d) {
+        vis.tip.hide(d);
+        vis.svg.selectAll("rect")
+            .style("fill-opacity", 1);
+        vis.leaveEventHandler(vis.current_genre, "total");
+
+    }
+
+
+    vis.rects.on('mouseover', mouseover)
+        .on('mouseout', mouseleave)
+
+    vis.rects.transition();
+
 
 
     // and to add the text labels
     vis.textLabels = vis.svg
-        .selectAll("text")
+        .selectAll("text.tree-labels")
         .data(vis.root.leaves());
-
     vis.textLabels.exit().remove();
 
     vis.textLabels.enter()
         .append("text")
+        .attr("class", "tree-labels")
         .merge(vis.textLabels)
         .transition()
         .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
         .text(function(d){
             return d.data["color_name"]; })
-        .attr("font-size", "15px")
+        .attr("font-size", "12px")
         .attr("fill", "white")
-        .attr("class", "tree-labels")
+
 
 
 }
 
+TreeMap.prototype.selectColor = function(color) {
+    var vis = this;
+
+    vis.svg.selectAll("rect")
+        .style("fill-opacity", 0.5);
+
+    vis.svg.select("#rect-" + color)
+        .style("fill-opacity", 1);
+}
+
+TreeMap.prototype.deselectColor = function() {
+    var vis = this;
+
+
+    vis.svg.selectAll("rect")
+        .style("fill-opacity", 1);
+}

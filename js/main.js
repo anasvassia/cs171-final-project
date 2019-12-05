@@ -7,6 +7,24 @@ var ridgeline;
 
 var vis = {};
 
+var enterEventHandler = function(genre, color) {
+    bookdisplay.wrangleData(genre, color);
+    treemap.selectColor(color);
+    barchart.selectColor(color);
+
+}
+
+var leaveEventHandler = function(genre, color) {
+    bookdisplay.wrangleData(genre, color);
+    treemap.deselectColor();
+    barchart.deselectColor();
+}
+
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 queue()
     .defer(d3.json,"data/book-data-lite.json")
     .defer(d3.json,"data/tag_object.json")
@@ -22,9 +40,11 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
 
     vis.data = data;
 
-    barchart = new BarChart("barchart", tagObjectData);
+    barchart = new BarChart("barchart", tagObjectData, enterEventHandler, leaveEventHandler);
 
-    treemap = new TreeMap("treemap", hierarchyTagColorData, data);
+    bookdisplay = new BookDisplay("book-display", data);
+
+    treemap = new TreeMap("treemap", hierarchyTagColorData, data,  enterEventHandler, leaveEventHandler);
 
     innovativeview = new InnovativeView("color-vis", data, genreByYear, summaryByGenre, {});
 
@@ -121,11 +141,11 @@ function createSelect(tagFrequencyData) {
 
     select.on('change', function() {
         treemap.wrangleData(this.value);
+        bookdisplay.wrangleData(this.value, "total");
         barchart.wrangleData(this.value);
         ridgeline.wrangleData(this.value);
     });
 }
-
 
 
 $(function() {
