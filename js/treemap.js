@@ -5,11 +5,12 @@
  * @param _data						-- the actual data: perDayData
  */
 
-TreeMap = function(_parentElement, _data, _bookData, _eventHandler){
+TreeMap = function(_parentElement, _data, _bookData,  _enterEventHandler, _leaveEventHandler){
     this.parentElement = _parentElement;
     this.data = _data;
     this.bookData = _bookData;
-    this.eventHandler = _eventHandler;
+    this.enterEventHandler = _enterEventHandler;
+    this.leaveEventHandler = _leaveEventHandler;
 
     this.initVis();
 }
@@ -261,9 +262,9 @@ TreeMap.prototype.updateVis = function(){
 
     var mouseover = function(d) {
         vis.tip.show(d);
-        vis.eventHandler(vis.current_genre, d.data.color_name);
+        vis.enterEventHandler(vis.current_genre, d.data.color_name);
         vis.svg.selectAll("rect")
-            .style("fill-opacity", 0.6);
+            .style("fill-opacity", 0.5);
 
         vis.svg.select("#rect-" + d.data.color_name)
             .style("fill-opacity", 1);
@@ -273,7 +274,7 @@ TreeMap.prototype.updateVis = function(){
         vis.tip.hide(d);
         vis.svg.selectAll("rect")
             .style("fill-opacity", 1);
-        vis.eventHandler(vis.current_genre, "total");
+        vis.leaveEventHandler(vis.current_genre, "total");
 
     }
 
@@ -307,3 +308,20 @@ TreeMap.prototype.updateVis = function(){
 
 }
 
+TreeMap.prototype.selectColor = function(color) {
+    var vis = this;
+
+    vis.svg.selectAll("rect")
+        .style("fill-opacity", 0.5);
+
+    vis.svg.select("#rect-" + color)
+        .style("fill-opacity", 1);
+}
+
+TreeMap.prototype.deselectColor = function() {
+    var vis = this;
+
+
+    vis.svg.selectAll("rect")
+        .style("fill-opacity", 1);
+}

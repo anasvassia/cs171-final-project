@@ -8,10 +8,11 @@
  * @param _data						-- the actual data: perDayData
  */
 
-BarChart = function(_parentElement, _data, _eventHandler){
+BarChart = function(_parentElement, _data, _enterEventHandler, _leaveEventHandler){
     this.parentElement = _parentElement;
     this.data = _data;
-    this.eventHandler = _eventHandler;
+    this.enterEventHandler = _enterEventHandler;
+    this.leaveEventHandler = _leaveEventHandler;
 
     this.initVis();
 }
@@ -169,9 +170,9 @@ BarChart.prototype.updateVis = function(){
         vis.tip.show(d);
 
 
-        vis.eventHandler(vis.current_genre, subgroupName);
+        vis.enterEventHandler(vis.current_genre, subgroupName);
         vis.svg.selectAll(".layer")
-            .style("fill-opacity", 0.6);
+            .style("fill-opacity", 0.5);
 
         vis.svg.select("#layer-" + subgroupName)
             .style("fill-opacity", 1);
@@ -182,7 +183,7 @@ BarChart.prototype.updateVis = function(){
         vis.tip.hide(d);
         vis.svg.selectAll(".layer")
             .style("fill-opacity", 1);
-        vis.eventHandler(vis.current_genre, "total");
+        vis.leaveEventHandler(vis.current_genre, "total");
 
     }
 
@@ -250,5 +251,23 @@ BarChart.prototype.updateVis = function(){
 
     // vis.svg.select(".x-axis").call(vis.xAxis);
     vis.svg.select(".y-axis").call(vis.yAxis);
+}
+
+BarChart.prototype.selectColor = function(color) {
+    var vis = this;
+
+    vis.svg.selectAll(".layer")
+        .style("fill-opacity", 0.5);
+
+    vis.svg.select("#layer-" + color)
+        .style("fill-opacity", 1);
+}
+
+BarChart.prototype.deselectColor = function() {
+    var vis = this;
+
+
+    vis.svg.selectAll(".layer")
+        .style("fill-opacity", 1);
 }
 

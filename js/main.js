@@ -7,9 +7,17 @@ var ridgeline;
 
 var vis = {};
 
-var eventHandler = function(genre, color) {
+var enterEventHandler = function(genre, color) {
     bookdisplay.wrangleData(genre, color);
+    treemap.selectColor(color);
+    barchart.selectColor(color);
 
+}
+
+var leaveEventHandler = function(genre, color) {
+    bookdisplay.wrangleData(genre, color);
+    treemap.deselectColor();
+    barchart.deselectColor();
 }
 
 const capitalize = (s) => {
@@ -32,11 +40,11 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
 
     vis.data = data;
 
-    barchart = new BarChart("barchart", tagObjectData, eventHandler);
+    barchart = new BarChart("barchart", tagObjectData, enterEventHandler, leaveEventHandler);
 
     bookdisplay = new BookDisplay("book-display", data);
 
-    treemap = new TreeMap("treemap", hierarchyTagColorData, data, eventHandler);
+    treemap = new TreeMap("treemap", hierarchyTagColorData, data,  enterEventHandler, leaveEventHandler);
 
     innovativeview = new InnovativeView("color-vis", data, genreByYear, summaryByGenre, {});
 
