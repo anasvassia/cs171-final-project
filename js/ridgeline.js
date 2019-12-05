@@ -206,7 +206,6 @@ RidgeLine.prototype.updateVis = function(){
 
     vis.rect_selection = vis.areas.selectAll("rect.ridgeline-bars")
         .data(function (d) {
-            console.log(d);
             return d.bins.map(function (bin) {
                 return {
                     'x0': bin.x0,

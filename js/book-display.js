@@ -20,7 +20,7 @@ BookDisplay = function(_parentElement, _bookData){
 BookDisplay.prototype.initVis = function(){
     var vis = this;
 
-    vis.margin = { top: 20, right: 100, bottom: 20, left: 60 };
+    vis.margin = { top: 20, right: 10, bottom: 20, left: 30 };
 
     vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
         vis.height = 600 - vis.margin.top - vis.margin.bottom;
@@ -116,7 +116,7 @@ BookDisplay.prototype.updateVis = function(){
                 d3.select(this).append("tspan")
                     .text(arr[i])
                     .attr("dy", i ? "1.2em" : 0)
-                    .attr("x", 25)
+                    .attr("x", 30)
                     .attr("text-anchor", "middle")
                     .attr("class", "tspan" + i)
                     .attr("fill", "black");
@@ -155,9 +155,9 @@ BookDisplay.prototype.updateVis = function(){
         })
         .attr("pointer-events", "all")
         .attr("transform", function (d, i) {
-            var row_num = Math.ceil(vis.width/50);
-//            console.log("total_width " +  d.total_width + " row_num " + row_num);
-            return "translate(" + ((i%row_num)*50) + ", " + ((Math.floor(i/row_num))*74 + 10*i + 50) + ")"
+            // var row_num = Math.ceil(vis.width/50);
+            // console.log("total_width " +  vis.width + " row_num " + row_num);
+            return "translate(" + (0) + ", " + (i*74 + 10*i + 50) + ")"
 //             var num_cols = Math.max(1,  Math.floor(d.total_width/50));
 //             var num_rows = Math.max(1, Math.floor(d.total_height/74));
 //             console.log("cols: " + num_cols + " rows: " + num_rows);

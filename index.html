@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>A Cover Worth 1000 Words</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 
@@ -172,9 +173,9 @@
     <div class="row step">
         <div class="col-md-12">
             <form class="form-inline">
-                <div class="form-group">
-                    <label for="genre-select"><pre>Chart Data:  </pre></label>
-                    <select class="form-control" id="genre-select"></select>
+                <div class="form-group ui-widget">
+                    <label>Choose a genre: </label>
+                    <select class="form-control" id="combobox"></select>
                 </div>
             </form>
         </div>
@@ -204,6 +205,8 @@
 
 <script src="js/queue.v1.min.js"></script>
 <script src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+    <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/d3.min.js"></script>
 <script src="js/d3-scale-radial.js"></script>
@@ -218,6 +221,7 @@
 <script src="js/ui.js"></script>
 <script src="js/lodash.js"></script>
 <script src="js/main.js"></script>
+<script src="js/combobox.js"></script>
 <script src="js/innovative_updated.js"></script>
 <script src="js/stacked_bar.js"></script>
 </body>

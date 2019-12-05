@@ -20,7 +20,7 @@ RatingBookDisplay = function(_parentElement, _bookData){
 RatingBookDisplay.prototype.initVis = function(){
     var vis = this;
 
-    vis.margin = { top: 20, right: 100, bottom: 20, left: 60 };
+    vis.margin = { top: 20, right: 10, bottom: 20, left: 30 };
 
     vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
         vis.height = 600 - vis.margin.top - vis.margin.bottom;
@@ -158,7 +158,7 @@ RatingBookDisplay.prototype.updateVis = function(){
         .attr("transform", function (d, i) {
             var row_num = Math.ceil(vis.width/50);
 //            console.log("total_width " +  d.total_width + " row_num " + row_num);
-            return "translate(" + ((i%row_num)*50) + ", " + ((Math.floor(i/row_num))*74 + 10*i + 50) + ")"
+            return "translate(" + (0) + ", " + (i*74 + 10*i + 50) + ")"
 //             var num_cols = Math.max(1,  Math.floor(d.total_width/50));
 //             var num_rows = Math.max(1, Math.floor(d.total_height/74));
 //             console.log("cols: " + num_cols + " rows: " + num_rows);

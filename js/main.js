@@ -131,9 +131,20 @@ function createSelect(tagFrequencyData) {
     tagFrequencyData.sort(function(a, b) {
         return b.frequency - a.frequency;
     });
-    var topTags = tagFrequencyData.slice(0, 100);
 
-    var select = $('#genre-select');
+    tagFrequencyData = tagFrequencyData.filter(function (d) {
+        return !(["nonfiction", "ya", "book-club"]).includes(d.tag_name);
+    });
+
+    var topTags = tagFrequencyData.slice(0, 60);
+
+    var select = $('#combobox');
+
+    //$( "#combobox" ).combobox();
+    // $( "#toggle" ).on( "click", function() {
+    //     $( "#combobox" ).toggle();
+    // });
+
     if(select.prop) {
         var options = select.prop('options');
     }
@@ -142,11 +153,13 @@ function createSelect(tagFrequencyData) {
     }
     options[0] = new Option("All", "total");
     topTags.forEach(function(tag) {
-        options[options.length] = new Option(tag["tag_name"], tag["tag_name"]);
+        var displayTag = capitalize(tag["tag_name"].replace("-", " "));
+        options[options.length] = new Option(displayTag, tag["tag_name"]);
     });
-    select.val("total");
 
+    select.val("total");
     select.on('change', function() {
+        console.log(this.value);
         treemap.wrangleData(this.value);
         bookdisplay.wrangleData(this.value, "total");
         barchart.wrangleData(this.value);
