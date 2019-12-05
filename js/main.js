@@ -157,6 +157,8 @@ function createSelect(tagFrequencyData) {
 
 $(function() {
     $.scrollify({
-        section : ".step"
+        section : ".step",
+        touchScroll: false,
+        scrollSpeed: 1500,
     });
 });
