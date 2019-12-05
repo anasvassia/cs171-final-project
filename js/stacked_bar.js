@@ -42,8 +42,8 @@ StackedBar.prototype.initVis = function () {
     };
 
 // Set margin and svg drawing area.
-    vis.margin = {top: 30, right: 20, bottom: 10, left: 10},
-        vis.width = 850 - vis.margin.left - vis.margin.right,
+    vis.margin = {top: 30, right: 0, bottom: 10, left: 10},
+        vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
         vis.height = 800 - vis.margin.top - vis.margin.bottom;
 
     // Draw SVG Element.
@@ -95,7 +95,7 @@ StackedBar.prototype.initVis = function () {
         .selectAll("text")
         .style("text-anchor", "end")
         .style("font-size", 12)
-        .attr('fill', 'grey')
+        .attr('fill', '#A8A8A8')
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
         .attr("transform", "rotate(-65)");
@@ -106,7 +106,7 @@ StackedBar.prototype.initVis = function () {
         .attr("transform", "translate(150,200)")
         .selectAll("text")
         .style("font-size", 12)
-        .attr('fill', 'grey');
+        .attr('fill', '#A8A8A8');
 
     vis.svg.append("text")
         .attr("class", "x_axis_label")
@@ -145,6 +145,9 @@ StackedBar.prototype.updateStack = function () {
         .transition()
         .duration(1000)
         .call(d3.axisLeft(vis.y))
+        .selectAll("text")
+        .style("font-size", 12)
+        .attr('fill', '#A8A8A8');
 
 };
 
