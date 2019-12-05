@@ -104,12 +104,13 @@ BookDisplay.prototype.updateVis = function(){
     vis.imageselect = vis.svg.selectAll("image")
         .data(vis.images);
 
+    vis.imageselect.exit().remove();
+
+
     // TODO: call tooltip
     vis.imageElements = vis.imageselect.enter()
         .append("image")
         .merge(vis.imageselect)
-
-
         .attr('width', function(d) {
             return 50;
             // var num_cols = Math.floor(d.total_width/50);
@@ -124,13 +125,10 @@ BookDisplay.prototype.updateVis = function(){
             return d.image_url;
         })
         .attr("pointer-events", "all")
-        .on('mouseover', vis.tip.show)
-        .on('mouseout', vis.tip.hide)
-
         .attr("transform", function (d, i) {
             var row_num = Math.ceil(vis.width/50);
 //            console.log("total_width " +  d.total_width + " row_num " + row_num);
-            return "translate(" + ((i%row_num)*50 +30) + ", " + ((Math.floor(i/row_num))*74 + 30) + ")"
+            return "translate(" + ((i%row_num)*50) + ", " + ((Math.floor(i/row_num))*74 + 10*i) + ")"
 //             var num_cols = Math.max(1,  Math.floor(d.total_width/50));
 //             var num_rows = Math.max(1, Math.floor(d.total_height/74));
 //             console.log("cols: " + num_cols + " rows: " + num_rows);
@@ -142,8 +140,12 @@ BookDisplay.prototype.updateVis = function(){
 
         });
 
+    vis.imageElements.call(vis.tip);
+
+    vis.imageElements.on('mouseover', vis.tip.show)
+        .on('mouseout', vis.tip.hide)
+
     vis.imageElements.transition();
-    vis.imageElements.exit().remove();
 
 
 
