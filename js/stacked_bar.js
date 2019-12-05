@@ -56,11 +56,11 @@ StackedBar.prototype.initVis = function () {
     vis.x = d3.scaleBand()
         .domain(vis.year_ranges)
         .rangeRound([0, vis.width - 120])
-        .padding(0.3)
+        .padding(0.6)
         .align(0.3);
 
     vis.y = d3.scaleLinear()
-        .domain(d3.extent(vis.data, function(d){return d.sum}))
+        .domain([0,1])
         .rangeRound([vis.height - 230, 0]);
 
     //Define the stack bar plotter. Plot only totals by default.
@@ -127,7 +127,7 @@ StackedBar.prototype.updateStack = function () {
     // Update Series
     var series = vis.stack(vis.updated_data);
     // Update domain of Y axes.
-    vis.y.domain(d3.extent(vis.updated_data, function(d){return d.sum}));
+    // vis.y.domain(d3.extent(vis.updated_data, function(d){return d.sum}));
 
     // Call the X and Y scales
 
