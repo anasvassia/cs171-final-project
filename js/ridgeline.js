@@ -50,11 +50,7 @@ RidgeLine.prototype.initVis = function(){
 
     // Add X axis
     vis.x = d3.scaleLinear()
-        .domain([2.5, 5])
         .range([ 0, vis.width ]);
-    vis.svg.append("g")
-        .attr("transform", "translate(0," + vis.height + ")")
-        .call(d3.axisBottom(vis.x));
 
     // Create a Y scale for densities
     vis.y = d3.scaleLinear()
@@ -70,7 +66,7 @@ RidgeLine.prototype.initVis = function(){
 
 
     // (Filter, aggregate, modify data)
-    vis.wrangleData("total");
+    vis.wrangleData("total", true);
 }
 
 
@@ -78,24 +74,50 @@ RidgeLine.prototype.initVis = function(){
  * Data wrangling
  */
 
-RidgeLine.prototype.wrangleData = function(genre){
+RidgeLine.prototype.wrangleData = function(genre, rating){
     var vis = this;
+
+    console.log("GENRE: " + genre + " RATING: " + rating);
+
+    vis.param = rating ? "average_rating" : "ratings_count";
+
 
     vis.current_genre = genre;
 
     var n = vis.categories.length;
+
+    if (genre != "total") {
+        vis.filteredData = vis.data.filter(function (d) {
+            return d["tags"].includes(genre);
+        })
+    } else {
+        vis.filteredData = vis.data;
+    }
+
+    if (vis.param === "ratings_count") {
+        vis.filteredData.sort(function(a, b) {
+            return a["ratings_count"] - b["ratings_count"];
+        })
+        var l = vis.filteredData.length;
+        var bound = l - Math.round(l*0.05);
+        vis.filteredData = vis.filteredData.slice(0, bound);
+    }
+
+    console.log(vis.filteredData);
+
+    vis.x.domain(d3.extent(vis.filteredData, function (d) {
+        return d[vis.param];
+    }))
+
 
     // Compute kernel density estimation for each column:
     //var kde = kernelDensityEstimator(kernelEpanechnikov(9), vis.x.ticks(40)) // increase this 40 for more accurate density.
     vis.allDensity = [];
     for (i = 0; i < n; i++) {
         var key = vis.categories[i]
-        var category_data = vis.data.filter(function(d) {
-            if (genre === "total") {
-                return d["dominantColorCategory"] === key;
-            } else {
-                return d["dominantColorCategory"] === key && d["tags"].includes(genre);
-            }
+        var category_data = vis.filteredData.filter(function(d) {
+            return d["dominantColorCategory"] === key;
+
         })
 
        // console.log(key + " " + category_data.length);
@@ -103,7 +125,7 @@ RidgeLine.prototype.wrangleData = function(genre){
 
         // // set the parameters for the histogram
         var histogram = d3.histogram()
-            .value(function(d){  return +d["average_rating"]})   // I need to give the vector of value
+            .value(function(d){  return +d[vis.param]})   // I need to give the vector of value
             .domain(vis.x.domain())  // then the domain of the graphic
             .thresholds(vis.x.ticks(30)); // then the numbers of bins
 
@@ -114,11 +136,36 @@ RidgeLine.prototype.wrangleData = function(genre){
     //     var density = kde(ratings);
     //     vis.allDensity.push({key: key, density: density})
     }
-    if (vis.current_genre === "total") {
-        vis.totalDensity = vis.allDensity;
+
+    vis.totalDensity = [];
+    for (i = 0; i < n; i++) {
+        var key = vis.categories[i]
+        var category_data = vis.data.filter(function(d) {
+            return d["dominantColorCategory"] === key;
+
+        })
+
+        // console.log(key + " " + category_data.length);
+        // var ratings = category_data.map(function(d){  return +d["average_rating"]});
+
+        // // set the parameters for the histogram
+        var histogram = d3.histogram()
+            .value(function(d){  return +d[vis.param]})   // I need to give the vector of value
+            .domain(vis.x.domain())  // then the domain of the graphic
+            .thresholds(vis.x.ticks(30)); // then the numbers of bins
+
+        var bins = histogram(category_data);
+
+        vis.totalDensity.push({key: key, bins: bins});
+        //     console.log(ratings);
+        //     var density = kde(ratings);
+        //     vis.allDensity.push({key: key, density: density})
     }
 
-    // console.log(vis.allDensity);
+
+
+
+    console.log(vis.allDensity);
     // Update the visualization
     vis.updateVis();
 }
@@ -130,9 +177,8 @@ RidgeLine.prototype.wrangleData = function(genre){
 
 RidgeLine.prototype.updateVis = function(){
     var vis = this;
-    
-    
-    
+
+
     vis.y.domain([0, d3.max(vis.totalDensity, function (d) {
         return d3.max(d.bins, function (b) {
             return b.length;
@@ -160,6 +206,8 @@ RidgeLine.prototype.updateVis = function(){
 
     vis.areas.call(vis.tip);
 
+    vis.areas.selectAll("rect.total-bars").remove();
+
     if (vis.current_genre != "total") {
         vis.totalRectSelection = vis.areas.selectAll("rect.total-bars")
             .data(function (d, i) {
@@ -183,7 +231,7 @@ RidgeLine.prototype.updateVis = function(){
                 return "translate(" + vis.x(d.x0) + "," + vis.y(d.bin.length) + ")";
             })
             .attr("width", function (d) {
-                var numbins = 26;
+                var numbins = vis.totalDensity[0].bins.length;
                 if (numbins > 0) {
                     var barWidth = vis.width / numbins - 1;
 
@@ -227,14 +275,19 @@ RidgeLine.prototype.updateVis = function(){
     vis.rects.transition().duration(1000);
 
     var mouseover = function(d) {
-        vis.tip.html(d.bin.length + " books with average " + d.x0 + " rating")
+        if (vis.param === "average_rating") {
+            vis.tip.html(d.bin.length + " books with average " + d.x0 + " rating");
+        } else {
+            vis.tip.html(d.bin.length + " books with " + d.x0 + " reviews");
+        }
         vis.tip.show(d);
-        vis.enterHandler(vis.current_genre, d.color, [d.x0, d.x1]);
+        vis.enterHandler(vis.current_genre, d.color, [d.x0, d.x1], vis.param);
     }
 
     var mouseleave = function(d) {
         vis.tip.hide(d);
-        vis.enterHandler(vis.current_genre, "total", [0, 5]);
+        console.log(vis.x.domain());
+        vis.enterHandler(vis.current_genre, "total", vis.x.domain(), vis.param);
     }
 
 
@@ -245,7 +298,7 @@ RidgeLine.prototype.updateVis = function(){
         .on('mouseout', mouseleave)
 
         .attr("width", function(d) {
-            var numbins = 26;
+            var numbins = vis.allDensity[0].bins.length;
             if (numbins > 0) {
                 var barWidth = vis.width / numbins - 1;
 
@@ -258,6 +311,13 @@ RidgeLine.prototype.updateVis = function(){
         .attr("fill", function (d) {
             return vis.colorMap[d.color];
         });
+
+    vis.svg.select(".x-axis").remove();
+
+    vis.svg.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", "translate(0," + vis.height + ")")
+        .call(d3.axisBottom(vis.x));
 
 
 

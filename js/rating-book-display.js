@@ -45,8 +45,9 @@ RatingBookDisplay.prototype.initVis = function(){
         "gray": "#736f6c"
     }
 
+
     // (Filter, aggregate, modify data)
-    vis.wrangleData("total", "total", [0, 5]);
+    vis.wrangleData("total", "total", [0, 5], "average_rating");
 }
 
 
@@ -54,12 +55,14 @@ RatingBookDisplay.prototype.initVis = function(){
  * Data wrangling
  */
 
-RatingBookDisplay.prototype.wrangleData = function(genre, color, rating){
+RatingBookDisplay.prototype.wrangleData = function(genre, color, rating, param){
     var vis = this;
 
     vis.current_genre = genre;
     vis.current_color = color;
     vis.current_rating = rating;
+
+    console.log(param);
 
 
     // for (var i = 0; i < vis.data[genre].children.length; i++) {
@@ -69,12 +72,17 @@ RatingBookDisplay.prototype.wrangleData = function(genre, color, rating){
     // console.log(vis.data[genre]);
     vis.images = [];
 
+    vis.bookData.sort(function (a, b) {
+        return b["ratings_count"] - a["ratings_count"];
+    });
+
+
     for (var i = 0; i < vis.bookData.length; i++) {
         var book = vis.bookData[i];
         if (book["tags"].includes(genre) || genre === "total") {
             var book_color = book["dominantColorCategory"];
             if (book_color &&  book_color != "missing") {
-                if ((book_color === color || color === "total") && (book.average_rating >= rating[0] && book.average_rating <= rating[1])) {
+                if ((book_color === color || color === "total") && (book[param] >= rating[0] && book[param] <= rating[1])) {
                     if (vis.images.length < 6) {
                         vis.images.push(book);
                     }
@@ -85,7 +93,7 @@ RatingBookDisplay.prototype.wrangleData = function(genre, color, rating){
             break;
         }
     }
-
+    console.log(vis.images);
     // Update the visualization
     vis.updateVis();
 }

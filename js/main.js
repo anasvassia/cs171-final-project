@@ -22,8 +22,9 @@ var leaveEventHandler = function(genre, color) {
     barchart.deselectColor();
 }
 
-var enterRatingEventHandler = function (genre, color, rating) {
-    ratingbookdisplay.wrangleData(genre, color, rating);
+var enterRatingEventHandler = function (genre, color, rating, param) {
+    console.log(param);
+    ratingbookdisplay.wrangleData(genre, color, rating, param);
 }
 
 const capitalize = (s) => {
@@ -49,13 +50,14 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
     barchart = new BarChart("barchart", tagObjectData, enterEventHandler, leaveEventHandler);
 
     bookdisplay = new BookDisplay("book-display", data);
-    ratingbookdisplay = new RatingBookDisplay("rating-book-display", data);
 
     treemap = new TreeMap("treemap", hierarchyTagColorData, data,  enterEventHandler, leaveEventHandler);
 
     innovativeview = new InnovativeView("color-vis", data, genreByYear, summaryByGenre, {});
 
     stackedbar = new StackedBar("stacked-bar", genreByYear);
+
+    ratingbookdisplay = new RatingBookDisplay("rating-book-display", data);
 
     ridgeline = new RidgeLine("ridgeline", data, enterRatingEventHandler);
 
@@ -140,6 +142,7 @@ function createSelect(tagFrequencyData) {
 
     var select = $('#genre-select');
     var ratingSelect = $('#rating-genre-select');
+    var ratingCheckbox = $('#rating-checkbox');
     var ratingOptions;
     if(ratingSelect.prop) {
         ratingOptions = ratingSelect.prop('options');
@@ -170,13 +173,16 @@ function createSelect(tagFrequencyData) {
         barchart.wrangleData(this.value);
     });
 
-    console.log(ratingOptions)
     ratingSelect.val("total");
     ratingSelect.on('change', function() {
-        ridgeline.wrangleData(this.value);
+        ridgeline.wrangleData(this.value, !$('#rating-checkbox').is(':checked'));
     });
 
-
+    ratingCheckbox.change(function () {
+        console.log($('#rating-genre-select').val());
+            ridgeline.wrangleData($('#rating-genre-select').val(), !this.checked);
+        }
+    )
 
 }
 
