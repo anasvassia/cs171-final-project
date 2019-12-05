@@ -76,6 +76,14 @@ BarChart.prototype.initVis = function(){
 
     // (Filter, aggregate, modify data)
     vis.wrangleData("total");
+
+    vis.svg.append("text")
+        .text("This visualization shows which objects and symbols" +
+            "tend to be shown on book covers of different genres." +
+            "Once again, the book that you selected at the" +
+            "beginning is highlighted. Choose a genre to see which" +
+            "symbols are most common within it.")
+        .attr("class", "storyline")
 }
 
 

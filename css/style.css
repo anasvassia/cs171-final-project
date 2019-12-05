@@ -19,19 +19,17 @@
 }
 
 .step {
-    position:relative;
-    overflow:hidden;
     width:100%;
     min-height:100vh;
-
 }
 
-#intro, .storyline, #sources {
+.storyline{
     font-family: Google-Roboto;
     font-size: 20px;
     font-weight: normal;
-    margin-left: 0px;
-    margin-right: 0px;
+    text-align: center;
+    font-kerning: auto;
+    margin: 10px 0px 20px;
 }
 
 #header-img {
@@ -63,42 +61,48 @@ h6 {
     color: #eb5f6c;
 }
 
-#book-selection {
-    background-color: rgba(70, 25, 12, 0.85);
-    display: block;
-    margin-bottom: 20px;
-}
-
 #instructions {
     color: darkgray;
-    -webkit-text-stroke: 0.5px black;
+    -webkit-text-stroke: 0.3px black;
 }
 
-#choice-explanation {
-    margin-top: 50px;
-    margin-bottom: 50px;
+#book-selection {
+    background-image: url("../img/table.png");
+    display: block;
+}
+
+.book-covers {
+    width: 146px;
+    height: 220px;
     text-align: center;
+    display: block;
+    margin: 25px auto;
 }
 
+.row1, .row2{
+    margin-left: 20px;
+    margin-right: 0px;
+}
+
+#choice {
+    margin-top: 50px;
+    margin-bottom: 15px;
+}
 #selected-book-image {
     width: 50%;
     margin: auto;
 }
 
-#color-title {
-    margin-top: 150px;
-}
 
-.storyline, #color-vis{
-    text-align: center;
-    font-kerning: auto;
-    margin: auto;
-}
-
-#symbols-container {
+.section-title {
+    font-size: 32px;
+    font-family: Zilla-Slab;
+    text-align: left;
     margin-top: 50px;
+    margin-bottom: 20px;
 }
 
+/*
 #sources-and-credits {
     font-size: 14px;
     margin-top: 100px;
@@ -120,8 +124,11 @@ h6 {
     font-size: 14px;
     font-style: italic;
 }
+ */
 
-.tooltip, .data-label, .y-axis, .tree-labels, .genre-name, #genre-select, label pre {
+/* Tree View Styling */
+.tooltip, .data-label, .y-axis, .tree-labels, .genre-name,
+    .book-display-labels, #genre-select, label pre {
     font-family: Google-Roboto;
     font-size: 14px;
     font-style: normal;
@@ -149,51 +156,31 @@ label pre {
     font-size: 12px;
 }
 
-.book-covers {
-    width: 146px;
-    height: 220px;
-    text-align: center;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.row1, .row2{
-    margin-left: 20px;
-    margin-right: 0px;
-}
-
-hr {
-    margin-top: -25px;
-    margin-bottom: 0;
-}
 
 /*Color View Styles*/
 
 .genre-label {
-    font-family: Helvetica; /*TO BE REPLACED BY THE DEFAULT FONTS   */
+    font-family: Google-Roboto;
     font-size: 15px;
     fill: grey;
 }
 
 #legend-title {
-    font-family: Helvetica; /*TO BE REPLACED BY THE DEFAULT FONTS   */
+    font-family: Google-Roboto;
     font-size: 18px;
     fill: #A0A0A0;
     text-decoration-line: underline;
 }
 
 .legend-details {
-    font-family: Helvetica; /*TO BE REPLACED BY THE DEFAULT FONTS   */
+    font-family: Google-Roboto;
     font-size: 15px;
     color: #D0D0D0;
     font-style: italic;
 }
 
 .d3-tip-circles {
-    font-family: Helvetica; /*TO BE REPLACED BY THE DEFAULT FONTS   */
+    font-family: Google-Roboto;
     font-size: 15px;
     color: grey;
     font-style: italic;
@@ -208,7 +195,7 @@ hr {
 }
 
 .legend-arrow-text {
-    font-family: Helvetica; /*TO BE REPLACED BY THE DEFAULT FONTS   */
+    font-family: Google-Roboto;
     font-size: 12px;
     fill: #D0D0D0;
     font-style: italic;

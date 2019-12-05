@@ -9,7 +9,7 @@
 <body>
 
     <!-- Header image and title -->
-    <div class="row container-fluid step parallax" id="header">
+    <div class="row container-fluid step" id="header">
         <img src="img/header-image.jpeg" alt="Stack of Books" id="header-img"/>
         <div class="col-md-3"><hr/></div>
         <div class="col-md-6" id="title">
@@ -22,7 +22,9 @@
     <!-- Introductory text -->
 
     <div class="row container-fluid step" id="intro">
-        <div class="col-md-12" id="opening">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" id="opening">
+            <g class="section-title">The World of Aesthetics<br/></g>
             <p class="storyline">
                 Aesthetics tend to be taken for granted. Who cares if something looks good?
                 Function before style, right? While there is some truth to that, visual appeal
@@ -59,10 +61,10 @@
                 first begin with a quick example.
             </p>
         </div>
+        <div class="col-md-1"></div>
     </div>
 
     <!-- Hook/ user interaction -- book is selected -->
-
     <div class="row container-fluid step" id="choose-book">
         <div class="col-md-12">
             <div class="row container-fluid">
@@ -121,7 +123,7 @@
 
     <div class="row visualizations" id="vis-container">
         <div class="col-md-12">
-            <div class="row container-fluid">
+            <div class="row container-fluid" id="choice">
                 <div class="col-md-2"></div>
                 <div class="col-md-7 storyline step" id="choice-explanation"></div>
                 <div class="col-md-3" id="selected-book"></div>
@@ -129,7 +131,7 @@
             <hr/>
 
             <!-- Color viualization-->
-            <div class="row container-fluid" id="color-container">
+            <div class="row container-fluid step" id="color-container">
                 <div class="col-md-7">
                     <div id="color-vis"></div>
                 </div>
@@ -142,6 +144,7 @@
 
             <div class="row container-fluid step" id="symbols-container">
                 <div class="col-md-12">
+                    <g class="section-title">More Than Color<br/></g>
                     <p class="storyline">
                         Who knew that there was such a pattern to the usage of
                         color! Pretty cool, right? Another important feature
@@ -162,23 +165,37 @@
         </div>
     </div>
     
-    <div class="row step">
-
-        <div class="col-md-5" id="barchart"></div>
-        <div class="col-md-2" id="book-display"></div>
-        <div class="col-md-5" id="treemap"></div>
-    </div>
-
-    <div class="row step">
+    <div class="row container-fluid step">
         <div class="col-md-12">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="genre-select"><pre>Chart Data:  </pre></label>
-                    <select class="form-control" id="genre-select"></select>
+            <div class="row">
+                <div class="col-md-12">
+                    <g class="section-title">Symbols<br/></g>
                 </div>
-            </form>
+            </div>
+
+            <!--Select Box-->
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="genre-select"><pre>Chart Data:  </pre></label>
+                            <select class="form-control" id="genre-select"></select>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5" id="barchart"></div>
+                <div class="col-md-2" id="book-display"></div>
+                <div class="col-md-5" id="treemap"></div>
+            </div>
         </div>
     </div>
+
+
 
 
     <div class="row step">
@@ -188,7 +205,7 @@
     </div>
 
     <!-- Sources and credits -->
-    <div id="sources-and-credits" class="storyline">
+    <div id="sources-and-credits" class="storyline step">
         <p id="about-project">
             "A Cover Worth 1000 Words" was created by Anastasia Lamothe '21,
             Lekshmi Santhosh '21, and Isabelle Zheng '22 as the final project
@@ -207,7 +224,7 @@
 <script src="js/d3.min.js"></script>
 <script src="js/d3-scale-radial.js"></script>
 <script src="js/d3-tip.js"></script>
-<!--<script src="js/Scrollify-master/jquery.scrollify.js"></script>-->
+<script src="js/Scrollify-master/jquery.scrollify.js"></script>
 <script src="js/bar-chart.js"></script>
 <script src="js/book-display.js"></script>
 

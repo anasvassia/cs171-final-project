@@ -100,6 +100,7 @@ BookDisplay.prototype.updateVis = function(){
 
     vis.svg.select("text").remove();
     vis.svg.append("text")
+        .attr("class", "book-display-labels")
         .each(function (d) {
             var arr;
             if (vis.current_color != "total" && vis.current_genre != "total") {

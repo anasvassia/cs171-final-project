@@ -67,24 +67,29 @@ d3.json("data/book-data-lite.json", function(data) {
                 // user can select whichever book they like
                 if(clicked) {
                     $(".book-covers")
-                        .css("opacity", "0.8")
+                        .css("opacity", "0.9")
                         .css("border", "none");
                     $(select)
                         .css("opacity", "1.0")
                         .css("border", "3px double wheat");
                     console.log(val);
                     var genre = genreArray[index].replace("-", " ");
+                    var authors = val.authors.replace(",", " &");
                     console.log(innovativeview.summarybygenre);
 
                     // let user choose a book
                     $("#choice-explanation").html(
-                        val.title + " by " + val.authors + "? " +
+                    "<g class='section-title'>Explanation of Your Choice" +
+                        "<br/></g>" + val.title + " by " + authors + "? " +
                         "Not a bad choice. This is " +
                         "actually a " + genre +
                         " book, published in " + val.original_publication_year +
                         ", with a predominantly " + val.dominantColorCategory +
-                        " colored cover. But think for a moment - why did you " +
-                        "choose this book? Is [color] your favorite " +
+                        " colored cover. " +
+                        "<br/><br/>" +
+                        "But think for a moment - why did you " +
+                        "choose this book? Is " + val.dominantColorCategory +
+                        " your favorite " +
                         "color? Maybe you particularly liked the art style of " +
                         "this cover? Maybe you’re not entirely sure why. " +
                         "Regardless, there was probably something (or things) " +
@@ -99,13 +104,14 @@ d3.json("data/book-data-lite.json", function(data) {
                         " entire psychological field, known as " +
                         "<a href='https://en.wikipedia.org/wiki/Neuroesthetics'>" +
                         "neuroaesthetics</a>, that researches how and why these" +
-                        " visual stimuli affect our everyday decisions. <br/><br/>" +
+                        " visual stimuli affect our everyday decisions. " +
+                        "<br/><br/>" +
                         "While neuroaesthetics is a topic that we could talk " +
                         "about for days, we’ll " +
                         "provide a short introduction to this awesome field by " +
                         "looking at book covers. " +
                         "Bringing it back to the book you selected, recall " +
-                        "that " + val.title + " by " + val.authors + " is " +
+                        "that " + val.title + " by " + authors + " is " +
                         "a" + genre +
                         " book with a predominantly " +
                         val.dominantColorCategory + " colored " +
