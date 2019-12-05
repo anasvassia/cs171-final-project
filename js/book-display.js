@@ -57,6 +57,9 @@ BookDisplay.prototype.initVis = function(){
 BookDisplay.prototype.wrangleData = function(genre, color){
     var vis = this;
 
+    vis.current_genre = genre;
+    vis.current_color = color;
+
 
     // for (var i = 0; i < vis.data[genre].children.length; i++) {
     //     vis.data[genre].children[i]["images"] = [];
@@ -71,13 +74,13 @@ BookDisplay.prototype.wrangleData = function(genre, color){
             var book_color = book["dominantColorCategory"];
             if (book_color &&  book_color != "missing") {
                 if (book_color === color || color === "total") {
-                    if (vis.images.length < 12 && book["ratings_count"] > 100000) {
+                    if (vis.images.length < 6 && book["ratings_count"] > 100000) {
                         vis.images.push(book);
                     }
                 }
             }
         }
-        if (vis.images.length >= 12) {
+        if (vis.images.length >= 6) {
             break;
         }
     }
@@ -93,6 +96,32 @@ BookDisplay.prototype.wrangleData = function(genre, color){
 
 BookDisplay.prototype.updateVis = function(){
     var vis = this;
+
+
+    vis.svg.select("text").remove();
+    vis.svg.append("text")
+        .each(function (d) {
+            var arr;
+            if (vis.current_color != "total" && vis.current_genre != "total") {
+                arr = [capitalize(vis.current_genre) + " books", "with dominant",  "color " + vis.current_color];
+            } else if (vis.current_color != "total") {
+                arr = ["Books with", "dominant color", vis.current_color];
+            } else if (vis.current_genre != "total") {
+                arr = [capitalize(vis.current_genre) + " books"];
+            } else {
+                arr = ["Top books"]
+            }
+
+            for (i = 0; i < arr.length; i++) {
+                d3.select(this).append("tspan")
+                    .text(arr[i])
+                    .attr("dy", i ? "1.2em" : 0)
+                    .attr("x", 25)
+                    .attr("text-anchor", "middle")
+                    .attr("class", "tspan" + i)
+                    .attr("fill", "black");
+            }
+        });
 
 
     vis.tip = d3.tip().attr("class", "tooltip")
@@ -128,7 +157,7 @@ BookDisplay.prototype.updateVis = function(){
         .attr("transform", function (d, i) {
             var row_num = Math.ceil(vis.width/50);
 //            console.log("total_width " +  d.total_width + " row_num " + row_num);
-            return "translate(" + ((i%row_num)*50) + ", " + ((Math.floor(i/row_num))*74 + 10*i) + ")"
+            return "translate(" + ((i%row_num)*50) + ", " + ((Math.floor(i/row_num))*74 + 10*i + 50) + ")"
 //             var num_cols = Math.max(1,  Math.floor(d.total_width/50));
 //             var num_rows = Math.max(1, Math.floor(d.total_height/74));
 //             console.log("cols: " + num_cols + " rows: " + num_rows);

@@ -7,6 +7,16 @@ var ridgeline;
 
 var vis = {};
 
+var eventHandler = function(genre, color) {
+    bookdisplay.wrangleData(genre, color);
+
+}
+
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 queue()
     .defer(d3.json,"data/book-data-lite.json")
     .defer(d3.json,"data/tag_object.json")
@@ -22,11 +32,11 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
 
     vis.data = data;
 
-    barchart = new BarChart("barchart", tagObjectData);
+    barchart = new BarChart("barchart", tagObjectData, eventHandler);
 
     bookdisplay = new BookDisplay("book-display", data);
 
-    treemap = new TreeMap("treemap", hierarchyTagColorData, data);
+    treemap = new TreeMap("treemap", hierarchyTagColorData, data, eventHandler);
 
     innovativeview = new InnovativeView("color-vis", data, genreByYear, summaryByGenre, {});
 
@@ -128,3 +138,4 @@ function createSelect(tagFrequencyData) {
         ridgeline.wrangleData(this.value);
     });
 }
+

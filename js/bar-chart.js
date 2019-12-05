@@ -1,16 +1,17 @@
-const capitalize = (s) => {
-  if (typeof s !== 'string') return ''
-  return s.charAt(0).toUpperCase() + s.slice(1)
-}
+
+
+
+
 /*
  * PrioVis - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the visualization
  * @param _data						-- the actual data: perDayData
  */
 
-BarChart = function(_parentElement, _data, _metaData){
+BarChart = function(_parentElement, _data, _eventHandler){
     this.parentElement = _parentElement;
     this.data = _data;
+    this.eventHandler = _eventHandler;
 
     this.initVis();
 }
@@ -84,7 +85,7 @@ BarChart.prototype.initVis = function(){
 BarChart.prototype.wrangleData = function(genre){
     var vis = this;
 
-
+    vis.current_genre = genre;
 
     vis.displayData = vis.data[genre];
 
@@ -124,8 +125,13 @@ BarChart.prototype.updateVis = function(){
         return d.name;
     }));
 
-
-
+    vis.tip = d3.tip().attr("class", "tooltip")
+        .html(function(d) {
+            console.log(this);
+            var subgroupName = d3.select(this.parentNode).datum().key;
+            var subgroupValue = d.data[subgroupName];
+            return "Object Type: " + d.data.name + "<br>" + "Color: " + capitalize(subgroupName) + "<br>" + "Score: " + Math.round(subgroupValue);
+        })
 
     vis.groupsselect = vis.svg
         .selectAll("g.layer")
@@ -145,37 +151,49 @@ BarChart.prototype.updateVis = function(){
     })
         .transition();
 
+    var mouseover = function(d) {
+        console.log(d);
 
+        var subgroupName = d3.select(this.parentNode).datum().key; // This was the tricky part
+        console.log(this.parentNode);
+        vis.tip.show(d, this);
+        vis.eventHandler(vis.current_genre, subgroupName);
+        vis.svg.selectAll(".layer")
+            .style("fill-opacity", 0.6);
 
+        vis.svg.select("#layer-" + subgroupName)
+            .style("fill-opacity", 1);
+    }
+
+    var mouseleave = function(d) {
+
+        vis.tip.hide(d);
+        vis.svg.selectAll(".layer")
+            .style("fill-opacity", 1);
+        vis.eventHandler(vis.current_genre, "total");
+
+    }
 
     vis.rectsselect = vis.groups.selectAll("rect")
         .data(function(d) { return d; })
 
-    vis.rectsenter = vis.rectsselect.enter().append("rect")
+    vis.rectsenter = vis.rectsselect.enter().append("rect");
 
     vis.rects = vis.rectsenter.merge(vis.rectsselect)
-
-    vis.tip = d3.tip().attr("class", "tooltip")
-            .html(function(d) {
-                var subgroupName = d3.select(this.parentNode).datum().key;
-                var subgroupValue = d.data[subgroupName];
-                return "Object Type: " + d.data.name + "<br>" + "Color: " + capitalize(subgroupName) + "<br>" + "Score: " + Math.round(subgroupValue);
-            })
-
     vis.rects.call(vis.tip);
 
+    vis.rects.on('mouseover', mouseover)
+        .on('mouseout', mouseleave)
+        .attr("x", function (d) {
+            return vis.x(d[0]);
+        })
+        .attr("y", function(d){
+            return vis.y(d.data.name);
+        })
+        .attr("width", function(d) {
+            return vis.x(d[1]) - vis.x(d[0]); })
+        .attr("height", vis.y.bandwidth());
 
-    vis.rects.on('mouseover', vis.tip.show)
-            .on('mouseout', vis.tip.hide)
-            .attr("x", function (d) {
-                return vis.x(d[0]);
-            })
-            .attr("y", function(d){
-                return vis.y(d.data.name);
-            })
-            .attr("width", function(d) {
-                return vis.x(d[1]) - vis.x(d[0]); })
-            .attr("height", vis.y.bandwidth())
 
     vis.rects.transition();
 

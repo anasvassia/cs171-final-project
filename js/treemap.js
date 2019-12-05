@@ -5,10 +5,11 @@
  * @param _data						-- the actual data: perDayData
  */
 
-TreeMap = function(_parentElement, _data, _bookData){
+TreeMap = function(_parentElement, _data, _bookData, _eventHandler){
     this.parentElement = _parentElement;
     this.data = _data;
     this.bookData = _bookData;
+    this.eventHandler = _eventHandler;
 
     this.initVis();
 }
@@ -58,6 +59,7 @@ TreeMap.prototype.initVis = function(){
 TreeMap.prototype.wrangleData = function(genre){
     var vis = this;
 
+    vis.current_genre = genre;
 
     for (var i = 0; i < vis.data[genre].children.length; i++) {
         vis.data[genre].children[i]["images"] = [];
@@ -257,8 +259,27 @@ TreeMap.prototype.updateVis = function(){
 
     vis.rects.call(vis.tip);
 
-    vis.rects.on('mouseover', vis.tip.show)
-        .on('mouseout', vis.tip.hide)
+    var mouseover = function(d) {
+        vis.tip.show(d);
+        vis.eventHandler(vis.current_genre, d.data.color_name);
+        vis.svg.selectAll("rect")
+            .style("fill-opacity", 0.6);
+
+        vis.svg.select("#rect-" + d.data.color_name)
+            .style("fill-opacity", 1);
+    }
+
+    var mouseleave = function(d) {
+        vis.tip.hide(d);
+        vis.svg.selectAll("rect")
+            .style("fill-opacity", 1);
+        vis.eventHandler(vis.current_genre, "total");
+
+    }
+
+
+    vis.rects.on('mouseover', mouseover)
+        .on('mouseout', mouseleave)
 
     vis.rects.transition();
 
