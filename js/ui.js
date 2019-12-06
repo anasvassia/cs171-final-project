@@ -47,6 +47,7 @@ d3.json("data/book-data-lite.json", function(data) {
        // save state of click
         var clicked = false;
 
+
         $(select)
             .on("mouseover", function() {
                 if(!clicked) {
@@ -78,20 +79,29 @@ d3.json("data/book-data-lite.json", function(data) {
                     $(select)
                         .css("opacity", "1.0")
                         .css("border", "3px double wheat");
-                    console.log(val);
                     var genre = genreArray[index].replace("-", " ");
                     var authors = val.authors.replace(",", " &");
-                    console.log(innovativeview.summarybygenre);
+                    var thisGenre = data.filter(function(d) {
+                        return d.tags.includes(genreArray[index]) && !(d.image_url.includes("nophoto"));
+                    });
+                    var thisColor = thisGenre.filter(function(d) {
+                        return d.dominantColorCategory == val.dominantColorCategory;
+                    });
+                    var percent = thisColor.length/thisGenre.length.toFixed(2);
+                    var isCommon = percent >= .15 ? "pretty" : "not very";
 
                     // let user choose a book
                     $("#choice-explanation").html(
                         "<g class='section-title'><br>Explanation of Your Choice" +
                         "<br/></g>" +
-                        "<p class='storyline'>" + val.title + " by " + authors + "? " +
+                        "<b class='storyline'>" + val.title + " by " + authors + "? " +
                         "Not a bad choice. This is " +
-                        "actually a " + genre +
-                        " book, published in " + val.original_publication_year +
-                        ", with a predominantly " + val.dominantColorCategory +
+                        "actually a<b> " + genre +
+                        "</b> book, published in <b>" +
+                        val.original_publication_year +
+                        "</b>, with a predominantly <emp style='color:" +
+                        innovativeview.colorMap[val.dominantColorCategory]
+                        + "'>" + val.dominantColorCategory + "</emp>" +
                         " colored cover. " +
                         "<br/><br/>" +
                         "But think for a moment - why did you " +
@@ -122,9 +132,9 @@ d3.json("data/book-data-lite.json", function(data) {
                         "a" + genre +
                         " book with a predominantly " +
                         val.dominantColorCategory + " colored " +
-                        "cover. This is actually " +
-                        "[pretty (>15%)/ not very (<15%)] common for " + genre +
-                        "books. Has this always been " +
+                        "cover. This is actually " + isCommon +
+                        " common for " + genre +
+                        " books. Has this always been " +
                         "the case for this genre? What about colors used in " +
                         "other genres? Let’s find " +
                         "out. </p>"
