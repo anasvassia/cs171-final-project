@@ -68,8 +68,8 @@ d3.json("data/book-data-lite.json", function(data) {
                 if(clicked) {
                     $("#choice").html(
                         '<div class="col-md-2"></div>\n' +
-                        '                <div class="col-md-7 step" id="choice-explanation"></div>\n' +
-                        '                <div class="col-md-3" id="selected-book"></div>'
+                        '<div class="col-md-7 step inner-div" id="choice-explanation"></div>\n' +
+                        '<div class="col-md-3" id="selected-book"></div>'
                     );
 
                     $(".book-covers")
@@ -85,7 +85,7 @@ d3.json("data/book-data-lite.json", function(data) {
 
                     // let user choose a book
                     $("#choice-explanation").html(
-                        "<g class='section-title'>Explanation of Your Choice" +
+                        "<g class='section-title'><br>Explanation of Your Choice" +
                         "<br/></g>" +
                         "<p class='storyline'>" + val.title + " by " + authors + "? " +
                         "Not a bad choice. This is " +
