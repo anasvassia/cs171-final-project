@@ -66,6 +66,12 @@ d3.json("data/book-data-lite.json", function(data) {
                 clicked = !clicked;
                 // user can select whichever book they like
                 if(clicked) {
+                    $("#choice").html(
+                        '<div class="col-md-2"></div>\n' +
+                        '                <div class="col-md-7 step" id="choice-explanation"></div>\n' +
+                        '                <div class="col-md-3" id="selected-book"></div>'
+                    );
+
                     $(".book-covers")
                         .css("opacity", "0.9")
                         .css("border", "none");
@@ -79,7 +85,7 @@ d3.json("data/book-data-lite.json", function(data) {
 
                     // let user choose a book
                     $("#choice-explanation").html(
-                        "<g class='section-title'>Explanation of Your Choice" +
+                        "<br/><br/><br/><g class='section-title'>Explanation of Your Choice" +
                         "<br/></g>" +
                         "<p class='storyline'>" + val.title + " by " + authors + "? " +
                         "Not a bad choice. This is " +
@@ -130,6 +136,8 @@ d3.json("data/book-data-lite.json", function(data) {
                     // pass selection to innovative view
                     innovativeview.selectedBook = val;
                     innovativeview.updateVis();
+
+                    $()
                     // on click, move to choice explanation div
                    $.scrollify.next();
                 }

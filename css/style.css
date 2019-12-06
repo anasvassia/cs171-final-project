@@ -55,15 +55,14 @@ h1 {
      text-align: center;
  }
 
-h6 {
-    font-family: Playfair;
-    font-size: 30px;
-    color: #eb5f6c;
-}
 
-#instructions {
+a, a:visited, a:active, #instructions {
     color: darkgray;
     -webkit-text-stroke: 0.3px black;
+}
+a:hover {
+    color: #E3AD38;
+    text-decoration: none;
 }
 
 #book-selection {
