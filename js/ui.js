@@ -11,17 +11,16 @@ var books = [];
 // load data
 d3.json("data/book-data-lite.json", function(data) {
     var genreArray = [
-        "fantasy", "science-fiction", "nonfiction", "young-adult",
-        "childrens", "horror", "romance", "mystery"
+        "fantasy", "science-fiction", "historical", "young-adult",
+        "children", "thriller", "romance", "paranormal"
     ];
-
+    
     // book covers to be displayed
    books = d3.range(0, 8).map( function(val) {
         return random(genreArray[val]);
-
         });
 
-    // generate new books on each page load
+    // generate new books
     function random(genre) {
         var result = data[Math.floor(Math.random()*data.length)];
         // if the book doesn't have a cover photo
@@ -41,8 +40,6 @@ d3.json("data/book-data-lite.json", function(data) {
             .attr("alt", val.title)
             .css("opacity", "0.7");
 
-       // $(select).hide();
-       // $(select).delay(2500).fadeIn(1000);
 
        // save state of click
         var clicked = false;
