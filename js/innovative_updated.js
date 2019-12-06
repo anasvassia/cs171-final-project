@@ -11,6 +11,7 @@ InnovativeView = function (_parentElement, _data, _genrebyyear, _summarybygenre,
     this.year_ranges = [...new Set(_data.map(x => x.year_range))].sort();
     this.selectedBook = _selectedBook;
     this.initVis();
+    console.log(vis.selectedBook);
 };
 
 /*
@@ -89,10 +90,10 @@ InnovativeView.prototype.initVis = function () {
         var genreCircleMetadata = {};
         genreCircleMetadata['genre-circle-cx'] = vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius;
         genreCircleMetadata['genre-circle-cy'] = vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius;
-        genreCircleMetadata['line-start-x'] = vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius * 1.4;
-        genreCircleMetadata['line-start-y'] = vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius * 1.4;
-        genreCircleMetadata['line-end-x'] = vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius * 1.56;
-        genreCircleMetadata['line-end-y'] = vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius * 1.56;
+        genreCircleMetadata['line-start-x'] = vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius * 1.38;
+        genreCircleMetadata['line-start-y'] = vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius * 1.38;
+        genreCircleMetadata['line-end-x'] = vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius * 1.5;
+        genreCircleMetadata['line-end-y'] = vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius * 1.5;
         genreCircleMetadata['color-circle-cx'] = [];
         genreCircleMetadata['color-circle-cy'] = [];
         vis.genrecirclelocation.push(genreCircleMetadata)
@@ -168,7 +169,7 @@ InnovativeView.prototype.initVis = function () {
             vis.svg.append("path")
                 .attr("d", lineFunction(linedata))
                 .attr("class", vis.summarybygenre[i]['genre']+" callout")
-                .attr("stroke", "#DCDCDC")
+                .attr("stroke", '#DCDCDC')
                 .attr("stroke-width", 2)
                 .attr("fill", "none");});
 
@@ -182,7 +183,7 @@ vis.svg.selectAll('.genre-label')
     .attr("class", function(d) {return d.genre + " genre-label"})
     .attr("x", function(d,i){return vis.genrecirclelocation[i]['line-end-x']})
     .attr("y", function(d,i){return vis.genrecirclelocation[i]['line-end-y'] + label_offset_y[i]})
-    .attr("text-anchor",function(d,i){ if(i ===2){return 'start'} else if (i === 6){return "end"} else {return "middle"}})
+    .attr("text-anchor",function(d,i){ if(i ===2){return 'middle'} else if (i === 6){return "middle"} else {return "middle"}})
     .text(function(d){return vis.genres[d['genre']]});
 
     // Add legend title
@@ -198,7 +199,7 @@ vis.svg.selectAll('.genre-label')
     vis.svg
         .append("foreignObject")
         .attr('class', 'legend-details')
-        .attr("x", vis.width/4.6)
+        .attr("x", vis.width/4.3)
         .attr('y', vis.mainCircley - 125)
         .attr('height', 160)
         .attr('width', 425)

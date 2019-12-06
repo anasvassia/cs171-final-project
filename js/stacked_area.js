@@ -126,24 +126,80 @@ StackedBar.prototype.initVis = function () {
     vis.svg.append("text")
         .attr("class", "y_axis_label")
         .text("Count Distribution %")
-        .attr("transform", "translate(100,400) rotate(270)")
+        .attr("transform", "translate(100,550) rotate(270)")
         .attr('fill', 'grey');
+
+    vis.svg
+        .append("text")
+        .attr("class", "stack-header")
+        .text("All Genres")
+        .attr("transform", "translate(150,100)");
+
+//     vis.tooltip = d3.select("#" + vis.parentElement).append("div")
+//         .attr("class", "tooltip_stack")
+//         .style("opacity", 0);
+//
+//     ////////////
+//     var focus = svg.append("g")
+//         .attr("class", "focus")
+//         .style("display", "none");
+//
+//     focus.append("text")
+//         .attr("x", 9)
+//         .attr("dy", ".35em")
+//         .style("font-size",15);
+// ///////////////////////
+//
+//     var tooltip = vis.svg.append("g")
+//         .attr("class", "tooltip")
+//         .style("opacity", 0);
+//
+//     tooltip.append("rect")
+//         .attr("width", 30)
+//         .attr("height", 20)
+//         .attr("fill", "white")
+//         .style("opacity", 0.5);
+//
+//     tooltip.append("text")
+//         .attr("x", 15)
+//         .attr("dy", "1.2em")
+//         .style("text-anchor", "middle")
+//         .attr("font-size", "12px")
+//         .attr("font-weight", "bold");
+//
+//     var tip_example = d3.tip()
+//         .attr('class', 'd3-tip-circles tooltip')
+//         .offset([-5, 10])
+//         .html(function(d) {
+//             return d[d.index].data[d.key];
+//         });
+//
+//     vis.svg.call(tip_example);
 
     vis.svg
         .selectAll(".stacked_bar")
         .on('mouseover', function(d) {
             var chosenOne = this;
             d3.selectAll('.stacked_bar').transition().style('opacity',function () {
-                return (this === chosenOne) ? 1.0 : 0.1;
-            });})
+                return (this === chosenOne) ? 1.0 : 0.1;});
+        })
         .on('mouseout',function(d) {
-            d3.selectAll('.stacked_bar').transition().style("opacity", 0.8); });
+            d3.selectAll('.stacked_bar').transition().style("opacity", 0.8);
+
+        });
 
     vis.updateStack();
 };
 
 StackedBar.prototype.updateStack = function () {
     var vis = this;
+
+    vis.svg
+        .append("text")
+        .attr("class", "stack-header")
+        .html(vis.selected_genre)
+        .attr("transform", "translate(150,100)");
+
     // Update Series
     var series = vis.stack(vis.updated_data);
     // Call the X and Y scales
@@ -164,8 +220,7 @@ StackedBar.prototype.updateStack = function () {
             if(vis.selected_color === ''){return vis.colorMap[d.key]}
             else {return vis.colorMap[vis.selected_color]}
         })
-        .attr('d', vis.line)
-
+        .attr('d', vis.line);
 
 };
 
@@ -174,6 +229,14 @@ StackedBar.prototype.selectionChanged = function (filteredData) {
     // Filter data accordingly without changing the original data
     // Update the data property to the filtered dataset.
     vis.updated_data = filteredData;
+   if(window.genre === 'All Genres')
+   {vis.selected_genre  = 'All Genres';}
+   else
+       { vis.selected_genre = vis.genres[window.genre]}
+
+    d3.selectAll(".stack-header")
+        .remove();
+
     // Update the visualization.
     vis.updateStack();
 };

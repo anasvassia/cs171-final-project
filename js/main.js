@@ -104,11 +104,13 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
                 window.filter_genre_global = genreByYear.filter(function(d){return d.genre === selectedGenre});
             }
             stackedbar.selectionChanged(window.filter_genre_global);
+            window.genre = selectedGenre;
 
         });
 // Set on-click event handlers to deselect filters.
     d3.select("#color-vis")
         .on('click', function(){
+
             // Grab the target element that got clicked.
             var target_event = d3.select(d3.event.target);
             // if you click on genre components - do not do anything. I'm hard coding the 8 genres here.
@@ -125,9 +127,12 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
                 d3.selectAll('.faded').classed('faded', false);
                 // Also update the bar graph to show total.
                 window.filter_genre_global = genreByYear.filter(function(d){ return d.genre === 'total';});
+                window.genre = 'All Genres';
+
             }
             // Update stacked bar
             stackedbar.selectionChanged(window.filter_genre_global);
+
         });
 }
 

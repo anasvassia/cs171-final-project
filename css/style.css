@@ -217,6 +217,12 @@ label pre {
     stroke: #DCDCDC;
 
 }
+.stack-header{
+    font-size: 40px;
+    fill: grey;
+}
+
+/**/
 
 .custom-combobox {
     position: relative;

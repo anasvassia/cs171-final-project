@@ -148,6 +148,7 @@ d3.json("data/book-data-lite.json", function(data) {
 
                     // pass selection to innovative view
                     innovativeview.selectedBook = val;
+                    console.log(val);
                     innovativeview.updateVis();
 
                     // on click, move to choice explanation div
