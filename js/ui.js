@@ -79,8 +79,9 @@ d3.json("data/book-data-lite.json", function(data) {
 
                     // let user choose a book
                     $("#choice-explanation").html(
-                    "<g class='section-title'>Explanation of Your Choice" +
-                        "<br/></g>" + val.title + " by " + authors + "? " +
+                        "<g class='section-title'>Explanation of Your Choice" +
+                        "<br/></g>" +
+                        "<p class='storyline'>" + val.title + " by " + authors + "? " +
                         "Not a bad choice. This is " +
                         "actually a " + genre +
                         " book, published in " + val.original_publication_year +
@@ -120,7 +121,7 @@ d3.json("data/book-data-lite.json", function(data) {
                         "books. Has this always been " +
                         "the case for this genre? What about colors used in " +
                         "other genres? Let’s find " +
-                        "out."
+                        "out. </p>"
                     );
                     $("#selected-book").html(
                         "<img src=" + val.image_url +

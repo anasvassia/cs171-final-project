@@ -126,7 +126,7 @@
         <div class="col-md-12">
             <div class="row container-fluid" id="choice">
                 <div class="col-md-2"></div>
-                <div class="col-md-7 storyline step" id="choice-explanation"></div>
+                <div class="col-md-7 step" id="choice-explanation"></div>
                 <div class="col-md-3" id="selected-book"></div>
             </div>
             <hr/>
@@ -180,8 +180,8 @@
                 <div class="col-md-6">
                     <form class="form-inline">
                         <div class="form-group">
-                            <label for="genre-select"><pre>Chart Data:  </pre></label>
-                            <select class="form-control" id="genre-select"></select>
+                            <label for="genre-select"><pre>Choose a genre:  </pre></label>
+                            <select class="form-control select-box" id="genre-select"></select>
                         </div>
                     </form>
                 </div>
@@ -196,37 +196,77 @@
         </div>
     </div>
 
-
-
-
-<div class="step">
-            <form>
-                <div class="form-row">
-                    <div class="col-6">
-                    <label>Choose a genre: </label>
-                    <select class="form-control" id="rating-genre-select"></select>
-                    </div>
-                    <div class="col-2"></div>
-                    <div class="col-4">
-                        <span>Average Rating</span>
-
-                        <label class="switch">
-                        <input type="checkbox" id="rating-checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                        <span>Number of Reviews</span>
-
-                    </div>
-                </div>
-            </form>
-
-    <div class="row ">
-        <div class="col-md-1"></div>
-        <div class="col-md-8" id="ridgeline"></div>
-        <div class="col-md-2" id="rating-book-display"></div>
-        <div class="col-md-1"></div>
+    <div class="row container-fluid step">
+        <div class="col-md-12">
+            <g class="section-title">Influence on Ratings?<br/></g>
+            <p class="storyline">
+                Pretty cool, right? You might now be wondering on
+                whether these features really do affect how likely a
+                person is to pick up a book. Our data doesn’t allow us
+                to answer this question. However, we can answer how
+                popular different books are, and see how these ratings
+                correlate with the dominant color of books in
+                different genres. Once again, the book that you
+                selected at the beginning is highlighted. Feel free to
+                play around with the different genres and the
+                visualization itself.
+            </p>
+        </div>
     </div>
-</div>
+
+
+
+
+    <div class="step">
+        <g class="section-title">Visualization of Reviews<br/></g>
+        <form>
+            <div class="form-row">
+                <div class="col-6">
+                    <label><pre>Choose a genre: </pre></label>
+                    <select class="form-control select-box" id="rating-genre-select"></select>
+                </div>
+                <div class="col-2"></div>
+                <div class="col-4">
+                    <span>Average Rating</span>
+                        <label class="switch">
+                            <input type="checkbox" id="rating-checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    <span>Number of Reviews</span>
+                </div>
+            </div>
+        </form>
+
+        <div class="row ">
+            <div class="col-md-1"></div>
+            <div class="col-md-8" id="ridgeline"></div>
+            <div class="col-md-2" id="rating-book-display"></div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+
+    <div class="row container-fluid step">
+        <div class="col-md-12">
+            <g class="section-title">Applications to Real Life<br/></g>
+            <p class="storyline">
+                Colors and symbols are only two of the features used
+                on book covers in order to encourage you to buy a
+                book. Your decisions on which books you’re attracted
+                are being influenced before you even fully process
+                what you are seeing. This is all pretty cool, but so
+                what? Well, for one, as customers, you are now better
+                equipped to understand your purchasing habits, and to
+                analyze why you are drawn to certain books over
+                others. And, if you find yourself needing to design
+                book covers, either now or in the future, these
+                features are important to think about. Consciously or
+                not, people really do judge a book by a cover. Make
+                yours stand out, because as they say, a cover is worth
+                a thousand words.
+
+            </p>
+        </div>
+    </div>
 
     <!-- Sources and credits -->
     <div id="sources-and-credits" class="storyline step">

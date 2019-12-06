@@ -77,13 +77,26 @@ BarChart.prototype.initVis = function(){
     // (Filter, aggregate, modify data)
     vis.wrangleData("total");
 
-    vis.svg.append("text")
-        .text("This visualization shows which objects and symbols" +
-            "tend to be shown on book covers of different genres." +
-            "Once again, the book that you selected at the" +
-            "beginning is highlighted. Choose a genre to see which" +
-            "symbols are most common within it.")
-        .attr("class", "storyline")
+    // Add legend title
+    vis.svg
+        .append("text")
+        .attr("class", "legend-title")
+        .attr("x", vis.width - 300)
+        .attr('y', vis.height - 310)
+        .text('Symbol Usage across 8 Genre Book Covers');
+
+    // Add legend text
+    vis.svg.append("foreignObject")
+        .attr('class', 'legend-details')
+        .attr("x", vis.width - 290)
+        .attr('y', vis.height - 300)
+        .attr('height', 300)
+        .attr('width', 300)
+        .text("This visualization shows which objects and symbols " +
+            "tend to be shown on book covers of different genres.\n" +
+            "Once again, the book that you selected at the\n" +
+            "beginning is highlighted. Choose a genre to see which\n" +
+            "symbols are most common within it.");
 }
 
 

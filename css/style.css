@@ -90,7 +90,7 @@ h6 {
 }
 #selected-book-image {
     width: 50%;
-    margin: auto;
+    margin-top: 50px;
 }
 
 
@@ -128,7 +128,7 @@ h6 {
 
 /* Tree View Styling */
 .tooltip, .data-label, .y-axis, .tree-labels, .genre-name,
-    .book-display-labels, #genre-select, label pre {
+    .book-display-labels, .select-box, #genre-select, label pre {
     font-family: Google-Roboto;
     font-size: 14px;
     font-style: normal;
@@ -165,18 +165,18 @@ label pre {
     fill: grey;
 }
 
-#legend-title {
-    font-family: Google-Roboto;
-    font-size: 18px;
+.legend-title {
+    font-family: Zilla-Slab;
+    font-size: 19px;
     fill: #A0A0A0;
-    text-decoration-line: underline;
 }
 
 .legend-details {
     font-family: Google-Roboto;
     font-size: 15px;
-    color: #D0D0D0;
+    color: #b0aeae;
     font-style: italic;
+    text-align: center;
 }
 
 .d3-tip-circles {

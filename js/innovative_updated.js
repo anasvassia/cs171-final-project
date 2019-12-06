@@ -185,10 +185,10 @@ vis.svg.selectAll('.genre-label')
     .attr("text-anchor",function(d,i){ if(i ===2){return 'start'} else if (i === 6){return "end"} else {return "middle"}})
     .text(function(d){return vis.genres[d['genre']]});
 
-// Add legend title
+    // Add legend title
     vis.svg
         .append("text")
-        .attr("id", "legend-title")
+        .attr("class", "legend-title")
         .attr("x", vis.mainCirclex)
         .attr('y', vis.mainCircley - 140)
         .attr("text-anchor", 'middle')
@@ -198,7 +198,7 @@ vis.svg.selectAll('.genre-label')
     vis.svg
         .append("foreignObject")
         .attr('class', 'legend-details')
-        .attr("x", vis.width/3.7 )
+        .attr("x", vis.width/4.6)
         .attr('y', vis.mainCircley - 125)
         .attr('height', 160)
         .attr('width', 425)
