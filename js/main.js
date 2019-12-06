@@ -98,11 +98,13 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
                             })}
                 );
                 window.filter_genre_global = filter_genre_color.filter(function(d){return d.genre === selectedGenre});
+
             }
             else{
                 window.filter_genre_global = genreByYear.filter(function(d){return d.genre === selectedGenre});
             }
             stackedbar.selectionChanged(window.filter_genre_global);
+
         });
 // Set on-click event handlers to deselect filters.
     d3.select("#color-vis")

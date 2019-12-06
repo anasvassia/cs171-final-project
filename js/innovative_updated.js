@@ -35,10 +35,10 @@ InnovativeView.prototype.initVis = function () {
     vis.genres = {
         'young_adult': 'Young Adult',
         'science_fiction': 'Science Fiction',
-        'paranormal': 'Paranormal',
+        'thriller': 'Thriller',
         'children': 'Children',
         'romance': 'Romance',
-        'thriller': 'Thriller',
+        'paranormal': 'Paranormal',
         'historic': 'Historical',
         'fantasy': 'Fantasy',
     };
@@ -48,7 +48,7 @@ InnovativeView.prototype.initVis = function () {
         vis.width  = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
         vis.height = 900 - vis.margin.top - vis.margin.bottom,
         vis.outerRadius = Math.min(vis.width, vis.height) /5,
-        vis.mainRadius = 250, vis.mainCirclex = vis.width/2,
+        vis.mainRadius = 245, vis.mainCirclex = vis.width/2,
         vis.mainCircley = vis.height/2, vis.subRadius =15;
 
     // Draw SVG Element.
