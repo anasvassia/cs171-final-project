@@ -18,16 +18,16 @@ StackedBar.prototype.initVis = function () {
     var vis = this;
 
     vis.colorMap = {
-        "blue": "#93d7f0",
-        "red": "#eb5f6c",
-        "yellow": "#f1d063",
-        "green": "#99d58f",
-        "violet": "#bb96d8",
-        "orange": "#f09b68",
         "pink": "#f797a1",
-        "white": "#f5f5f5",
         "black": "#433d39",
-        "gray": "#736f6c"
+        "yellow": "#f1d063",
+        "red": "#eb5f6c",
+        "blue": "#93d7f0",
+        "green": "#99d58f",
+        "orange": "#f09b68",
+        "white": "#f5f5f5",
+        "gray": "#736f6c",
+        "violet": "#bb96d8"
     };
 
     vis.genres = {
@@ -79,7 +79,10 @@ StackedBar.prototype.initVis = function () {
     //Define the stack bar plotter. Plot only totals by default.
     vis.stack = d3.stack()
         .keys(Object.keys(vis.colorMap));
+
     var series = vis.stack(vis.data.filter(function(d){return d.genre === 'total';}));
+
+    console.log(series);
 
     vis.svg
         .selectAll(".stacked_bar")
@@ -92,10 +95,6 @@ StackedBar.prototype.initVis = function () {
         .append("path")
         .attr('class', 'area')
         .attr('d', vis.area)
-        // .attr("x", function(d) { return vis.x(d.data.year_range); })
-
-        //     // .on('mouseover', tip_stack.show)
-        //     // .on('mouseout', tip_stack.hide)
         .attr("transform", "translate(150,200)");
 
     // Plot X axis
@@ -129,6 +128,16 @@ StackedBar.prototype.initVis = function () {
         .text("Count Distribution %")
         .attr("transform", "translate(100,400) rotate(270)")
         .attr('fill', 'grey');
+
+    vis.svg
+        .selectAll(".stacked_bar")
+        .on('mouseover', function(d) {
+            var chosenOne = this;
+            d3.selectAll('.stacked_bar').transition().style('opacity',function () {
+                return (this === chosenOne) ? 1.0 : 0.1;
+            });})
+        .on('mouseout',function(d) {
+            d3.selectAll('.stacked_bar').transition().style("opacity", 0.8); });
 
     vis.updateStack();
 };
