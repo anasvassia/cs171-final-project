@@ -85,7 +85,7 @@ d3.json("data/book-data-lite.json", function(data) {
 
                     // let user choose a book
                     $("#choice-explanation").html(
-                        "<br/><br/><br/><g class='section-title'>Explanation of Your Choice" +
+                        "<g class='section-title'>Explanation of Your Choice" +
                         "<br/></g>" +
                         "<p class='storyline'>" + val.title + " by " + authors + "? " +
                         "Not a bad choice. This is " +
@@ -129,15 +129,17 @@ d3.json("data/book-data-lite.json", function(data) {
                         "other genres? Let’s find " +
                         "out. </p>"
                     );
-                    $("#selected-book").html(
+
+                    $("#selected-book")
+                        .html(
                         "<img src=" + val.image_url +
                         " alt='Book Cover' id='selected-book-image'/>"
-                    );
+                        );
+
                     // pass selection to innovative view
                     innovativeview.selectedBook = val;
                     innovativeview.updateVis();
 
-                    $()
                     // on click, move to choice explanation div
                    $.scrollify.next();
                 }

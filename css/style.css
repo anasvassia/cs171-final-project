@@ -101,6 +101,16 @@ a:hover {
     margin-bottom: 20px;
 }
 
+.outer-div {
+    padding: 30px;
+    text-align: center;
+}
+
+.inner-div {
+    display: inline-block;
+    padding: 50px;
+}
+
 /*
 #sources-and-credits {
     font-size: 14px;
@@ -127,7 +137,7 @@ a:hover {
 
 /* Tree View Styling */
 .tooltip, .data-label, .y-axis, .tree-labels, .genre-name,
-    .book-display-labels, .select-box, #genre-select, label pre {
+    .book-display-labels, .select-box, #genre-select, label pre, span {
     font-family: Google-Roboto;
     font-size: 14px;
     font-style: normal;

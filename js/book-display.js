@@ -128,7 +128,7 @@ BookDisplay.prototype.updateVis = function(){
     vis.tip = d3.tip().attr("class", "tooltip")
         .html(function(d) {
             return d.title;
-        })
+        });
 
 
     vis.imageselect = vis.svg.selectAll("image")
