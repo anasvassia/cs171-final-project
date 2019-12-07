@@ -3,9 +3,15 @@ This repo holds the final visualization project for CS171. Using data from Googl
 
 # How is this repo organized?
 We have organized all the files in the following directory structure
+
 /
+  
   -- css (All stylesheets used for this project)
+ 
   -- js (All js files used are stored here)
+  
   -- img (Directory for all images)
+  
   -- data (Directory for raw data + pre-aggregated data + wrangling script)
+  
 index.html (Parent html file with the static content and id elements)
