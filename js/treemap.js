@@ -23,7 +23,7 @@ TreeMap = function(_parentElement, _data, _bookData,  _enterEventHandler, _leave
 TreeMap.prototype.initVis = function(){
     var vis = this;
 
-    vis.margin = { top: 20, right: 100, bottom: 20, left: 60 };
+    vis.margin = { top: 20, right: 60, bottom: 40, left: 60 };
 
     vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
         vis.height = 600 - vis.margin.top - vis.margin.bottom;
@@ -43,7 +43,7 @@ TreeMap.prototype.initVis = function(){
         "violet": "#bb96d8",
         "orange": "#f09b68",
         "pink": "#f797a1",
-        "white": "#f5e9c0",
+        "white": "#f5f5f5",
         "black": "#433d39",
         "gray": "#736f6c"
     }
@@ -115,120 +115,6 @@ TreeMap.prototype.updateVis = function(){
         .padding(3)
         (vis.root);
 
-    // console.log(vis.root);
-
-
-
-    // use this information to add rectangles:
-    // vis.leaf = vis.svg
-    //     .selectAll("g.area")
-    //     .data(vis.root.leaves());
-
-
-    // TODO: FIX CLIPPING
-    // vis.clipPaths = vis.svg
-    //     .selectAll(".clip-path")
-    //     .data(vis.root.leaves());
-    //
-    // vis.clipPaths.exit().remove();
-    //
-    // vis.clipPaths.enter()
-    //     .append("clipPath")
-    //     .attr("id", function (d) {
-    //         console.log(d);
-    //         return "clipPath-" + d.data["color_name"];
-    //     })
-    //     .attr("class", "clip-path")
-    //     .merge(vis.leaf)
-    //     .attr("clipPathUnits", "userSpaceOnUse")
-    //     .append("rect")
-    //     .attr('width', function (d) { return d.x1 - d.x0; })
-    //     .attr('height', function (d) { return d.y1 - d.y0; })
-    //     .attr("x", function(d) {
-    //
-    //         return d.x0;
-    //     } )
-    //     .attr("y", function(d) {
-    //
-    //         return d.y0;
-    //     } );
-
-    // vis.groupsenter = vis.leaf.enter()
-    //     .append("g")
-    //     .attr("class", "area");
-    //
-    // vis.groups = vis.groupsenter.merge(vis.leaf);
-    //
-    // vis.groups
-    //     .transition()
-    //     .attr("transform", function(d) {
-    //         return "translate(" + d.x0 + "," + d.y0 + ")";
-    //     } )
-    //     .attr("clip-path", function(d){
-    //         return "url(#clipPath-" + d.data.color_name + ")";
-    //     });
-
-//
-//     vis.images = vis.groups.selectAll("image")
-//
-//         .data(function(d){
-//             return d.data.images.map(function(i) {
-//                 return {
-//                     ...i,
-//                     "total_width": d.x1 - d.x0,
-//                     "total_height": d.y1 - d.y0
-//                 };
-//             }); })
-//
-//     vis.imageElements = vis.images.enter()
-//         .append("image")
-//         .merge(vis.images)
-//         .attr('width', function(d) {
-//             return 50;
-//             // var num_cols = Math.floor(d.total_width/50);
-//             // return Math.max(1, d.total_width / num_cols);
-//         })
-//         .attr("height", function(d) {
-//             return 74;
-//             // var num_rows = Math.floor(d.total_height/74);
-//             // return Math.max(1, d.total_height / num_rows);
-//         })
-//         .attr("xlink:href", function (d) {
-//             return d.image_url;
-//         })
-//         .attr("pointer-events", "all")
-//         .on('mouseover', vis.tip.show)
-//         .on('mouseout', vis.tip.hide)
-//
-//         .attr("transform", function (d, i) {
-//             var row_num = Math.ceil(d.total_width/50);
-// //            console.log("total_width " +  d.total_width + " row_num " + row_num);
-//             return "translate(" + ((i%row_num)*50) + ", " + (Math.floor(i/row_num)*74) + ")"
-// //             var num_cols = Math.max(1,  Math.floor(d.total_width/50));
-// //             var num_rows = Math.max(1, Math.floor(d.total_height/74));
-// //             console.log("cols: " + num_cols + " rows: " + num_rows);
-// //
-// //             var x = d.total_width / num_cols * (i % num_cols);
-// //             var y = d.total_height/num_rows  * Math.floor(i /num_rows );
-// //             return "translate(" + (x) + ", " + (y) + ")"
-//
-//
-//         })
-//         .attr("opacity", function (d, i) {
-//             var row_num = Math.ceil(d.total_width/74);
-//             // cond: Math.floor(i/row_num)*74 <= d.total_height + 74
-//             if (Math.floor(i/row_num)*74 <= d.total_height + 74) {
-//                 return 1;
-//             } else {
-//                 return 0;
-//             }
-//         });
-//
-//     vis.imageElements.transition();
-//     vis.imageElements.exit().remove();
-
-    // TODO: need to remove rects
-
     vis.rectsSelect = vis.svg
         .selectAll("rect")
         .data(vis.root.leaves());
@@ -253,6 +139,16 @@ TreeMap.prototype.updateVis = function(){
         .style("fill", function(d) {
             return vis.colorMap[d.data["color_name"]];
         })
+         .style("stroke", function(d) {
+             if (d.data["color_name"] === "white") {
+                 return "#ddd"
+             }
+         })
+         .style('stroke-width', function(d) {
+             if (d.data["color_name"] === "white") {
+                 return 2
+             }
+         })
         .style("fill-opacity", 1)
          .attr("transform", function(d) {
              return "translate(" + d.x0 + "," + d.y0 + ")";
@@ -301,9 +197,16 @@ TreeMap.prototype.updateVis = function(){
         .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
         .text(function(d){
             return d.data["color_name"]; })
-        .attr("font-size", "12px")
-        .attr("fill", "white")
-
+        .attr("width", function(d){
+            return vis.svg.select("#rect-" + d.data["color_name"]).attr("width") - 5; })
+        .style("font-size", "12px")
+        .attr("fill", function (d) {
+            if (d.data["color_name"] === "white") {
+                    return "#bbb"
+                } else {
+                return "white";
+            }
+        });
 
 
 }

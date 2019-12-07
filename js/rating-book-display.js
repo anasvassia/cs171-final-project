@@ -62,14 +62,7 @@ RatingBookDisplay.prototype.wrangleData = function(genre, color, rating, param){
     vis.current_color = color;
     vis.current_rating = rating;
 
-    console.log(param);
 
-
-    // for (var i = 0; i < vis.data[genre].children.length; i++) {
-    //     vis.data[genre].children[i]["images"] = [];
-    // }
-
-    // console.log(vis.data[genre]);
     vis.images = [];
 
     vis.bookData.sort(function (a, b) {

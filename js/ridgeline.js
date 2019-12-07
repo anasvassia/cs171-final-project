@@ -41,7 +41,7 @@ RidgeLine.prototype.initVis = function(){
         "violet": "#bb96d8",
         "orange": "#f09b68",
         "pink": "#f797a1",
-        "white": "#f5e9c0",
+        "white": "#f5f5f5",
         "black": "#433d39",
         "gray": "#736f6c"
     };
@@ -78,8 +78,6 @@ RidgeLine.prototype.initVis = function(){
 RidgeLine.prototype.wrangleData = function(genre, rating){
     var vis = this;
 
-    console.log("GENRE: " + genre + " RATING: " + rating);
-
     vis.param = rating ? "average_rating" : "ratings_count";
 
 
@@ -103,8 +101,6 @@ RidgeLine.prototype.wrangleData = function(genre, rating){
         var bound = l - Math.round(l*0.05);
         vis.filteredData = vis.filteredData.slice(0, bound);
     }
-
-    console.log(vis.filteredData);
 
     vis.x.domain(d3.extent(vis.filteredData, function (d) {
         return d[vis.param];
@@ -133,9 +129,6 @@ RidgeLine.prototype.wrangleData = function(genre, rating){
         var bins = histogram(category_data);
 
         vis.allDensity.push({key: key, bins: bins});
-    //     console.log(ratings);
-    //     var density = kde(ratings);
-    //     vis.allDensity.push({key: key, density: density})
     }
 
     vis.totalDensity = [];
@@ -146,9 +139,6 @@ RidgeLine.prototype.wrangleData = function(genre, rating){
 
         })
 
-        // console.log(key + " " + category_data.length);
-        // var ratings = category_data.map(function(d){  return +d["average_rating"]});
-
         // // set the parameters for the histogram
         var histogram = d3.histogram()
             .value(function(d){  return +d[vis.param]})   // I need to give the vector of value
@@ -158,16 +148,10 @@ RidgeLine.prototype.wrangleData = function(genre, rating){
         var bins = histogram(category_data);
 
         vis.totalDensity.push({key: key, bins: bins});
-        //     console.log(ratings);
-        //     var density = kde(ratings);
-        //     vis.allDensity.push({key: key, density: density})
+
     }
 
 
-
-
-    console.log(vis.allDensity);
-    // Update the visualization
     vis.updateVis();
 }
 
@@ -250,6 +234,9 @@ RidgeLine.prototype.updateVis = function(){
             });
 
         vis.totalRects.lower();
+
+        vis.totalRects.transition().duration(1000);
+
     }
 
 
@@ -273,7 +260,6 @@ RidgeLine.prototype.updateVis = function(){
         .attr("class", "ridgeline-bars")
         .merge(vis.rect_selection);
 
-    vis.rects.transition().duration(1000);
 
     var mouseover = function(d) {
         if (vis.param === "average_rating") {
@@ -311,7 +297,20 @@ RidgeLine.prototype.updateVis = function(){
         .attr("height", function(d) { return vis.height/10 - vis.y(d.bin.length); })
         .attr("fill", function (d) {
             return vis.colorMap[d.color];
+        })
+        .style("stroke", function(d) {
+            if (d.color === "white") {
+                return "#ddd"
+            }
+        })
+        .style('stroke-width', function(d) {
+            if (d.color === "white") {
+                return 1
+            }
         });
+
+    vis.rects.transition().duration(1000);
+
 
     vis.svg.select(".x-axis").remove();
 
