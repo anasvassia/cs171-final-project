@@ -15,3 +15,6 @@ We have organized all the files in the following directory structure
   -- data (Directory for raw data + pre-aggregated data + wrangling script)
   
 index.html (Parent html file with the static content and id elements)
+
+## css
+We use **Bootstrap** grid framework to organize the content. All custom styles are in **styles.css** file.
