@@ -227,25 +227,22 @@ BarChart.prototype.updateVis = function(){
     // Add legend text
     vis.svg.append("foreignObject")
         .attr('class', 'legend-details')
-        .attr("x", vis.width - 200)
+        .attr("x", vis.width - 190)
         .attr('y', vis.y(vis.layers[9][8].data.name) + 20)
         .attr('height', 300)
-        .attr('width', 200)
+        .attr('width', 180)
         .text("This visualization shows which objects and symbols " +
             "tend to be shown on book covers of different genres.\n" +
             "Once again, the book that you selected at the\n" +
             "beginning is highlighted. Choose a genre to see which\n" +
             "symbols are most common within it.");
-
-    console.log(vis.layers);
-    console.log(vis.svg.select("foreignObject").attr('x'));
-    console.log(vis.y(vis.layers[9][8].data.name))
+    
 
     // Add legend title
     vis.svg
         .append("text")
         .attr("class", "legend-title")
-        .attr("x", vis.svg.select("foreignObject").attr('x') -20)
+        .attr("x", vis.svg.select("foreignObject").attr('x') -25)
         .attr('y', vis.y(vis.layers[9][8].data.name))
         .text('Symbol Usage across 8 Genre Book Covers');
 
