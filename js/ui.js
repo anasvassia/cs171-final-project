@@ -156,10 +156,10 @@ d3.json("data/book-data-lite.json", function(data) {
                         " alt='Book Cover' id='selected-book-image'/>"
                         );
 
-                    // pass selection to innovative view
+                    // Identify the selection and plot the EMoji and tooltip.
                     d3.select('.UserSelection').remove();
                     var genre_index = genretoColorView[genre];
-                    console.log(genre, genretoColorView[genre]);
+
                     if(genre_index !== null)
                     {
                         var label_offset_select_y = [-25, -25, 35, 45, 45, 45, 35, -25];
@@ -176,7 +176,6 @@ d3.json("data/book-data-lite.json", function(data) {
 
                         var tip_selection = d3.tip()
                             .attr('class', 'd3-tip-selection tooltip')
-                            // .offset([-5, 10])
                             .offset(function() {
                                 if(genre_index === 0) {return [100, 170]} // Young Adult tooltip was getting cut-off
                                 if(genre_index === 6) {return [0, 120]} // Romance tooltip was getting cut-off
