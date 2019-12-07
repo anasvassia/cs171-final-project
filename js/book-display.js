@@ -20,7 +20,7 @@ BookDisplay = function(_parentElement, _bookData){
 BookDisplay.prototype.initVis = function(){
     var vis = this;
 
-    vis.margin = { top: 20, right: 10, bottom: 20, left: 30 };
+    vis.margin = { top: 20, right: 10, bottom: 60, left: 30 };
 
     vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
         vis.height = 600 - vis.margin.top - vis.margin.bottom;
@@ -156,16 +156,8 @@ BookDisplay.prototype.updateVis = function(){
         })
         .attr("pointer-events", "all")
         .attr("transform", function (d, i) {
-            // var row_num = Math.ceil(vis.width/50);
-            // console.log("total_width " +  vis.width + " row_num " + row_num);
-            return "translate(" + (0) + ", " + (i*74 + 10*i + 50) + ")"
-//             var num_cols = Math.max(1,  Math.floor(d.total_width/50));
-//             var num_rows = Math.max(1, Math.floor(d.total_height/74));
-//             console.log("cols: " + num_cols + " rows: " + num_rows);
-//
-//             var x = d.total_width / num_cols * (i % num_cols);
-//             var y = d.total_height/num_rows  * Math.floor(i /num_rows );
-//             return "translate(" + (x) + ", " + (y) + ")"
+
+            return "translate(" + (5) + ", " + (i*74 + 10*i + 50) + ")"
 
 
         });
