@@ -46,8 +46,6 @@ StackedBar.prototype.initVis = function () {
         vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
         vis.height = 800 - vis.margin.top - vis.margin.bottom;
 
-    console.log(vis.width);
-
     // Draw SVG Element.
     vis.svg = d3.select("#" + vis.parentElement)
         .append("svg")
@@ -81,8 +79,6 @@ StackedBar.prototype.initVis = function () {
         .keys(Object.keys(vis.colorMap));
 
     var series = vis.stack(vis.data.filter(function(d){return d.genre === 'total';}));
-
-    console.log(series);
 
     vis.svg
         .selectAll(".stacked_bar")
