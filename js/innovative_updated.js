@@ -11,7 +11,6 @@ InnovativeView = function (_parentElement, _data, _genrebyyear, _summarybygenre,
     this.year_ranges = [...new Set(_data.map(x => x.year_range))].sort();
     this.selectedBook = _selectedBook;
     this.initVis();
-    console.log(vis.selectedBook);
 };
 
 /*
@@ -19,7 +18,7 @@ InnovativeView = function (_parentElement, _data, _genrebyyear, _summarybygenre,
  */
 InnovativeView.prototype.initVis = function () {
     var vis = this;
-
+    // Color mapping object to map HTML colors to a more harmonious color palette.
     vis.colorMap = {
         "blue": "#93d7f0",
         "red": "#eb5f6c",
@@ -32,7 +31,7 @@ InnovativeView.prototype.initVis = function () {
         "black": "#433d39",
         "gray": "#736f6c"
     };
-
+// Object to map genre tags to user-friendly and formatted text for presentation.
     vis.genres = {
         'young_adult': 'Young Adult',
         'science_fiction': 'Science Fiction',
@@ -74,20 +73,9 @@ InnovativeView.prototype.initVis = function () {
     // Scale for the color circles per genre
     vis.ColorCircleRadScale = d3.scaleLinear().domain([0,100]).range([4,40]);
 
-    // NEEDS TO BE UPDATED.
-    vis.areay = d3.scaleLinear()
-        .rangeRound([100, 0]);
-
-    vis.areax = d3.scaleBand()
-        .domain(vis.year_ranges)
-        .rangeRound([0, 400])
-        .padding(0.4)
-        .align(0.3);
-
     // Identify the position of each sub-circle which represents a genre. Since we are showing top 8 genres, we have
     // 8 circles, spaced 45 degrees apart.
     vis.genrecirclelocation = [];
-
     vis.summarybygenre.forEach(function(d,i){
         var genreCircleMetadata = {};
         genreCircleMetadata['genre-circle-cx'] = vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius;
@@ -100,15 +88,14 @@ InnovativeView.prototype.initVis = function () {
         genreCircleMetadata['color-circle-cy'] = [];
         vis.genrecirclelocation.push(genreCircleMetadata)
     });
-
+    // Push the object to the global name space (Not idiomatic) for doing the integration between user selection and color viz.
     window.colorview_genre_location = vis.genrecirclelocation;
 
     // Set the spoke length and angular separation.
     vis.reach = 3.5;
     vis.angle = 18;
-
+// Plot the spokes and color circles.
     vis.summarybygenre.forEach(function(d,i){
-
         d.color.forEach(function(color, index)
             {
                 vis.genrecirclelocation[i]['color-circle-cx'].push(vis.genrecirclelocation[i]['genre-circle-cx'] + Math.sin(d.angle_index[index] * vis.angle * Math.PI / 180) * (vis.subRadius + (20 - index) * vis.reach));
@@ -177,7 +164,7 @@ InnovativeView.prototype.initVis = function () {
                 .attr("opacity", 0.5)
                 .attr("stroke-width", 2)
                 .attr("fill", "none");});
-
+// This arra holds the offset to be applied to the genre labels in the Y direction.
     var label_offset_y = [-10, -10, 5, 15, 15, 15, 5, -10];
 
     //Add Genre names
@@ -217,7 +204,6 @@ vis.svg.selectAll('.genre-label')
    var legend_loc_x = vis.mainCirclex - 20;
    var legend_loc_y = vis.mainCircley + 60;
    var legend_scale = d3.scaleLinear().domain([0,100]).range([2,30]);
-
    var legend_spoke_location = {}, legend_reach = 3;
     legend_spoke_location['color-circle-cx'] = [];
     legend_spoke_location['color-circle-cy'] = [];

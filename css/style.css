@@ -122,7 +122,7 @@ a:hover {
 }
 
 .outer-div {
-    padding: 30px;
+    padding: 0 30px;
     text-align: center;
 }
 
@@ -265,7 +265,7 @@ label pre {
     opacity: 0.6;
 }
 
-.sub_circle,.colorcircle{
+.sub_circle,.colorcircle,.book-covers{
     cursor: pointer;
 }
 
@@ -278,7 +278,15 @@ label pre {
 }
 .stack-header{
     font-size: 24px;
+    font-family: Zilla-Slab;
     fill: grey;
+}
+
+.stack-descriptions{
+    font-family: Google-Roboto;
+    font-size: 13px;
+    fill: grey;
+    font-style: italic;
 }
 
 /**/
