@@ -89,7 +89,7 @@ d3.json("data/book-data-lite.json", function(data) {
 
                     // let user choose a book
                     $("#choice-explanation").html(
-                        "<g class='section-title'><br>Explanation of Your Choice" +
+                        "<g class='section-title'>Explanation of Your Choice" +
                         "<br/></g>" +
                         "<p class='storyline'><b>" + val.title + "</b> by " + authors + "? " +
                         "Not a bad choice. This is " +

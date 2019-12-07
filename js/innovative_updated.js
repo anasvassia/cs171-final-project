@@ -51,7 +51,8 @@ InnovativeView.prototype.initVis = function () {
         vis.outerRadius = Math.min(vis.width, vis.height) /5,
         vis.mainRadius = 195,
         vis.mainCirclex = vis.width/1.89,
-        vis.mainCircley = vis.height/2.25, vis.subRadius =15;
+        vis.mainCircley = vis.height/2.5,
+        vis.subRadius =15;
 
     // Draw SVG Element.
     vis.svg = d3.select("#" + vis.parentElement)

@@ -38,12 +38,11 @@ html,body, #main-col, #main-row {
 
 .storyline{
     font-family: Google-Roboto;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: normal;
     text-align: center;
     font-kerning: auto;
-    margin-top: 10px;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 #header-img {
@@ -102,9 +101,10 @@ a:hover {
 }
 
 #choice {
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 0px;
 }
+
 #selected-book-image {
     width: 50%;
     margin-top: 150px;
@@ -118,7 +118,6 @@ a:hover {
 .section-title {
     font-size: 32px;
     font-family: Zilla-Slab;
-    margin-top: 50px;
     margin-bottom: 20px;
 }
 
@@ -129,7 +128,7 @@ a:hover {
 
 .inner-div {
     display: inline-block;
-    padding: 45px;
+    padding: 50px;
 }
 
 .profile-image {
@@ -211,6 +210,12 @@ label pre {
     text-align: center;
 }
 
+.y_axis_label, .x_axis_label {
+    font-family: Zilla-Slab;
+    font-size: 18px;
+    fill: #A0A0A0;
+}
+
 .d3-tip-circles {
     font-family: Google-Roboto;
     font-size: 15px;
@@ -261,7 +266,7 @@ label pre {
 
 }
 .stack-header{
-    font-size: 40px;
+    font-size: 28px;
     fill: grey;
 }
 
