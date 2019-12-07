@@ -100,7 +100,7 @@ StackedBar.prototype.initVis = function () {
     // Plot X axis
     vis.svg.append("g")
         .attr("class", "x_axis")
-        .attr("transform", "translate(150,625)")
+        .attr("transform", "translate(140,625)")
         .call(d3.axisBottom(vis.x).ticks(20))
         .selectAll("text")
         .style("text-anchor", "end")
