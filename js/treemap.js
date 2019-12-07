@@ -96,7 +96,7 @@ TreeMap.prototype.wrangleData = function(genre){
     // console.log(vis.data[genre]);
 
     vis.root = d3.hierarchy(vis.data[genre])
-        .sum(function(d) { return d.frequency; })
+        .sum(function(d) { return d.frequency; });
 
     // Update the visualization
     vis.updateVis();

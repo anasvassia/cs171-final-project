@@ -15,6 +15,18 @@ d3.json("data/book-data-lite.json", function(data) {
         "children", "thriller", "romance", "paranormal"
     ];
 
+    var genretoColorView =
+        {
+            "fantasy":2,
+            "science fiction":1,
+            "thriller":5,
+            "historical":4,
+            "young adult":0,
+            "children":3,
+            "romance":6,
+            "paranormal":7
+        };
+
     // book covers to be displayed
    books = d3.range(0, 8).map( function(val) {
         return random(genreArray[val]);
@@ -89,7 +101,7 @@ d3.json("data/book-data-lite.json", function(data) {
 
                     // let user choose a book
                     $("#choice-explanation").html(
-                        "<g class='section-title'><br>Explanation of Your Choice" +
+                        "<g class='section-title'>Explanation of Your Choice" +
                         "<br/></g>" +
                         "<p class='storyline'><b>" + val.title + "</b> by " + authors + "? " +
                         "Not a bad choice. This is " +
@@ -126,7 +138,7 @@ d3.json("data/book-data-lite.json", function(data) {
                         "looking at book covers. " +
                         "Bringing it back to the book you selected, recall " +
                         "that <b>" + val.title + "</b> by " + authors + " is " +
-                        "a" + genre +
+                        "a " + genre +
                         " book with a predominantly  <emp style='color:" +
                         innovativeview.colorMap[val.dominantColorCategory]
                         + "'>" + val.dominantColorCategory + "</emp>" + " colored " +
@@ -145,9 +157,23 @@ d3.json("data/book-data-lite.json", function(data) {
                         );
 
                     // pass selection to innovative view
-                    innovativeview.selectedBook = val;
-                    console.log(val);
-                    innovativeview.updateVis();
+                    d3.select('.UserSelection').remove();
+                    var genre_index = genretoColorView[genre];
+                    console.log(genre, genretoColorView[genre]);
+                    if(genre_index !== null)
+                    {
+                        var label_offset_select_y = [-25, -25, 35, 45, 45, 45, 35, -25];
+                        var label_offset_select_x = [0,0, 10, 0, 0, 0, 0, 0];
+
+                        d3.select('#color-vis').select("svg")
+                            .append('text')
+                            .attr('x', window.colorview_genre_location[genre_index]['line-end-x'] + label_offset_select_x[genre_index])
+                            .attr('y',window.colorview_genre_location[genre_index]['line-end-y'] + label_offset_select_y[genre_index])
+                            .attr('class', 'UserSelection')
+                            .attr('text-anchor','middle' )
+                            .attr("font-size", 30)
+                            .text("🌸");
+                    }
 
                     // on click, move to choice explanation div
                    $.scrollify.next();
