@@ -176,12 +176,17 @@ d3.json("data/book-data-lite.json", function(data) {
 
                         var tip_selection = d3.tip()
                             .attr('class', 'd3-tip-selection tooltip')
-                            .offset([-5, 10])
-                            .html(function() {return '<span><strong>Your selection</strong></span><br><p><img src=' +
+                            // .offset([-5, 10])
+                            .offset(function() {
+                                if(genre_index === 0) {return [100, 170]} // Young Adult tooltip was getting cut-off
+                                if(genre_index === 6) {return [0, 120]} // Romance tooltip was getting cut-off
+                                else {return [-5, 10]}
+                            })
+                            .html(function() {return '<span><strong>Your selection</strong></span><br><span><img src=' +
                                 val.image_url +
                                 ' width="20" height="30" display: inline>' +
                                 val.title +
-                                '</p>'+
+                                '</span><br>'+
                                 '<span>It has <emp style=\'color:'+
                                 innovativeview.colorMap[val.dominantColorCategory]
                                 + "'>" + val.dominantColorCategory +
