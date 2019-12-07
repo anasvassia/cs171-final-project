@@ -126,7 +126,7 @@ d3.json("data/book-data-lite.json", function(data) {
                         "looking at book covers. " +
                         "Bringing it back to the book you selected, recall " +
                         "that <b>" + val.title + "</b> by " + authors + " is " +
-                        "a" + genre +
+                        "a " + genre +
                         " book with a predominantly  <emp style='color:" +
                         innovativeview.colorMap[val.dominantColorCategory]
                         + "'>" + val.dominantColorCategory + "</emp>" + " colored " +
