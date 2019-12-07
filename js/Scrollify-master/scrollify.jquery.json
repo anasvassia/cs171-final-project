@@ -1,3 +1,34 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:332f929d7ff06697aa0760fee82409ca6b606c75226eea2fc0ec8f9964ecff18
-size 904
+{
+    "name": "scrollify",
+    "title": "jQuery Scrollify",
+    "description": "A jQuery plugin that assists scrolling and smoothly snaps to sections.",
+    "keywords": [
+        "scroll",
+        "snap"
+    ],
+    "version": "1.0.20",
+    "author": {
+        "name": "Luke Haas",
+        "url": "http://lukehaas.me"
+    },
+    "maintainers": [
+        {
+            "name": "Luke Haas",
+            "email": "",
+            "url": "http://lukehaas.me"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/lukehaas/Scrollify/blob/master/LICENSE"
+        }
+    ],
+    "bugs": "https://github.com/lukehaas/Scrollify/issues",
+    "homepage": "http://projects.lukehaas.me/scrollify",
+    "docs": "https://github.com/lukehaas/Scrollify",
+    "download": "https://github.com/lukehaas/Scrollify",
+    "dependencies": {
+        "jquery": ">=1.7"
+    }
+}
