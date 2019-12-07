@@ -55,7 +55,7 @@ function createVis(error, data, tagObjectData, hierarchyTagColorData, tagFrequen
 
     innovativeview = new InnovativeView("color-vis", data, genreByYear, summaryByGenre, {});
 
-    stackedbar = new StackedBar("stacked-bar", genreByYear);
+    stackedbar = new StackedArea("stacked-bar", genreByYear);
 
     ratingbookdisplay = new RatingBookDisplay("rating-book-display", data);
 
