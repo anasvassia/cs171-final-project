@@ -1,4 +1,8 @@
 /*
+References used to build the stackbar- http://bl.ocks.org/mstanaland/6100713
+*/
+
+/*
  * Innovative View - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the bar charts
  * @param _data						-- the dataset 'book aesthetic analysis'

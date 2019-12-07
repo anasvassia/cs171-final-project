@@ -1,3 +1,6 @@
+/*
+References used to build the ridgeline- https://www.d3-graph-gallery.com/ridgeline.html
+*/
 
 /*
  * PrioVis - Object constructor function
@@ -9,7 +12,6 @@ RidgeLine = function(_parentElement, _data, _enterHandler){
     this.parentElement = _parentElement;
     this.data = _data;
     this.enterHandler = _enterHandler;
-
     this.initVis();
 }
 

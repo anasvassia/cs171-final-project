@@ -1,4 +1,9 @@
 /*
+Custom hub and spoke viz which use color prominance for 8 genres.
+Reference - https://github.com/d3/d3/wiki
+*/
+
+/*
  * Innovative View - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the bar charts
  * @param _data						-- the dataset 'book aesthetic analysis'

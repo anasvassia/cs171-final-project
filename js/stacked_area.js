@@ -1,4 +1,9 @@
 /*
+References used to build the stack area - https://bl.ocks.org/fabiomainardi/3976176cb36e718a608f
+Rotating axes - https://bl.ocks.org/d3noob/3c040800ff6457717cca586ae9547dbf
+*/
+
+/*
  * Stacked Area - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the stacked area chart
  * @param _data				-- the pre-aggregated dataset aggregated by year and genre.
