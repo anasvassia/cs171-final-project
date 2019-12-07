@@ -42,7 +42,7 @@ html,body, #main-col, #main-row {
     font-weight: normal;
     text-align: center;
     font-kerning: auto;
-    margin: 10px 0px 20px;
+    margin-top: 10px;
 }
 
 #header-img {
@@ -104,6 +104,10 @@ a:hover {
     width: 50%;
     margin-top: 150px;
     margin-bottom: 0px;
+}
+
+#color-container {
+    margin: 0;
 }
 
 
