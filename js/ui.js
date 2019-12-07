@@ -14,7 +14,7 @@ d3.json("data/book-data-lite.json", function(data) {
         "fantasy", "science-fiction", "historical", "young-adult",
         "children", "thriller", "romance", "paranormal"
     ];
-    
+
     // book covers to be displayed
    books = d3.range(0, 8).map( function(val) {
         return random(genreArray[val]);

@@ -193,11 +193,11 @@ function createSelect(tagFrequencyData) {
 
 }
 
+
 // scrolly-telling setup
 $(function() {
     $.scrollify({
         section : ".step",
-        touchScroll: false,
         scrollSpeed: 1500,
     });
 });
