@@ -25,7 +25,7 @@ BarChart = function(_parentElement, _data, _enterEventHandler, _leaveEventHandle
 BarChart.prototype.initVis = function(){
     var vis = this;
 
-    vis.margin = { top: 20, right: 60, bottom: 20, left: 100 };
+    vis.margin = { top: 20, right: 60, bottom: 40, left: 100 };
     // console.log($("#" + vis.parentElement).width());
     vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
         vis.height = 600 - vis.margin.top - vis.margin.bottom;
@@ -45,7 +45,7 @@ BarChart.prototype.initVis = function(){
         "violet": "#bb96d8",
         "orange": "#f09b68",
         "pink": "#f797a1",
-        "white": "#f5e9c0",
+        "white": "#f5f5f5",
         "black": "#433d39",
         "gray": "#736f6c"
     }
@@ -60,43 +60,14 @@ BarChart.prototype.initVis = function(){
         .rangeRound([0, vis.height])
         .paddingInner(0.2);
 
-    // vis.xAxis = d3.axisBottom()
-    //     .scale(vis.x);
-
     vis.yAxis = d3.axisLeft()
         .scale(vis.y);
-
-    // vis.svg.append("g")
-    //     .attr("class", "x-axis axis")
-    //     .attr("transform", "translate(0," + vis.height + ")");
-
 
     vis.svg.append("g")
         .attr("class", "y-axis axis");
 
     // (Filter, aggregate, modify data)
     vis.wrangleData("total");
-
-    // Add legend title
-    vis.svg
-        .append("text")
-        .attr("class", "legend-title")
-        .attr("x", vis.width - 260)
-        .attr('y', vis.height - 310)
-        .text('Symbol Usage across 8 Genre Book Covers');
-
-    // Add legend text
-    vis.svg.append("foreignObject")
-        .attr('class', 'legend-details')
-        .attr("x", vis.width - 290)
-        .attr('y', vis.height - 300)
-        .attr('height', 300)
-        .attr('width', 300)
-        .text("This visualization shows which objects and symbols " +
-            "tend to be shown on book covers of different genres.\n" +
-            "Once again, the book that you selected at the\n" +
-            "beginning is highlighted. Choose a genre to see which\n" +
-            "symbols are most common within it.");
 }
 
 
@@ -122,9 +93,6 @@ BarChart.prototype.wrangleData = function(genre){
         .keys(vis.colors)
         (vis.displayData);
 
-    console.log(vis.layers);
-
-        // console.log(vis.displayData);
 
     // Update the visualization
     vis.updateVis();
@@ -229,24 +197,6 @@ BarChart.prototype.updateVis = function(){
     vis.groupsselect.exit().remove();
     vis.rectsselect.exit().remove();
 
-    // var bars = vis.svg.selectAll(".bar")
-    //     .data(vis.displayData);
-    //
-    // bars.enter().append("rect")
-    //     .attr("class", "bar")
-    //
-    //     .merge(bars)
-    //     .transition()
-    //     .attr("x", vis.x(0))
-    //     .attr("y", function(d){
-    //         return vis.y(d.name);
-    //     })
-    //     .attr("width", function(d) {
-    //         return vis.x(d.score); })
-    //     .attr("height", vis.y.bandwidth())
-    //     .attr("fill", "#736f6c");
-    //
-    // bars.exit().remove();
 
     var textLabels = vis.svg
         .selectAll("text.data-label")
@@ -270,8 +220,38 @@ BarChart.prototype.updateVis = function(){
 
     textLabels.exit().remove();
 
-    // vis.svg.select(".x-axis").call(vis.xAxis);
     vis.svg.select(".y-axis").call(vis.yAxis);
+
+
+
+    // Add legend text
+    vis.svg.append("foreignObject")
+        .attr('class', 'legend-details')
+        .attr("x", vis.width - 200)
+        .attr('y', vis.y(vis.layers[9][8].data.name) + 20)
+        .attr('height', 300)
+        .attr('width', 200)
+        .text("This visualization shows which objects and symbols " +
+            "tend to be shown on book covers of different genres.\n" +
+            "Once again, the book that you selected at the\n" +
+            "beginning is highlighted. Choose a genre to see which\n" +
+            "symbols are most common within it.");
+
+    console.log(vis.layers);
+    console.log(vis.svg.select("foreignObject").attr('x'));
+    console.log(vis.y(vis.layers[9][8].data.name))
+
+    // Add legend title
+    vis.svg
+        .append("text")
+        .attr("class", "legend-title")
+        .attr("x", vis.svg.select("foreignObject").attr('x') -20)
+        .attr('y', vis.y(vis.layers[9][8].data.name))
+        .text('Symbol Usage across 8 Genre Book Covers');
+
+
+
+
 }
 
 BarChart.prototype.selectColor = function(color) {

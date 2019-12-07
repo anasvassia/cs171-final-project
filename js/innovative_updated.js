@@ -206,7 +206,7 @@ vis.svg.selectAll('.genre-label')
         .attr('class', 'legend-details')
         .attr("x", vis.mainCirclex - vis.mainRadius + 35)
         .attr('y', vis.mainCircley - 125)
-        .attr('height', vis.mainRadius * 2 - 75)
+        .attr('height', vis.mainRadius * 2 - 260)
         .attr('width', vis.mainRadius * 2 - 75)
         .text("We've custom designed a hub & spoke' visual to represent each genre. " +
             "The center represents a genre and spoke length & area of the colored circles represent the " +
