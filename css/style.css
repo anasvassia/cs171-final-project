@@ -98,7 +98,7 @@ a:hover {
 
 #choice {
     margin-top: 50px;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 #selected-book-image {
     width: 50%;
