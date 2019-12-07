@@ -123,6 +123,7 @@ a:hover {
 
 .outer-div {
     padding: 30px;
+    padding-top: 0;
     text-align: center;
 }
 
