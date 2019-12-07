@@ -6,6 +6,16 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <!--Sources used:
+     fixing padding:
+        https://www.youtube.com/watch?v=OASSKoiCfqY
+        https://tipue.com/blog/center-a-div/
+
+     bringing specific divs into view:
+        https://stackoverflow.com/a/13239427
+        https://stackoverflow.com/a/4884928
+     -->
 </head>
 <body>
     <!-- Header image and title -->
@@ -277,15 +287,66 @@
 
 
     <!-- Sources and credits -->
-    <div id="sources-and-credits" class="storyline step outer-div">
-        <div class="inner-div">
-            <p id="about-project">
+    <div id="sources-and-credits" class="outer-div">
+        <div class="inner-div step">
+            <p id="about-project" class="storyline">
                 "A Cover Worth 1000 Words" was created by Anastasia Lamothe '21,
                 Lekshmi Santhosh '21, and Isabelle Zheng '22 as the final project
                 for Harvard CS171 2019.
             </p>
+            <div id="images" class="row">
+                <div class="col-md-4">
+                    <figure>
+                        <img src="img/anastasia.jpg" alt="Anastasia Lamothe" class="profile-image">
+                        <figcaption class="profile">
+                            <a href="https://www.linkedin.com/in/anastasia-lamothe/"
+                               target="_blank">
+                                Anastasia Lamothe - Harvard College '21
+                            </a>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure>
+                        <img src="img/lekshmi.jpg" alt="Lekshmi Santhosh" class="profile-image">
+                        <figcaption class="profile">
+                            <a href="https://www.linkedin.com/in/lekshmi-santhosh-256a3599/"
+                               target="_blank">
+                                Lekshmi Santhosh - Harvard Extension School '21
+                            </a>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-4">
+                    <figure>
+                        <img src="img/isabelle.jpg" alt="Isabelle Zheng" class="profile-image">
+                        <figcaption class="profile">
+                            <a href="https://www.linkedin.com/in/isabellez/"
+                               target="_blank">
+                                Isabelle Zheng - Harvard College '22
+                            </a>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
             <p id="sources">
-                Sources go here with link tags
+                <h6 id="sources-title">Sources and Attributions</h6>
+                <ol>
+                    <li><a href="https://github.com/zygmuntz/goodbooks-10k"
+                           target="_blank">GoodBooks DataSet by zygmuntz
+                    </a></li>
+                    <li><a href="https://cloud.google.com/vision/"
+                           target="_blank">Google Vision API
+                    </a></li>
+                    <li><a href="https://unsplash.com/photos/McX3XuJRsUM"
+                           target="_blank">Header Image taken by Robert Anasch
+                            on Unsplash
+                    </a></li>
+                    <li><a href="https://projects.lukehaas.me/scrollify/#home"
+                           target="_blank">
+                        Scrollify jQuery Plugin created by Luke Haas
+                    </a></li>
+                </ol>
             </p>
         </div>
     </div>
