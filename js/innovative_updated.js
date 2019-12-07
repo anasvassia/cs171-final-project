@@ -101,6 +101,8 @@ InnovativeView.prototype.initVis = function () {
         vis.genrecirclelocation.push(genreCircleMetadata)
     });
 
+    window.colorview_genre_location = vis.genrecirclelocation;
+
     // Set the spoke length and angular separation.
     vis.reach = 3.5;
     vis.angle = 18;

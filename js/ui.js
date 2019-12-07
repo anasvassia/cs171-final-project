@@ -17,14 +17,14 @@ d3.json("data/book-data-lite.json", function(data) {
 
     var genretoColorView =
         {
-            "fantasy": "fantasy",
-            "science-fiction": "science_fiction",
-            "thriller": "thriller",
-            "historical": "historic",
-            "young-adult": "young_adult",
-            "children": "children",
-            "romance": "romance",
-            "paranormal": "paranormal"
+            "fantasy":2,
+            "science fiction":1,
+            "thriller":5,
+            "historical":4,
+            "young adult":0,
+            "children":3,
+            "romance":6,
+            "paranormal":7
         };
 
     // book covers to be displayed
@@ -157,12 +157,23 @@ d3.json("data/book-data-lite.json", function(data) {
                         );
 
                     // pass selection to innovative view
-                    innovativeview.selectedBook = val;
-                    window.selected_genre_global = genretoColorView[genre];
+                    d3.select('.UserSelection').remove();
+                    var genre_index = genretoColorView[genre];
+                    console.log(genre, genretoColorView[genre]);
+                    if(genre_index !== null)
+                    {
+                        var label_offset_select_y = [-25, -25, 35, 45, 45, 45, 35, -25];
+                        var label_offset_select_x = [0,0, 10, 0, 0, 0, 0, 0];
 
-                    var b = d3.selectAll('.sub_circle').select(".young_adult");
-
-                    innovativeview.updateVis();
+                        d3.select('#color-vis').select("svg")
+                            .append('text')
+                            .attr('x', window.colorview_genre_location[genre_index]['line-end-x'] + label_offset_select_x[genre_index])
+                            .attr('y',window.colorview_genre_location[genre_index]['line-end-y'] + label_offset_select_y[genre_index])
+                            .attr('class', 'UserSelection')
+                            .attr('text-anchor','middle' )
+                            .attr("font-size", 30)
+                            .text("🌸");
+                    }
 
                     // on click, move to choice explanation div
                    $.scrollify.next();
