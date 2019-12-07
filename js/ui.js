@@ -159,6 +159,9 @@ d3.json("data/book-data-lite.json", function(data) {
                     // pass selection to innovative view
                     innovativeview.selectedBook = val;
                     window.selected_genre_global = genretoColorView[genre];
+
+                    var b = d3.selectAll('.sub_circle').select(".young_adult");
+
                     innovativeview.updateVis();
 
                     // on click, move to choice explanation div

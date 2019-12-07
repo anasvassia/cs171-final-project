@@ -172,6 +172,7 @@ InnovativeView.prototype.initVis = function () {
                 .attr("d", lineFunction(linedata))
                 .attr("class", vis.summarybygenre[i]['genre']+" callout")
                 .attr("stroke", '#DCDCDC')
+                .attr("opacity", 0.5)
                 .attr("stroke-width", 2)
                 .attr("fill", "none");});
 
@@ -201,19 +202,18 @@ vis.svg.selectAll('.genre-label')
     vis.svg
         .append("foreignObject")
         .attr('class', 'legend-details')
-        .attr("x", vis.width/3.5)
+        .attr("x", vis.width/3)
         .attr('y', vis.mainCircley - 125)
         .attr('height', vis.mainRadius * 2 - 75)
         .attr('width', vis.mainRadius * 2 - 75)
-        .text("We analyzed books from 8 most common genres published between 1900 and 2017 and extracted the most dominant " +
-            "color. We've custom designed a hub & spoke' visual to represent each genre. " +
+        .text("We've custom designed a hub & spoke' visual to represent each genre. " +
             "The center represents a genre and spoke length & area of the colored circles represent the " +
             "color prevalence in a genre. Click on the circles to learn more about color prevalence trends. Click on the white space to clear " +
             "filters.");
 
     // Add a sample drawing for legend
-   var legend_loc_x = vis.mainCirclex - 50;
-   var legend_loc_y = vis.mainCircley + 100;
+   var legend_loc_x = vis.mainCirclex - 20;
+   var legend_loc_y = vis.mainCircley + 60;
    var legend_scale = d3.scaleLinear().domain([0,100]).range([2,30]);
 
    var legend_spoke_location = {}, legend_reach = 3;
@@ -256,17 +256,17 @@ vis.svg.selectAll('.genre-label')
         [
             {'x': legend_spoke_location['color-circle-cx'][0],'y': legend_spoke_location['color-circle-cy'][0]},
             {'x': legend_spoke_location['color-circle-cx'][0],'y': legend_spoke_location['color-circle-cy'][0] + 60},
-            {'x': legend_spoke_location['color-circle-cx'][0] + 120,'y': legend_spoke_location['color-circle-cy'][0] + 60}
+            {'x': legend_spoke_location['color-circle-cx'][0] + 80,'y': legend_spoke_location['color-circle-cy'][0] + 60}
         ],
         [
             {'x': legend_spoke_location['color-circle-cx'][0] + 40,'y': legend_spoke_location['color-circle-cy'][0]},
             {'x': legend_spoke_location['color-circle-cx'][0] + 40,'y': legend_spoke_location['color-circle-cy'][0] + 40},
-            {'x': legend_spoke_location['color-circle-cx'][0] + 120,'y': legend_spoke_location['color-circle-cy'][0] + 40}
+            {'x': legend_spoke_location['color-circle-cx'][0] + 80,'y': legend_spoke_location['color-circle-cy'][0] + 40}
         ],
         [
             {'x': legend_loc_x,'y': legend_loc_y},
             {'x': legend_loc_x,'y': legend_loc_y + 20},
-            {'x': legend_loc_x + 45,'y': legend_loc_y + 20}
+            {'x': legend_loc_x + 10,'y': legend_loc_y + 20}
         ]
     ];
 
