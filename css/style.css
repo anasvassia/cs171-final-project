@@ -43,6 +43,7 @@ html,body, #main-col, #main-row {
     text-align: center;
     font-kerning: auto;
     margin-top: 10px;
+    margin-bottom: 0;
 }
 
 #header-img {
@@ -130,7 +131,7 @@ a:hover {
 
 .inner-div {
     display: inline-block;
-    padding: 50px;
+    padding: 45px;
 }
 
 /* Tree View Styling */

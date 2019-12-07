@@ -316,11 +316,9 @@ RidgeLine.prototype.updateVis = function(){
     vis.svg.select(".x-axis").remove();
 
     vis.svg.append("g")
-        .attr("class", "x-axis")
+        .attr("class", "x-axis data-label")
         .attr("transform", "translate(0," + vis.height + ")")
-        .call(d3.axisBottom(vis.x))
-        .attr("class", "data-label");
-
+        .call(d3.axisBottom(vis.x));
 
 
 
