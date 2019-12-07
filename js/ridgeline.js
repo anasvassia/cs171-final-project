@@ -46,7 +46,7 @@ RidgeLine.prototype.initVis = function(){
         "gray": "#736f6c"
     };
 
-    vis.categories = Object.keys(vis.colorMap)
+    vis.categories = Object.keys(vis.colorMap);
 
     // Add X axis
     vis.x = d3.scaleLinear()
@@ -62,7 +62,8 @@ RidgeLine.prototype.initVis = function(){
         .range([0, vis.height])
         .paddingInner(1);
     vis.svg.append("g")
-        .call(d3.axisLeft(vis.yName));
+        .call(d3.axisLeft(vis.yName))
+        .attr("class", "data-label");
 
 
     // (Filter, aggregate, modify data)
@@ -191,7 +192,7 @@ RidgeLine.prototype.updateVis = function(){
 
     vis.areasenter = vis.update.enter()
         .append("g")
-        .attr("class", "areas")
+        .attr("class", "areas");
 
     vis.areas = vis.areasenter.merge(vis.update);
 
@@ -219,7 +220,7 @@ RidgeLine.prototype.updateVis = function(){
                         'color': d.key
                     }
                 })
-            })
+            });
 
         vis.totalRects = vis.totalRectSelection.enter()
             .append("rect")
@@ -317,7 +318,8 @@ RidgeLine.prototype.updateVis = function(){
     vis.svg.append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + vis.height + ")")
-        .call(d3.axisBottom(vis.x));
+        .call(d3.axisBottom(vis.x))
+        .attr("class", "data-label");
 
 
 

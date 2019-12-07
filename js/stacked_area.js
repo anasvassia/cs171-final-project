@@ -42,7 +42,7 @@ StackedBar.prototype.initVis = function () {
     };
 
 // Set margin and svg drawing area.
-    vis.margin = {top: 30, right: 10, bottom: 10, left: 10},
+    vis.margin = {top: 100, right: 10, bottom: 10, left: 10},
         vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
         vis.height = 800 - vis.margin.top - vis.margin.bottom;
 
@@ -57,7 +57,7 @@ StackedBar.prototype.initVis = function () {
     // Define Scales
     vis.x = d3.scaleBand()
         .domain(vis.year_ranges)
-        .rangeRound([0, 0.85*vis.width]);
+        .rangeRound([0, 0.75*vis.width]);
 
     vis.y = d3.scaleLinear()
         .domain([0,1])
@@ -95,12 +95,12 @@ StackedBar.prototype.initVis = function () {
         .append("path")
         .attr('class', 'area')
         .attr('d', vis.area)
-        .attr("transform", "translate(150,200)");
+        .attr("transform", "translate(150,165)");
 
     // Plot X axis
     vis.svg.append("g")
         .attr("class", "x_axis")
-        .attr("transform", "translate(150,730)")
+        .attr("transform", "translate(150,625)")
         .call(d3.axisBottom(vis.x).ticks(20))
         .selectAll("text")
         .style("text-anchor", "end")
@@ -113,27 +113,27 @@ StackedBar.prototype.initVis = function () {
     vis.svg.append("g")
         .attr("class", "y_axis")
         .call(d3.axisLeft(vis.y).tickFormat(d3.format(".0%")))
-        .attr("transform", "translate(155,200)")
+        .attr("transform", "translate(155,165)")
         .selectAll("text")
         .style("font-size", 12)
         .attr('fill', '#A8A8A8');
 
     vis.svg.append("text")
-        .attr("class", "x_axis_label")
+        .attr("class", "x_axis_label legend-title")
         .text("Years")
-        .attr("transform", "translate(100,770)");
+        .attr("transform", "translate("+ (vis.width/2 + 30) +",715)");
 
     vis.svg.append("text")
-        .attr("class", "y_axis_label")
+        .attr("class", "y_axis_label legend-title")
         .text("Count Distribution %")
-        .attr("transform", "translate(100,550) rotate(270)")
+        .attr("transform", "translate(100,500) rotate(270)")
         .attr('fill', 'grey');
 
     vis.svg
         .append("text")
-        .attr("class", "stack-header")
+        .attr("class", "stack-header section-title")
         .text("All Genres")
-        .attr("transform", "translate(150,100)");
+        .attr("transform", "translate(150,140)");
 
 //     vis.tooltip = d3.select("#" + vis.parentElement).append("div")
 //         .attr("class", "tooltip_stack")

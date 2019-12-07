@@ -49,8 +49,9 @@ InnovativeView.prototype.initVis = function () {
         vis.width  = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
         vis.height = 900 - vis.margin.top - vis.margin.bottom,
         vis.outerRadius = Math.min(vis.width, vis.height) /5,
-        vis.mainRadius = 245, vis.mainCirclex = vis.width/2,
-        vis.mainCircley = vis.height/2, vis.subRadius =15;
+        vis.mainRadius = 195,
+        vis.mainCirclex = vis.width/1.89,
+        vis.mainCircley = vis.height/2.25, vis.subRadius =15;
 
     // Draw SVG Element.
     vis.svg = d3.select("#" + vis.parentElement)
@@ -92,15 +93,15 @@ InnovativeView.prototype.initVis = function () {
         genreCircleMetadata['genre-circle-cy'] = vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius;
         genreCircleMetadata['line-start-x'] = vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius * 1.38;
         genreCircleMetadata['line-start-y'] = vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius * 1.38;
-        genreCircleMetadata['line-end-x'] = vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius * 1.5;
-        genreCircleMetadata['line-end-y'] = vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius * 1.5;
+        genreCircleMetadata['line-end-x'] = vis.mainCirclex + Math.sin(i*45* Math.PI/180)* vis.mainRadius * 1.58;
+        genreCircleMetadata['line-end-y'] = vis.mainCircley - Math.cos(i*45* Math.PI/180)* vis.mainRadius * 1.58;
         genreCircleMetadata['color-circle-cx'] = [];
         genreCircleMetadata['color-circle-cy'] = [];
         vis.genrecirclelocation.push(genreCircleMetadata)
     });
 
-    // Set the spoke length and angular seperation.
-    vis.reach = 4;
+    // Set the spoke length and angular separation.
+    vis.reach = 3.5;
     vis.angle = 18;
 
     vis.summarybygenre.forEach(function(d,i){
@@ -199,10 +200,10 @@ vis.svg.selectAll('.genre-label')
     vis.svg
         .append("foreignObject")
         .attr('class', 'legend-details')
-        .attr("x", vis.width/4.3)
+        .attr("x", vis.width/3.5)
         .attr('y', vis.mainCircley - 125)
-        .attr('height', 160)
-        .attr('width', 425)
+        .attr('height', vis.mainRadius * 2 - 75)
+        .attr('width', vis.mainRadius * 2 - 75)
         .text("We analyzed books from 8 most common genres published between 1900 and 2017 and extracted the most dominant " +
             "color. We've custom designed a hub & spoke' visual to represent each genre. " +
             "The center represents a genre and spoke length & area of the colored circles represent the " +

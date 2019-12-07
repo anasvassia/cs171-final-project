@@ -103,6 +103,7 @@ a:hover {
 #selected-book-image {
     width: 50%;
     margin-top: 150px;
+    margin-bottom: 0px;
 }
 
 
@@ -164,13 +165,13 @@ label pre {
 
 .legend-title {
     font-family: Zilla-Slab;
-    font-size: 19px;
+    font-size: 14px;
     fill: #A0A0A0;
 }
 
 .legend-details {
     font-family: Google-Roboto;
-    font-size: 15px;
+    font-size: 13px;
     color: #b0aeae;
     font-style: italic;
     text-align: center;
