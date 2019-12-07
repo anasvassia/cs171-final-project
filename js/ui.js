@@ -171,8 +171,27 @@ d3.json("data/book-data-lite.json", function(data) {
                             .attr('y',window.colorview_genre_location[genre_index]['line-end-y'] + label_offset_select_y[genre_index])
                             .attr('class', 'UserSelection')
                             .attr('text-anchor','middle' )
-                            .attr("font-size", 30)
-                            .text("🌸");
+                            .attr("font-size", 20)
+                            .text("📖");
+
+                        var tip_selection = d3.tip()
+                            .attr('class', 'd3-tip-selection tooltip')
+                            .offset([-5, 10])
+                            .html(function() {return '<span><strong>Your selection</strong></span><br><p><img src=' +
+                                val.image_url +
+                                ' width="20" height="30" display: inline>' +
+                                val.title +
+                                '</p>'
+                            });
+
+                        d3.select('#color-vis').select("svg").call(tip_selection);
+                        // Plot the color circles
+
+                        d3.select('.UserSelection')
+                            .on('mouseover', tip_selection.show)
+                            .on('mouseout', tip_selection.hide);
+
+
                     }
 
                     // on click, move to choice explanation div
