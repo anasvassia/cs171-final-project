@@ -15,6 +15,18 @@ d3.json("data/book-data-lite.json", function(data) {
         "children", "thriller", "romance", "paranormal"
     ];
 
+    var genretoColorView =
+        {
+            "fantasy": "fantasy",
+            "science-fiction": "science_fiction",
+            "thriller": "thriller",
+            "historical": "historic",
+            "young-adult": "young_adult",
+            "children": "children",
+            "romance": "romance",
+            "paranormal": "paranormal"
+        };
+
     // book covers to be displayed
    books = d3.range(0, 8).map( function(val) {
         return random(genreArray[val]);
@@ -126,7 +138,7 @@ d3.json("data/book-data-lite.json", function(data) {
                         "looking at book covers. " +
                         "Bringing it back to the book you selected, recall " +
                         "that <b>" + val.title + "</b> by " + authors + " is " +
-                        "a" + genre +
+                        "a " + genre +
                         " book with a predominantly  <emp style='color:" +
                         innovativeview.colorMap[val.dominantColorCategory]
                         + "'>" + val.dominantColorCategory + "</emp>" + " colored " +
@@ -146,7 +158,7 @@ d3.json("data/book-data-lite.json", function(data) {
 
                     // pass selection to innovative view
                     innovativeview.selectedBook = val;
-                    console.log(val);
+                    window.selected_genre_global = genretoColorView[genre];
                     innovativeview.updateVis();
 
                     // on click, move to choice explanation div
