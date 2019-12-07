@@ -92,7 +92,6 @@ StackedBar.prototype.initVis = function () {
         .attr('class', 'area')
         .attr('d', vis.area)
         .attr("transform", "translate(150,125)");
-
     // Plot X axis
     vis.svg.append("g")
         .attr("class", "x_axis")
@@ -131,57 +130,20 @@ StackedBar.prototype.initVis = function () {
         .text("All Genres")
         .attr("transform", "translate(150,100)");
 
-//     vis.tooltip = d3.select("#" + vis.parentElement).append("div")
-//         .attr("class", "tooltip_stack")
-//         .style("opacity", 0);
-//
-//     ////////////
-//     var focus = svg.append("g")
-//         .attr("class", "focus")
-//         .style("display", "none");
-//
-//     focus.append("text")
-//         .attr("x", 9)
-//         .attr("dy", ".35em")
-//         .style("font-size",15);
-// ///////////////////////
-//
-//     var tooltip = vis.svg.append("g")
-//         .attr("class", "tooltip")
-//         .style("opacity", 0);
-//
-//     tooltip.append("rect")
-//         .attr("width", 30)
-//         .attr("height", 20)
-//         .attr("fill", "white")
-//         .style("opacity", 0.5);
-//
-//     tooltip.append("text")
-//         .attr("x", 15)
-//         .attr("dy", "1.2em")
-//         .style("text-anchor", "middle")
-//         .attr("font-size", "12px")
-//         .attr("font-weight", "bold");
-//
-//     var tip_example = d3.tip()
-//         .attr('class', 'd3-tip-circles tooltip')
-//         .offset([-5, 10])
-//         .html(function(d) {
-//             return d[d.index].data[d.key];
-//         });
-//
-//     vis.svg.call(tip_example);
-
     vis.svg
         .selectAll(".stacked_bar")
         .on('mouseover', function(d) {
             var chosenOne = this;
-            d3.selectAll('.stacked_bar').transition().style('opacity',function () {
-                return (this === chosenOne) ? 1.0 : 0.1;});
+            d3.selectAll('.stacked_bar').transition()
+                .style('opacity',function () {return (this === chosenOne) ? 1.0 : 0.1;})
+                .attr('stroke',function () {return (this === chosenOne) ? 'grey': 'none';});
+
+
         })
         .on('mouseout',function(d) {
-            d3.selectAll('.stacked_bar').transition().style("opacity", 0.8);
-
+            d3.selectAll('.stacked_bar').transition()
+                .style("opacity", 0.8)
+                .attr("stroke", "none");
         });
 
     vis.updateStack();
@@ -199,7 +161,6 @@ StackedBar.prototype.updateStack = function () {
     // Update Series
     var series = vis.stack(vis.updated_data);
     // Call the X and Y scales
-
     vis.svg.selectAll(".stacked_bar")
         .select('.area')
         .data(series)
@@ -207,16 +168,6 @@ StackedBar.prototype.updateStack = function () {
         .duration(1000)
         .attr("d", vis.area);
 
-    vis.svg.selectAll(".stacked_bar")
-        .selectAll(".line-paths")
-        .data(series)
-        .transition()
-        .duration(1000)
-        .style('stroke', function(d){
-            if(vis.selected_color === ''){return vis.colorMap[d.key]}
-            else {return vis.colorMap[vis.selected_color]}
-        })
-        .attr('d', vis.line);
 
 };
 
