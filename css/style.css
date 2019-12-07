@@ -137,7 +137,9 @@ a:hover {
 }
 
 .profile {
-    font-size: 18px;
+    font-size: 16px;
+    font-family: Google-Roboto;
+    font-weight: bold;
 }
 
 ol li, #sources, #sources-title {
@@ -149,8 +151,12 @@ ol li, #sources, #sources-title {
     margin-left: 50px;
 }
 
+#about-project {
+    margin: 10px;
+}
+
 #sources {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 ol li {
