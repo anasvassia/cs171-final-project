@@ -81,7 +81,7 @@ BarChart.prototype.initVis = function(){
     vis.svg
         .append("text")
         .attr("class", "legend-title")
-        .attr("x", vis.width - 300)
+        .attr("x", vis.width - 260)
         .attr('y', vis.height - 310)
         .text('Symbol Usage across 8 Genre Book Covers');
 

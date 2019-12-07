@@ -18,8 +18,17 @@
     src: url("fonts/ZIlla_Slab/ZillaSlab-Regular.ttf");
 }
 
-html, body {
-    margin: 0;
+html,body, #main-col, #main-row {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.row {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
 }
 
 .step {
@@ -33,7 +42,8 @@ html, body {
     font-weight: normal;
     text-align: center;
     font-kerning: auto;
-    margin: 10px 0px 20px;
+    margin-top: 10px;
+    margin-bottom: 0;
 }
 
 #header-img {
@@ -59,9 +69,14 @@ h1 {
      text-align: center;
  }
 
- emp {
-     -webkit-text-stroke: 0.35px black;
+ emp, .tooltip-color {
+     -webkit-text-stroke: 0.25px black;
+     font-weight: 500;
 
+ }
+
+ b {
+     font-weight: 900;
  }
 
 
@@ -87,18 +102,18 @@ a:hover {
     margin: 25px auto;
 }
 
-.row1, .row2{
-    margin-left: 20px;
-    margin-right: 0px;
-}
-
 #choice {
     margin-top: 50px;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 #selected-book-image {
     width: 50%;
     margin-top: 150px;
+    margin-bottom: 0px;
+}
+
+#color-container {
+    margin: 0;
 }
 
 
@@ -116,7 +131,7 @@ a:hover {
 
 .inner-div {
     display: inline-block;
-    padding: 50px;
+    padding: 45px;
 }
 
 /* Tree View Styling */
@@ -160,13 +175,13 @@ label pre {
 
 .legend-title {
     font-family: Zilla-Slab;
-    font-size: 19px;
+    font-size: 14px;
     fill: #A0A0A0;
 }
 
 .legend-details {
     font-family: Google-Roboto;
-    font-size: 15px;
+    font-size: 13px;
     color: #b0aeae;
     font-style: italic;
     text-align: center;
