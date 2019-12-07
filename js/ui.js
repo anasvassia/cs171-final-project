@@ -181,7 +181,11 @@ d3.json("data/book-data-lite.json", function(data) {
                                 val.image_url +
                                 ' width="20" height="30" display: inline>' +
                                 val.title +
-                                '</p>'
+                                '</p>'+
+                                '<span>It has <emp style=\'color:'+
+                                innovativeview.colorMap[val.dominantColorCategory]
+                                + "'>" + val.dominantColorCategory +
+                                '</emp> as dominant color<span>'
                             });
 
                         d3.select('#color-vis').select("svg").call(tip_selection);
