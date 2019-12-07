@@ -236,10 +236,7 @@ BarChart.prototype.updateVis = function(){
             "Once again, the book that you selected at the\n" +
             "beginning is highlighted. Choose a genre to see which\n" +
             "symbols are most common within it.");
-
-    console.log(vis.layers);
-    console.log(vis.svg.select("foreignObject").attr('x'));
-    console.log(vis.y(vis.layers[9][8].data.name))
+    
 
     // Add legend title
     vis.svg
