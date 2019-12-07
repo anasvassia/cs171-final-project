@@ -32,6 +32,7 @@ StackedArea.prototype.initVis = function () {
     };
 // Object to map genre tags to user-friendly and formatted text for presentation.
     vis.genres = {
+        'All Genres': 'All Genres',
         'young_adult': 'Young Adult',
         'science_fiction': 'Science Fiction',
         'paranormal': 'Paranormal',
@@ -41,6 +42,20 @@ StackedArea.prototype.initVis = function () {
         'historic': 'Historical',
         'fantasy': 'Fantasy',
     };
+// Object which has the one liner narrative about each genre trend
+    vis.genreTrendStory = {
+        'All Genres': 'We can see color diversity after 1920 marking the rise of color and color printing.',
+            //Reference - https://harvardmagazine.com/2010/07/rise-of-color
+        'young_adult': 'Close to 80% of the books published between 1925 and 1930 in our sample use shades of blue.',
+        'science_fiction': 'The usage of blue shades seem to follow a the seasonal pattern',
+        'paranormal': 'Paranormal books predominantly use shades of red, orange, blue and black.',
+        'children': "Children's books seem to use lots of vibrant hues such as yellows and blues and less darker tones.",
+        'romance': 'Usage of red and pink shades remain consistent across the years.',
+        'thriller': 'It is not a surprise to see how pervasive the usage of red is for thriller genre.',
+        'historic': 'It is interesting to note how common black shades are over the years',
+        'fantasy': 'Oranges and blues are most predominant and their usage is consistent across years.',
+    };
+
     // Set margin and svg drawing area.
     vis.margin = {top: 100, right: 10, bottom: 10, left: 10},
         vis.width = $("#" + vis.parentElement).width()  - vis.margin.left - vis.margin.right,
@@ -116,8 +131,15 @@ StackedArea.prototype.initVis = function () {
     vis.svg
         .append("text")
         .attr("class", "stack-header section-title")
-        .text("All Genres")
+        .text("All Genres - Color Usage Trends")
+        .attr("transform", "translate(150,75)");
+
+    vis.svg
+        .append("text")
+        .attr("class", "stack-descriptions")
+        .text("We can see color diversity after 1920 marking the rise of color and color printing.")
         .attr("transform", "translate(150,100)");
+
     //Set up the hover functionality. This dims the paths not selected and highlights the chosen path.
     vis.svg
         .selectAll(".stacked_bar")
@@ -140,12 +162,6 @@ StackedArea.prototype.initVis = function () {
  */
 StackedArea.prototype.updateStack = function () {
     var vis = this;
-    // Update chart header.
-    vis.svg
-        .append("text")
-        .attr("class", "stack-header")
-        .html(vis.selected_genre)
-        .attr("transform", "translate(150,100)");
     // Update Series
     var series = vis.stack(vis.updated_data);
     // Update the chart.
@@ -163,10 +179,24 @@ StackedArea.prototype.selectionChanged = function (filteredData) {
     var vis = this;
     // Compute the new title value.
     vis.updated_data = filteredData;
-   if(window.genre === 'All Genres') {vis.selected_genre  = 'All Genres';} else {vis.selected_genre = vis.genres[window.genre]}
-    // Remove any existing headers.
+    vis.selected_genre = vis.genres[window.genre];
+    // Remove any existing headers and descriptions.
     d3.selectAll(".stack-header")
         .remove();
+    d3.selectAll(".stack-descriptions")
+        .remove();
+    // Update chart header.
+    vis.svg
+        .append("text")
+        .attr("class", "stack-header section-title")
+        .html(vis.selected_genre + ' - Color Usage Trends')
+        .attr("transform", "translate(150,75)");
+
+    vis.svg
+        .append("text")
+        .attr("class", "stack-descriptions")
+        .html(vis.genreTrendStory[window.genre])
+        .attr("transform", "translate(150,100)");
     // Update the visualization.
     vis.updateStack();
 };

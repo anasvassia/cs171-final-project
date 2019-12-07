@@ -278,7 +278,15 @@ label pre {
 }
 .stack-header{
     font-size: 24px;
+    font-family: Zilla-Slab;
     fill: grey;
+}
+
+.stack-descriptions{
+    font-family: Google-Roboto;
+    font-size: 13px;
+    fill: grey;
+    font-style: italic;
 }
 
 /**/
