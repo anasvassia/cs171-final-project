@@ -1,7 +1,7 @@
 /*
  * Stacked Area - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the stacked area chart
- * @param _data						-- the pre-aggregated dataset aggregated by year and genre.
+ * @param _data				-- the pre-aggregated dataset aggregated by year and genre.
  */
 StackedArea = function (_parentElement, _data) {
     this.parentElement = _parentElement;
