@@ -202,7 +202,7 @@ vis.svg.selectAll('.genre-label')
     vis.svg
         .append("foreignObject")
         .attr('class', 'legend-details')
-        .attr("x", vis.width/3)
+        .attr("x", vis.width/3.5)
         .attr('y', vis.mainCircley - 125)
         .attr('height', vis.mainRadius * 2 - 75)
         .attr('width', vis.mainRadius * 2 - 75)
