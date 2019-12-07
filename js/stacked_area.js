@@ -136,7 +136,7 @@ StackedBar.prototype.initVis = function () {
             var chosenOne = this;
             d3.selectAll('.stacked_bar').transition()
                 .style('opacity',function () {return (this === chosenOne) ? 1.0 : 0.1;})
-                .attr('stroke',function () {return (this === chosenOne) ? 'grey': 'none';});
+                .attr('stroke',function () {return (this === chosenOne) ? '#DCDCDC': 'none';});
 
 
         })
