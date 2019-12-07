@@ -265,7 +265,7 @@ label pre {
     opacity: 0.6;
 }
 
-.sub_circle,.colorcircle{
+.sub_circle,.colorcircle,.book-covers{
     cursor: pointer;
 }
 
