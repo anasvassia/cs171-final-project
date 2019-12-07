@@ -68,9 +68,14 @@ h1 {
      text-align: center;
  }
 
- emp {
-     -webkit-text-stroke: 0.35px black;
+ emp, .tooltip-color {
+     -webkit-text-stroke: 0.25px black;
+     font-weight: 500;
 
+ }
+
+ b {
+     font-weight: 900;
  }
 
 

@@ -91,7 +91,7 @@ d3.json("data/book-data-lite.json", function(data) {
                     $("#choice-explanation").html(
                         "<g class='section-title'><br>Explanation of Your Choice" +
                         "<br/></g>" +
-                        "<b class='storyline'>" + val.title + " by " + authors + "? " +
+                        "<p class='storyline'><b>" + val.title + "</b> by " + authors + "? " +
                         "Not a bad choice. This is " +
                         "actually a<b> " + genre +
                         "</b> book, published in <b>" +
@@ -125,10 +125,11 @@ d3.json("data/book-data-lite.json", function(data) {
                         "provide a short introduction to this awesome field by " +
                         "looking at book covers. " +
                         "Bringing it back to the book you selected, recall " +
-                        "that " + val.title + " by " + authors + " is " +
+                        "that <b>" + val.title + "</b> by " + authors + " is " +
                         "a" + genre +
-                        " book with a predominantly " +
-                        val.dominantColorCategory + " colored " +
+                        " book with a predominantly  <emp style='color:" +
+                        innovativeview.colorMap[val.dominantColorCategory]
+                        + "'>" + val.dominantColorCategory + "</emp>" + " colored " +
                         "cover. This is actually " + isCommon +
                         " common for " + genre +
                         " books. Has this always been " +
