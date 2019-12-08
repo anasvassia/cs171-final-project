@@ -16,5 +16,38 @@ We have organized all the files in the following directory structure
   
 index.html (Parent html file with the static content and id elements)
 
+# Links to screen cast and website
+Screencast:
+https://youtu.be/qVMfxGXjMpg
+
+Final website:
+http://isabellezheng.com/cs171-final-project/#1
+
 ## css
 We use **Bootstrap** grid framework to organize the content. All custom styles are in **styles.css** file.
+
+# Outside libraries used
+ We have used the following libraries 
+ 
+ /
+ 
+    -- Scrollify
+    
+    -- jQuery
+    
+    -- D3
+    
+    -- Queue
+    
+    -- Bootstrap
+    
+    -- Lodash
+    
+    -- Combobox
+    
+    -- Popper
+    
+    -- TextStroke
+    
+    -- PanelSnap
+    
