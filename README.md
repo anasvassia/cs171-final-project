@@ -48,23 +48,23 @@ We use **Bootstrap** grid framework to organize the content. All custom styles a
  
  /
  
-    -- Scrollify
+-- Scrollify
+
+-- jQuery
+
+-- D3
+
+-- Queue
+
+-- Bootstrap
     
-    -- jQuery
+-- Lodash
     
-    -- D3
+-- Combobox
     
-    -- Queue
+-- Popper
     
-    -- Bootstrap
+-- TextStroke
     
-    -- Lodash
-    
-    -- Combobox
-    
-    -- Popper
-    
-    -- TextStroke
-    
-    -- PanelSnap
+-- PanelSnap
     
