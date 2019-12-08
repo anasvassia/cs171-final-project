@@ -29,8 +29,9 @@ This directory has the following sub directories -
 
 -- **summarybygenre.json** (This file shows the pre-aggregated data from book_data and computes the percentage distribution of colors by 8 most commonly occuring genres by genre. The calculations are done using Python and can be found in **colorviz_datawrangling.py**)
 
--- **tag_color.json** (This file shows the pre-aggregated data from book_data and computes the frequency distribution of colors by tags. The calculations are done using Python and can be found in **wrangletagcolor.py**)
+-- **tag_color.json** (This file shows the pre-aggregated data from book_data and computes the frequency distribution of colors by tags and colors. The calculations are done using Python and can be found in **wrangletagcolor.py**)
 
+-- **tag_frequency.json** (This file shows the pre-aggregated data from book_data and computes the count of colors by tags. The calculations are done using Python and can be found in **wrangletagcolor.py**)
 
 ## css
 We use **Bootstrap** grid framework to organize the content. All custom styles are in **styles.css** file.
