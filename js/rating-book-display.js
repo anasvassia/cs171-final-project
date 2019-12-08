@@ -1,3 +1,6 @@
+/*
+Custom viz which shows example images upon hovering over the stack bar and tree map.
+*/
 
 /*
  * PrioVis - Object constructor function
@@ -86,7 +89,6 @@ RatingBookDisplay.prototype.wrangleData = function(genre, color, rating, param){
             break;
         }
     }
-    console.log(vis.images);
     // Update the visualization
     vis.updateVis();
 }
@@ -145,13 +147,9 @@ RatingBookDisplay.prototype.updateVis = function(){
         .merge(vis.imageselect)
         .attr('width', function(d) {
             return 50;
-            // var num_cols = Math.floor(d.total_width/50);
-            // return Math.max(1, d.total_width / num_cols);
         })
         .attr("height", function(d) {
             return 74;
-            // var num_rows = Math.floor(d.total_height/74);
-            // return Math.max(1, d.total_height / num_rows);
         })
         .attr("xlink:href", function (d) {
             return d.image_url;
@@ -159,15 +157,7 @@ RatingBookDisplay.prototype.updateVis = function(){
         .attr("pointer-events", "all")
         .attr("transform", function (d, i) {
             var row_num = Math.ceil(vis.width/50);
-//            console.log("total_width " +  d.total_width + " row_num " + row_num);
             return "translate(" + (0) + ", " + (i*74 + 10*i + 50) + ")"
-//             var num_cols = Math.max(1,  Math.floor(d.total_width/50));
-//             var num_rows = Math.max(1, Math.floor(d.total_height/74));
-//             console.log("cols: " + num_cols + " rows: " + num_rows);
-//
-//             var x = d.total_width / num_cols * (i % num_cols);
-//             var y = d.total_height/num_rows  * Math.floor(i /num_rows );
-//             return "translate(" + (x) + ", " + (y) + ")"
 
 
         });
@@ -175,7 +165,7 @@ RatingBookDisplay.prototype.updateVis = function(){
     vis.imageElements.call(vis.tip);
 
     vis.imageElements.on('mouseover', vis.tip.show)
-        .on('mouseout', vis.tip.hide)
+        .on('mouseout', vis.tip.hide);
 
     vis.imageElements.transition();
 
